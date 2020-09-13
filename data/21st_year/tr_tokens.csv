@@ -36,22 +36,22 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 34,photo his parents have framed,34,A1.18,1.0,33.0,A1
 35,"in expensive mahogany: Elated, graduating,",35,A1.18,1.0,34.0,A1
 36,cap and gown and all.,36,A1.18,1.0,35.0,A1
-37,,37,,,,
+37,,37,,,,A1
 38,Toasts and more toasts:,38,A1.19,2.0,36.0,A1
 39,“To our Doctor of,39,A1.20,1.0,38.0,A1
 40,Philosophy. Amazing Art Prodigy.,40,A1.20,1.0,39.0,A1
 41,To Gary Loisin!”,41,A1.20,1.0,40.0,A1
-42,,42,,,,
+42,,42,,,,A1
 43,"Clara’s carefully picked ""Happy",43,A1.21,2.0,41.0,A1
 44,"Graduation"" paper banners hang",44,A1.21,1.0,43.0,A1
 45,too low from,45,A1.21,1.0,44.0,A1
 46,the adobe doors.,46,A1.21,1.0,45.0,A1
 47,People have to duck when,47,A1.22,1.0,46.0,A1
 48,they go in the kitchen.,48,A1.22,1.0,47.0,A1
-49,,49,,,,
-50,,50,,2.0,48.0,
-51,,51,,1.0,50.0,
-52,,52,,,,
+49,,49,,,,A1
+50,,50,,2.0,48.0,A1
+51,,51,,1.0,50.0,A1
+52,,52,,,,A1
 53,"At 74th and Columbus,",53,B1.1,2.0,51.0,B1
 54,"Apartment 9D, Steven",54,B1.1,1.0,53.0,B1
 55,Perdue watches his,55,B1.1,1.0,54.0,B1
@@ -64,7 +64,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 62,"should be vigilant Steven…""",62,B1.2,1.0,61.0,B1
 63,Married 8 years he still,63,B1.3,1.0,62.0,B1
 64,can’t believe his good luck.,64,B1.3,1.0,63.0,B1
-65,,65,,,,
+65,,65,,,,B1
 66,"""Steven, are you listening?""",66,B1.4,2.0,64.0,B1
 67,"Yes, yes… He",67,B1.5,1.0,66.0,B1
 68,is listening…,68,B1.5,1.0,67.0,B1
@@ -91,22 +91,22 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 89,He looks much older than 50.,89,B1.16,1.0,88.0,B1
 90,"“She doesn't talk to me,""",90,B1.17,1.0,89.0,B1
 91,"Margaret whispers. ""So yes,",91,B1.17,1.0,90.0,B1
-92,,92,,,,
+92,,92,,,,B1
 93,I think you should do it.” She stops.,93,B1.18,2.0,91.0,B1
 94,“I'll be home,94,B1.20,1.0,93.0,B1
 95,"late tonight,”",95,B1.20,1.0,94.0,B1
 96,she adds.,96,B1.20,1.0,95.0,B1
 97,"She wants Steven to ask why, but he doesn't.",97,B1.21,1.0,96.0,B1
-98,,98,,,,
-99,,99,,2.0,97.0,
-100,,100,,1.0,99.0,
-101,,101,,,,
+98,,98,,,,B1
+99,,99,,2.0,97.0,B1
+100,,100,,1.0,99.0,B1
+101,,101,,,,B1
 102,The Graduation party keeps going.,102,A2.1,2.0,100.0,A2
 103,"Clara stares at her husband,",103,A2.2,1.0,102.0,A2
 104,once the most handsome man,104,A2.2,1.0,103.0,A2
 105,in the room: Gary's,105,A2.2,1.0,104.0,A2
 106,35 and already balding.,106,A2.2,1.0,105.0,A2
-107,,107,,,,
+107,,107,,,,A2
 108,His face is liquor-flushed,108,A2.3,2.0,106.0,A2
 109,as he bends over,109,A2.3,1.0,108.0,A2
 110,a 4-month-old baby-boy.,110,A2.3,1.0,109.0,A2
@@ -130,7 +130,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 128,the need to protect him...,128,A2.12,1.0,127.0,A2
 129,She puts her hand on the small,129,A2.13,1.0,128.0,A2
 130,"of his back, hoping he'd turn.",130,A2.13,1.0,129.0,A2
-131,,131,,,,
+131,,131,,,,A2
 132,The baby’s father steps up.,132,A2.14,2.0,130.0,A2
 133,"""So, is it time",133,A2.15,1.0,132.0,A2
 134,to open that Scotch?,134,A2.15,1.0,133.0,A2
@@ -139,24 +139,24 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 137,Clara looks at Gary confused,137,A2.18,1.0,136.0,A2
 138,"and he smiles, past her",138,A2.18,1.0,137.0,A2
 139,-- to the crowd.,139,A2.18,1.0,138.0,A2
-140,,140,,,,
+140,,140,,,,A2
 141,He’s basking in the glory of something.,141,A2.19,2.0,139.0,A2
 142,"Tommy, the baby's father, looks",142,A2.20,1.0,141.0,A2
 143,at Clara’s face and takes,143,A2.20,1.0,142.0,A2
 144,a step back --,144,A2.20,1.0,143.0,A2
 145,"""Oh man... Did I blow",145,A2.21,1.0,144.0,A2
 146,"the surprise? I'm so sorry…""",146,A2.21,1.0,145.0,A2
-147,,147,,,,
-148,,148,,2.0,146.0,
-149,,149,,1.0,148.0,
-150,,150,,1.0,149.0,
-151,,151,,,,
+147,,147,,,,A2
+148,,148,,2.0,146.0,A2
+149,,149,,1.0,148.0,A2
+150,,150,,1.0,149.0,A2
+151,,151,,,,A2
 152,"""You guys are into bullshit drama again.",152,B2.1,2.0,150.0,B2
 153,I just like to sleep,153,B2.2,1.0,152.0,B2
 154,"deeply these days. That's all.""",154,B2.2,1.0,153.0,B2
-155,,155,,,,
+155,,155,,,,B2
 156,Sasha strides up to her dad and opens her palm.,156,B2.3,2.0,154.0,B2
-157,,157,,,,
+157,,157,,,,B2
 158,The ten white sleeping,158,B2.4,2.0,156.0,B2
 159,"pills stare at him,",159,B2.4,1.0,158.0,B2
 160,an act of defiance.,160,B2.4,1.0,159.0,B2
@@ -165,7 +165,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 163,flush the pills,163,B2.6,1.0,162.0,B2
 164,down the toilet.,164,B2.6,1.0,163.0,B2
 165,"""You should have put them back in the pill-box.""",165,B2.7,1.0,164.0,B2
-166,,166,,,,
+166,,166,,,,B2
 167,Of course Sasha's right and now,167,B2.8,2.0,165.0,B2
 168,his gesture of closure feels stupid.,168,B2.8,1.0,167.0,B2
 169,He puts his hand on her,169,B2.9,1.0,168.0,B2
@@ -180,14 +180,14 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 178,you've lost all your money?,178,B2.14,1.0,177.0,B2
 179,That your stocks have all tanked?,179,B2.15,1.0,178.0,B2
 180,"That I might have to drop out of college?""",180,B2.16,1.0,179.0,B2
-181,,181,,,,
+181,,181,,,,B2
 182,On the TV --,182,B2.17,2.0,180.0,B2
 183,"the Middle East,",183,B2.17,1.0,182.0,B2
 184,"India, Wars, Earthquakes,",184,B2.17,1.0,183.0,B2
 185,"Crashes, Steven sighs.",185,B2.17,1.0,184.0,B2
 186,"""There’s no need to disturb",186,B2.18,1.0,185.0,B2
 187,Margaret… I'll figure it out.,187,B2.18,1.0,186.0,B2
-188,,188,,,,
+188,,188,,,,B2
 189,What do you want for your birthday?” he asks.,189,B2.19,2.0,187.0,B2
 190,“I want you to start,190,B2.20,1.0,189.0,B2
 191,"telling the truth,” says Sasha",191,B2.20,1.0,190.0,B2
@@ -195,10 +195,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 193,first time is breaking.,193,B2.20,1.0,192.0,B2
 194,“Your duplicity is,194,B2.21,1.0,193.0,B2
 195,so fucking exhausting…”,195,B2.21,1.0,194.0,B2
-196,,196,,,,
-197,,197,,2.0,195.0,
-198,,198,,1.0,197.0,
-199,,199,,,,
+196,,196,,,,B2
+197,,197,,2.0,195.0,B2
+198,,198,,1.0,197.0,B2
+199,,199,,,,B2
 200,Clara stares at Jeannie,200,A3.1,2.0,198.0,A3
 201,-- she must be,201,A3.1,1.0,200.0,A3
 202,"what, 25? 26?",202,A3.1,1.0,201.0,A3
@@ -209,19 +209,19 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 207,Tommy's parents swept in and,207,A3.3,1.0,206.0,A3
 208,erased all our debt.,208,A3.3,1.0,207.0,A3
 209,"All 10,000 dollars in one check...",209,A3.4,1.0,208.0,A3
-210,,210,,,,
+210,,210,,,,A3
 211,So we could start fresh and not stress…,211,A3.5,2.0,209.0,A3
 212,Amazing. Just amazing.,212,A3.6,1.0,211.0,A3
 213,I love them.”,213,A3.6,1.0,212.0,A3
-214,,214,,,,
+214,,214,,,,A3
 215,"“That's great, Jeannie,” Clara musters.",215,A3.7,2.0,213.0,A3
-216,,216,,,,
+216,,216,,,,A3
 217,“You want to have kids?” asks Jeannie.,217,A3.8,2.0,215.0,A3
 218,Still pudgy from the,218,A3.9,1.0,217.0,A3
 219,birth. So full of,219,A3.9,1.0,218.0,A3
 220,life and good cheer.,220,A3.9,1.0,219.0,A3
 221,"“Not yet,” Clara says stiffly.",221,A3.10,1.0,220.0,A3
-222,,222,,,,
+222,,222,,,,A3
 223,"“Can't afford it for one.”   Jeannie looks up, expecting",223,A3.11,2.0,221.0,A3
 224,more of an answer:,224,A3.12,1.0,223.0,A3
 225,"""I don't really like",225,A3.13,1.0,224.0,A3
@@ -245,10 +245,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 243,much wine she’ll serve...,243,A3.20,1.0,242.0,A3
 244,At least one bottle,244,A3.21,1.0,243.0,A3
 245,per person these days.,245,A3.21,1.0,244.0,A3
-246,,246,,,,
-247,,247,,2.0,245.0,
-248,,248,,1.0,247.0,
-249,,249,,,,
+246,,246,,,,A3
+247,,247,,2.0,245.0,A3
+248,,248,,1.0,247.0,A3
+249,,249,,,,A3
 250,"Inside the cab, Margaret holds",250,B3.1,2.0,248.0,B3
 251,onto her violin case.,251,B3.1,1.0,250.0,B3
 252,"“All the way down Columbus, OK?”",252,B3.2,1.0,251.0,B3
@@ -260,7 +260,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 258,The cab driver's eyes,258,B3.5,1.0,257.0,B3
 259,keep checking her out.,259,B3.5,1.0,258.0,B3
 260,"She pauses, hits voice mail.",260,B3.6,1.0,259.0,B3
-261,,261,,,,
+261,,261,,,,B3
 262,Alexander's accent purrs in her ear.,262,B3.7,2.0,260.0,B3
 263,He’s waiting,263,B3.8,1.0,262.0,B3
 264,for her.,264,B3.8,1.0,263.0,B3
@@ -276,7 +276,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 274,on her phone.,274,B3.14,1.0,273.0,B3
 275,Margaret texts him instead: I’m,275,B3.15,1.0,274.0,B3
 276,running a few minutes late.,276,B3.15,1.0,275.0,B3
-277,,277,,,,
+277,,277,,,,B3
 278,The eyes of the cabdriver are,278,B3.16,2.0,276.0,B3
 279,still there in the mirror,279,B3.16,1.0,278.0,B3
 280,“Do you have children princess?”,280,B3.16,1.0,279.0,B3
@@ -284,21 +284,21 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 282,"no, without thinking.",282,B3.17,1.0,281.0,B3
 283,And then she's terrified by what she’s done.,283,B3.18,1.0,282.0,B3
 284,Denying Sasha’s existence.,284,B3.19,1.0,283.0,B3
-285,,285,,,,
+285,,285,,,,B3
 286,But it's too late to undo it.,286,B3.20,2.0,284.0,B3
 287,"You look like someone who should,”",287,B3.21,1.0,286.0,B3
 288,says the cabdriver and is quiet,288,B3.21,1.0,287.0,B3
 289,the rest of the way.,289,B3.21,1.0,288.0,B3
-290,,290,,,,
+290,,290,,,,B3
 291,"She pays with a twenty,",291,B3.22,2.0,289.0,B3
 292,as they pull by the,292,B3.22,1.0,291.0,B3
 293,"fountain, and hates herself, because",293,B3.22,1.0,292.0,B3
 294,-- as if to prove,294,B3.22,1.0,293.0,B3
 295,him right -- she overtips.,295,B3.22,1.0,294.0,B3
-296,,296,,,,
-297,,297,,2.0,295.0,
-298,,298,,1.0,297.0,
-299,,299,,,,
+296,,296,,,,B3
+297,,297,,2.0,295.0,B3
+298,,298,,1.0,297.0,B3
+299,,299,,,,B3
 300,"“No art residencies for us,” Jeannie",300,A4.1,2.0,298.0,A4
 301,laughs and nods at the,301,A4.1,1.0,300.0,A4
 302,gurgling boy on her lap.,302,A4.1,1.0,301.0,A4
@@ -318,7 +318,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 316,"The ""Congratulations!"" sign still hits",316,A4.9,1.0,315.0,A4
 317,him on the back.,317,A4.9,1.0,316.0,A4
 318,"""One more Tommy, please!""",318,A4.10,1.0,317.0,A4
-319,,319,,,,
+319,,319,,,,A4
 320,She's never losing the baby,320,A4.11,2.0,318.0,A4
 321,"weight that way, Clara thinks.",321,A4.11,1.0,320.0,A4
 322,But who the fuck cares... she’s young...,322,A4.12,1.0,321.0,A4
@@ -327,7 +327,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 325,his hands and walks,325,A4.13,1.0,324.0,A4
 326,out of the room.,326,A4.13,1.0,325.0,A4
 327,"""How could you do this to me?"" Clara hisses at Gary.",327,A4.14,1.0,326.0,A4
-328,,328,,,,
+328,,328,,,,A4
 329,"""When did you find out about New",329,A4.15,2.0,327.0,A4
 330,"York? When did you even apply?""",330,A4.15,1.0,329.0,A4
 331,Anger and humiliation are,331,A4.16,1.0,330.0,A4
@@ -339,13 +339,13 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 337,"""Baby -- be",337,A4.19,1.0,336.0,A4
 338,"proud,"" he laughs.",338,A4.19,1.0,337.0,A4
 339,"""It's just for a year, we'll work it out...""",339,A4.20,1.0,338.0,A4
-340,,340,,,,
+340,,340,,,,A4
 341,And what is so sad,341,A4.21,2.0,339.0,A4
 342,-- he really believes this…,342,A4.21,1.0,341.0,A4
-343,,343,,,,
-344,,344,,2.0,342.0,
-345,,345,,1.0,344.0,
-346,,346,,,,
+343,,343,,,,A4
+344,,344,,2.0,342.0,A4
+345,,345,,1.0,344.0,A4
+346,,346,,,,A4
 347,Alexander and Margaret,347,B4.1,2.0,345.0,B4
 348,walk down Broadway.,348,B4.1,1.0,347.0,B4
 349,Margaret feels beautiful.,349,B4.2,1.0,348.0,B4
@@ -371,33 +371,33 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 369,I thought you wanted a kid.,369,B4.13,1.0,368.0,B4
 370,"Isn't that why you married?""",370,B4.13,1.0,369.0,B4
 371,She's quiet for a second.,371,B4.14,1.0,370.0,B4
-372,,372,,,,
+372,,372,,,,B4
 373,"""Sasha's been… a bit of a handful...""",373,B4.15,2.0,371.0,B4
-374,,374,,,,
+374,,374,,,,B4
 375,When she says it -- it feels lame.,375,B4.16,2.0,373.0,B4
 376,"“She took a year off, did",376,B4.17,1.0,375.0,B4
 377,"some great journalism in West Africa,",377,B4.17,1.0,376.0,B4
 378,but after she came back…”,378,B4.17,1.0,377.0,B4
-379,,379,,,,
+379,,379,,,,B4
 380,Alexander stops in front of a,380,B4.18,2.0,378.0,B4
 381,storefront. He’s not paying attention.,381,B4.18,1.0,380.0,B4
-382,,382,,,,
+382,,382,,,,B4
 383,Margaret braces herself: “Why did,383,B4.19,2.0,381.0,B4
 384,you call me?” she asks.,384,B4.19,1.0,383.0,B4
 385,"He turns, smiles",385,B4.20,1.0,384.0,B4
 386,at her.,386,B4.20,1.0,385.0,B4
 387,She's scared to say more.,387,B4.21,1.0,386.0,B4
-388,,388,,,,
+388,,388,,,,B4
 389,And somehow she's also excited.,389,B4.22,2.0,387.0,B4
 390,Margaret’s phone vibrates,390,B4.23,1.0,389.0,B4
 391,in her purse.,391,B4.23,1.0,390.0,B4
 392,She knows it’s,392,B4.24,1.0,391.0,B4
 393,Steven and she,393,B4.24,1.0,392.0,B4
 394,doesn't look.,394,B4.24,1.0,393.0,B4
-395,,395,,,,
-396,,396,,2.0,394.0,
-397,,397,,1.0,396.0,
-398,,398,,,,
+395,,395,,,,B4
+396,,396,,2.0,394.0,B4
+397,,397,,1.0,396.0,B4
+398,,398,,,,B4
 399,"""I don't want to go back",399,A5.1,2.0,397.0,A5
 400,"to New York,"" Clara says quietly.",400,A5.1,1.0,399.0,A5
 401,The dishes from last night,401,A5.2,1.0,400.0,A5
@@ -407,9 +407,9 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 405,Of course,405,A5.4,1.0,404.0,A5
 406,he’s late.,406,A5.4,1.0,405.0,A5
 407,And now the dishes won't be done until this evening...,407,A5.5,1.0,406.0,A5
-408,,408,,,,
+408,,408,,,,A5
 409,"Crusted chili. Soap, bubbles. Scrub!",409,A5.6,2.0,407.0,A5
-410,,410,,,,
+410,,410,,,,A5
 411,She's shopped and cooked and,411,A5.7,2.0,409.0,A5
 412,"served and now dishes, again.",412,A5.7,1.0,411.0,A5
 413,"""I'll do them later, Clara,",413,A5.8,1.0,412.0,A5
@@ -418,12 +418,12 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 416,"tupperware, newspapers -- looking.",416,A5.8,1.0,415.0,A5
 417,"""You've seen my wallet?”",417,A5.9,1.0,416.0,A5
 418,"”How long is this internship Gary?""",418,A5.10,1.0,417.0,A5
-419,,419,,,,
+419,,419,,,,A5
 420,""" September to June.""",420,A5.11,2.0,418.0,A5
 421,"""Without getting paid?",421,A5.12,1.0,420.0,A5
 422,I can’t afford to float,422,A5.13,1.0,421.0,A5
 423,this whole place by myself.”,423,A5.13,1.0,422.0,A5
-424,,424,,,,
+424,,424,,,,A5
 425,Gary heads to the door: “I’m sure you,425,A5.14,2.0,423.0,A5
 426,"can be a journalist in New York, too”",426,A5.14,1.0,425.0,A5
 427,But she just signed,427,A5.15,1.0,426.0,A5
@@ -431,55 +431,55 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 429,he knows it.,429,A5.15,1.0,428.0,A5
 430,“We should have talked this,430,A5.16,1.0,429.0,A5
 431,"move through, before you applied...”",431,A5.16,1.0,430.0,A5
-432,,432,,,,
+432,,432,,,,A5
 433,"He laughs. ""You would have talked me out of it.""",433,A5.17,2.0,431.0,A5
 434,For a moment he looks,434,A5.18,1.0,433.0,A5
 435,"like a boy, getting",435,A5.18,1.0,434.0,A5
 436,caught and standing up,436,A5.18,1.0,435.0,A5
 437,in defiance. Almost charming.,437,A5.18,1.0,436.0,A5
-438,,438,,,,
+438,,438,,,,A5
 439,"But he is 35. ""What's good for me Clara,",439,A5.19,2.0,437.0,A5
 440,"is also good for us.""",440,A5.20,1.0,439.0,A5
 441,That certainly used,441,A5.21,1.0,440.0,A5
 442,to be true.,442,A5.21,1.0,441.0,A5
 443,Is it now?,443,A5.21,1.0,442.0,A5
-444,,444,,,,
-445,,445,,2.0,443.0,
-446,,446,,1.0,445.0,
-447,,447,,,,
+444,,444,,,,A5
+445,,445,,2.0,443.0,A5
+446,,446,,1.0,445.0,A5
+447,,447,,,,A5
 448,Alexander pays for their hotdogs,448,B5.1,2.0,446.0,B5
 449,with crumpled-up dollar bills he,449,B5.1,1.0,448.0,B5
 450,pulls out of his pocket.,450,B5.1,1.0,449.0,B5
 451,“New York is the best. I’m,451,B5.2,1.0,450.0,B5
 452,so glad to be back.”,452,B5.2,1.0,451.0,B5
 453,The last eight years have been good to him.,453,B5.3,1.0,452.0,B5
-454,,454,,,,
+454,,454,,,,B5
 455,He still has a cat in his step.,455,B5.4,2.0,453.0,B5
 456,My new apartment looks,456,B5.5,1.0,455.0,B5
 457,"great, Maggie,” he says.",457,B5.5,1.0,456.0,B5
 458,“You’ll see – I bet you’ll want to move in…”,458,B5.6,1.0,457.0,B5
-459,,459,,,,
+459,,459,,,,B5
 460,Is this a come-on line?,460,B5.7,2.0,458.0,B5
 461,She catches a glimpse of herself in,461,B5.8,1.0,460.0,B5
 462,a window and is suddenly aware,462,B5.8,1.0,461.0,B5
 463,she should have colored her hair.,463,B5.8,1.0,462.0,B5
-464,,464,,,,
+464,,464,,,,B5
 465,"""New York is very glad you’re back…"" she says.",465,B5.9,2.0,463.0,B5
 466,The hot dog mustard drips on her blouse.,466,B5.10,1.0,465.0,B5
-467,,467,,,,
+467,,467,,,,B5
 468,"Alexander clears it, licks",468,B5.11,2.0,466.0,B5
 469,his finger and smiles.,469,B5.11,1.0,468.0,B5
 470,His eyes land on hers as,470,B5.12,1.0,469.0,B5
 471,she waits for his words.,471,B5.12,1.0,470.0,B5
-472,,472,,,,
+472,,472,,,,B5
 473,“I need you to connect me with your,473,B5.13,2.0,471.0,B5
 474,"former colleagues on Wall Street,” he says.",474,B5.13,1.0,473.0,B5
 475,“We’re working on a major,475,B5.14,1.0,474.0,B5
 476,piece on international corruption.,476,B5.14,1.0,475.0,B5
 477,It’s Pulitzer-worthy.”,477,B5.15,1.0,476.0,B5
-478,,478,,,,
+478,,478,,,,B5
 479,Margaret is so aware of her aging neck.,479,B5.16,2.0,477.0,B5
-480,,480,,,,
+480,,480,,,,B5
 481,That’s why he called:,481,B5.17,2.0,479.0,B5
 482,a little networking opportunity.,482,B5.17,1.0,481.0,B5
 483,That's what this meeting is…,483,B5.18,1.0,482.0,B5
@@ -490,20 +490,20 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 488,his card.,488,B5.21,1.0,487.0,B5
 489,"“Have Sasha call me,” he says.",489,B5.22,1.0,488.0,B5
 490,“I'm looking for interns and she sounds like a catch.”,490,B5.23,1.0,489.0,B5
-491,,491,,,,
-492,,492,,2.0,490.0,
-493,,493,,1.0,492.0,
-494,,494,,1.0,493.0,
-495,,495,,,,
+491,,491,,,,B5
+492,,492,,2.0,490.0,B5
+493,,493,,1.0,492.0,B5
+494,,494,,1.0,493.0,B5
+495,,495,,,,B5
 496,"“Here is your lunch...""",496,A6.1,2.0,494.0,A6
 497,Leftovers in blue tupperware.,497,A6.1,1.0,496.0,A6
 498,"""We’re postponing our lives, Gary.",498,A6.2,1.0,497.0,A6
 499,"What about getting a job?""",499,A6.3,1.0,498.0,A6
-500,,500,,,,
+500,,500,,,,A6
 501,Between looking for keys and slipping on,501,A6.4,2.0,499.0,A6
 502,"flip-flops, Gary sets the tupperware on",502,A6.4,1.0,501.0,A6
 503,the mail table and forgets it.,503,A6.4,1.0,502.0,A6
-504,,504,,,,
+504,,504,,,,A6
 505,She doesn't remind him.,505,A6.5,2.0,503.0,A6
 506,"The door closes, she stares at it.",506,A6.6,1.0,505.0,A6
 507,Next to the,507,A6.7,1.0,506.0,A6
@@ -537,19 +537,19 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 535,"""something,"" the ""drive.”",535,A6.20,1.0,534.0,A6
 536,He sits paralyzed under the light.,536,A6.21,1.0,535.0,A6
 537,He’s losing her.,537,A6.22,1.0,536.0,A6
-538,,538,,,,
+538,,538,,,,A6
 539, He is losing his wife.,539,A6.23,2.0,537.0,A6
 540,He looks at his phone.,540,A6.24,1.0,539.0,A6
 541,He should call Clara.,541,A6.25,1.0,540.0,A6
 542,But he doesn't.,542,A6.26,1.0,541.0,A6
-543,,543,,,,
-544,,544,,2.0,542.0,
-545,,545,,1.0,544.0,
-546,,546,,,,
+543,,543,,,,A6
+544,,544,,2.0,542.0,A6
+545,,545,,1.0,544.0,A6
+546,,546,,,,A6
 547,Margaret re-enters the apartment,547,B6.1,2.0,545.0,B6
 548,in a horrible mood.,548,B6.1,1.0,547.0,B6
 549,She can hear loud yelling from the back.,549,B6.2,1.0,548.0,B6
-550,,550,,,,
+550,,550,,,,B6
 551,Steven yells at a man. At 10 o’clock at,551,B6.3,2.0,549.0,B6
 552,night? What the hell?,552,B6.4,1.0,551.0,B6
 553,The Super is fighting with,553,B6.5,1.0,552.0,B6
@@ -558,9 +558,9 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 556,room has caved in.,556,B6.6,1.0,555.0,B6
 557,"The Super is yelling, no one",557,B6.7,1.0,556.0,B6
 558,told him about the damn leak.,558,B6.7,1.0,557.0,B6
-559,,559,,,,
+559,,559,,,,B6
 560,Steven’s upset there might be asbestos.,560,B6.8,2.0,558.0,B6
-561,,561,,,,
+561,,561,,,,B6
 562,Sasha seems weirdly amused.,562,B6.9,2.0,560.0,B6
 563,Margaret walks away from this,563,B6.10,1.0,562.0,B6
 564,"mess, and into the living",564,B6.10,1.0,563.0,B6
@@ -581,16 +581,16 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 579,to pick a fight,579,B6.15,1.0,578.0,B6
 580,with you Margaret.,580,B6.15,1.0,579.0,B6
 581,You want to get drunk? Just get drunk.”,581,B6.16,1.0,580.0,B6
-582,,582,,,,
+582,,582,,,,B6
 583,Her stepdaughter looks at her with cold eyes:,583,B6.17,2.0,581.0,B6
 584,“Where the hell have you,584,B6.18,1.0,583.0,B6
 585,been? You’ve got mustard stains,585,B6.18,1.0,584.0,B6
 586,all over your blouse.,586,B6.18,1.0,585.0,B6
 587,We were trying to reach you.”,587,B6.19,1.0,586.0,B6
-588,,588,,,,
-589,,589,,2.0,587.0,
-590,,590,,1.0,589.0,
-591,,591,,,,
+588,,588,,,,B6
+589,,589,,2.0,587.0,B6
+590,,590,,1.0,589.0,B6
+591,,591,,,,B6
 592,"When the phone rings, Clara's throwing up.",592,A7.1,2.0,590.0,A7
 593,She catches,593,A7.2,1.0,592.0,A7
 594,her breath.,594,A7.2,1.0,593.0,A7
@@ -599,7 +599,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 597,"too, always check that)",597,A7.3,1.0,596.0,A7
 598,before she calls back.,598,A7.3,1.0,597.0,A7
 599,It's her mom.,599,A7.4,1.0,598.0,A7
-600,,600,,,,
+600,,600,,,,A7
 601,"“You want me to send you some money?” “No mama,",601,A7.5,2.0,599.0,A7
 602,we're good.”,602,A7.6,1.0,601.0,A7
 603,“Gary got a job yet?,603,A7.7,1.0,602.0,A7
@@ -615,13 +615,13 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 613,It's August 18th. She still remembers the,613,A7.12,1.0,612.0,A7
 614,address by heart...,614,A7.13,1.0,613.0,A7
 615,"""Ready for work?""",615,A7.14,1.0,614.0,A7
-616,,616,,,,
+616,,616,,,,A7
 617,"""Almost mama."" ""You hold onto that job.",617,A7.15,2.0,615.0,A7
 618,A staff job is,618,A7.16,1.0,617.0,A7
 619,not easy to get.,619,A7.16,1.0,618.0,A7
 620,I'm really proud of you baby.,620,A7.17,1.0,619.0,A7
 621,You still want the name of that lawyer?,621,A7.18,1.0,620.0,A7
-622,,622,,,,
+622,,622,,,,A7
 623,"Mr. Zimmler's the best. He won't overcharge.""",623,A7.19,2.0,621.0,A7
 624,Clara closes her eyes.,624,A7.20,1.0,623.0,A7
 625,That was one conversation,625,A7.21,1.0,624.0,A7
@@ -632,16 +632,16 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 630,"The moment she snaps,",630,A7.23,1.0,629.0,A7
 631,she regrets it.,631,A7.23,1.0,630.0,A7
 632,“Gary and I are sticking it out.”,632,A7.24,1.0,631.0,A7
-633,,633,,,,
-634,,634,,2.0,632.0,
-635,,635,,1.0,634.0,
-636,,636,,,,
+633,,633,,,,A7
+634,,634,,2.0,632.0,A7
+635,,635,,1.0,634.0,A7
+636,,636,,,,A7
 637,Steven can hear their agitated voices full of anger. He tries,637,B7.1,2.0,635.0,B7
 638,his best,638,B7.2,1.0,637.0,B7
 639,at brokering,639,B7.2,1.0,638.0,B7
 640,peace.,640,B7.2,1.0,639.0,B7
 641,“Can I get you guys water?” he calls to the back.,641,B7.3,1.0,640.0,B7
-642,,642,,,,
+642,,642,,,,B7
 643,He stands in his pajamas by,643,B7.4,2.0,641.0,B7
 644,the light of the open fridge.,644,B7.4,1.0,643.0,B7
 645,He can hear Margaret’s voice,645,B7.5,1.0,644.0,B7
@@ -658,13 +658,13 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 656,upset. I'm simply upset.,656,B7.9,1.0,655.0,B7
 657,What's wrong with being upset?,657,B7.10,1.0,656.0,B7
 658,"You’re the therapist, no?",658,B7.10,1.0,657.0,B7
-659,,659,,,,
+659,,659,,,,B7
 660,"You tell me, is there something wrong if I am upset?”",660,B7.11,2.0,658.0,B7
 661,She’s yelling now.,661,B7.12,1.0,660.0,B7
 662,Margaret stands by the door.,662,B7.13,1.0,661.0,B7
 663,"""Upset is one thing,” she",663,B7.14,1.0,662.0,B7
 664,"says, “stealing pills is another…”",664,B7.14,1.0,663.0,B7
-665,,665,,,,
+665,,665,,,,B7
 666,“I didn’t steal your damn sleeping pills.,666,B7.15,2.0,664.0,B7
 667,I am NOT,667,B7.16,1.0,666.0,B7
 668,"my mother, OK?",668,B7.16,1.0,667.0,B7
@@ -673,25 +673,25 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 671,a statement or something? I am,671,B7.18,1.0,670.0,B7
 672,"not my mother, I’m not…”",672,B7.18,1.0,671.0,B7
 673,Steven moves to hug Sasha.,673,B7.19,1.0,672.0,B7
-674,,674,,,,
+674,,674,,,,B7
 675,Margaret steps back and exits the room.,675,B7.20,2.0,673.0,B7
-676,,676,,,,
+676,,676,,,,B7
 677,She wants to go far away.,677,B7.21,2.0,675.0,B7
 678,She takes her violin,678,B7.22,1.0,677.0,B7
 679,case puts it inside,679,B7.22,1.0,678.0,B7
 680,the closet and then,680,B7.22,1.0,679.0,B7
 681,she mops the floor.,681,B7.22,1.0,680.0,B7
-682,,682,,,,
-683,,683,,2.0,681.0,
-684,,684,,1.0,683.0,
-685,,685,,,,
+682,,682,,,,B7
+683,,683,,2.0,681.0,B7
+684,,684,,1.0,683.0,B7
+685,,685,,,,B7
 686,"“Next time you blink, Clara you'll be",686,A8.1,2.0,684.0,A8
 687,throwing away the last 20 and then,687,A8.1,1.0,686.0,A8
 688,the last 25 years of your life.”,688,A8.1,1.0,687.0,A8
 689,Her mom's voice,689,A8.2,1.0,688.0,A8
 690,is flat steel.,690,A8.2,1.0,689.0,A8
 691,"“I love you mama,” says Clara.",691,A8.3,1.0,690.0,A8
-692,,692,,,,
+692,,692,,,,A8
 693,"When her father died, Gary sat next to",693,A8.4,2.0,691.0,A8
 694,"her mother for days, holding her hand.",694,A8.4,1.0,693.0,A8
 695,He’s better,695,A8.5,1.0,694.0,A8
@@ -699,9 +699,9 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 697,Ten years together.,697,A8.6,1.0,696.0,A8
 698,“The lawyer's name is John Zimmler.,698,A8.7,1.0,697.0,A8
 699,He's a great divorce lawyer.,699,A8.7,1.0,698.0,A8
-700,,700,,,,
+700,,700,,,,A8
 701,"I'll send you the number,” says her mother before she hangs up…",701,A8.8,2.0,699.0,A8
-702,,702,,,,
+702,,702,,,,A8
 703,In Clara's closet there’s a,703,A8.9,2.0,701.0,A8
 704,huge stack of Gary's,704,A8.9,1.0,703.0,A8
 705,greeting cards. Meticulously drawn.,705,A8.9,1.0,704.0,A8
@@ -723,19 +723,19 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 721,yet warm.,721,A8.16,1.0,720.0,A8
 722,More xo's.,722,A8.16,1.0,721.0,A8
 723,She doesn't know what else to say…,723,A8.17,1.0,722.0,A8
-724,,724,,,,
+724,,724,,,,A8
 725,Never expects a response.,725,A8.18,2.0,723.0,A8
 726,But today she adds one,726,A8.19,1.0,725.0,A8
 727,more line: “Let me,727,A8.19,1.0,726.0,A8
 728,know how you are…”,728,A8.19,1.0,727.0,A8
 729,She regrets it.,729,A8.20,1.0,728.0,A8
-730,,730,,,,
-731,,731,,2.0,729.0,
-732,,732,,1.0,731.0,
-733,,733,,,,
+730,,730,,,,A8
+731,,731,,2.0,729.0,A8
+732,,732,,1.0,731.0,A8
+733,,733,,,,A8
 734,Steven comes home for lunch carrying,734,B8.1,2.0,732.0,B8
 735,a bunch of colorful foam tubes.,735,B8.1,1.0,734.0,B8
-736,,736,,,,
+736,,736,,,,B8
 737,He uses them to help patients move through aggression.,737,B8.2,2.0,735.0,B8
 738,“We’ll have a family,738,B8.3,1.0,737.0,B8
 739,"session, it will help",739,B8.3,1.0,738.0,B8
@@ -751,7 +751,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 749,"She opens the pull-out couch,",749,B8.8,1.0,748.0,B8
 750,uses 800 thread sheets to,750,B8.8,1.0,749.0,B8
 751,make it feel nice.,751,B8.8,1.0,750.0,B8
-752,,752,,,,
+752,,752,,,,B8
 753,Steven just stands at the doorframe eating,753,B8.9,2.0,751.0,B8
 754,his lean cuisine from the box.,754,B8.9,1.0,753.0,B8
 755,Blood rushes to,755,B8.10,1.0,754.0,B8
@@ -777,23 +777,23 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 775,"And Margaret almost cries,",775,B8.22,1.0,774.0,B8
 776,because she knows that,776,B8.22,1.0,775.0,B8
 777,he means it…,777,B8.22,1.0,776.0,B8
-778,,778,,,,
-779,,779,,2.0,777.0,
-780,,780,,1.0,779.0,
-781,,781,,,,
+778,,778,,,,B8
+779,,779,,2.0,777.0,B8
+780,,780,,1.0,779.0,B8
+781,,781,,,,B8
 782,Gary is on the attack and she hates him.,782,A9.1,2.0,780.0,A9
 783,“We came to LA,783,A9.2,1.0,782.0,A9
 784,because of you Clara.,784,A9.2,1.0,783.0,A9
 785,You fucked up and I picked up,785,A9.3,1.0,784.0,A9
 786,the pieces. You were running away…”,786,A9.3,1.0,785.0,A9
-787,,787,,,,
+787,,787,,,,A9
 788,Clara's heart is pounding.,788,A9.4,2.0,786.0,A9
 789,“Don't drag that,789,A9.5,1.0,788.0,A9
 790,stuff in… We,790,A9.5,1.0,789.0,A9
 791,need income Gary!”,791,A9.5,1.0,790.0,A9
 792,“So you work harder now. Pull,792,A9.6,1.0,791.0,A9
 793,more weight. Then I will.”,793,A9.6,1.0,792.0,A9
-794,,794,,,,
+794,,794,,,,A9
 795,“Fuck you!” The words are,795,A9.7,2.0,793.0,A9
 796,"out now, spite flying...",796,A9.7,1.0,795.0,A9
 797,“I am a staff-writer Gary. I,797,A9.8,1.0,796.0,A9
@@ -822,16 +822,16 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 820,yells: “You ask your parents for money,820,A9.19,1.0,819.0,A9
 821,if you want to go to NY.,821,A9.19,1.0,820.0,A9
 822,I’m not paying for any of that…”,822,A9.20,1.0,821.0,A9
-823,,823,,,,
-824,,824,,2.0,822.0,
-825,,825,,1.0,824.0,
-826,,826,,1.0,825.0,
-827,,827,,,,
+823,,823,,,,A9
+824,,824,,2.0,822.0,A9
+825,,825,,1.0,824.0,A9
+826,,826,,1.0,825.0,A9
+827,,827,,,,A9
 828,“I don’t want you to go back,828,B9.1,2.0,826.0,B9
 829,"to Wall Street, Maggie,” says Steven.",829,B9.1,1.0,828.0,B9
 830,“You need to do something you love.,830,B9.2,1.0,829.0,B9
 831,I want you to be brave.”,831,B9.3,1.0,830.0,B9
-832,,832,,,,
+832,,832,,,,B9
 833,They’re making Sasha’s bed,833,B9.4,2.0,831.0,B9
 834,on the pull-out couch.,834,B9.4,1.0,833.0,B9
 835,"New sheets, a",835,B9.5,1.0,834.0,B9
@@ -844,7 +844,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 842,"sailed,” Margaret says simply.",842,B9.8,1.0,841.0,B9
 843,"She takes out Alexander’s card,",843,B9.9,1.0,842.0,B9
 844,her voice all business.,844,B9.9,1.0,843.0,B9
-845,,845,,,,
+845,,845,,,,B9
 846,“There’s an opportunity for Sasha.,846,B9.10,2.0,844.0,B9
 847,"Alexander Sukurov, my old",847,B9.11,1.0,846.0,B9
 848,"journalist friend, is back",848,B9.11,1.0,847.0,B9
@@ -865,25 +865,25 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 863,"close: “I will, then",863,B9.19,1.0,862.0,B9
 864,we’ll get YOU a,864,B9.19,1.0,863.0,B9
 865,job that you love.”,865,B9.19,1.0,864.0,B9
-866,,866,,,,
+866,,866,,,,B9
 867,Margaret looks at her husband of,867,B9.20,2.0,865.0,B9
 868,8 years: “I really wish,868,B9.20,1.0,867.0,B9
 869,we’d had a child when,869,B9.20,1.0,868.0,B9
 870,"we met,” she says quietly.",870,B9.20,1.0,869.0,B9
 871,“I really wish we’d been brave…”,871,B9.21,1.0,870.0,B9
-872,,872,,,,
-873,,873,,2.0,871.0,
-874,,874,,1.0,873.0,
-875,,875,,,,
+872,,872,,,,B9
+873,,873,,2.0,871.0,B9
+874,,874,,1.0,873.0,B9
+875,,875,,,,B9
 876,Clara puts the birthday card in an,876,A10.1,2.0,874.0,A10
 877,"envelope and walks out, into the night.",877,A10.1,1.0,876.0,A10
-878,,878,,,,
+878,,878,,,,A10
 879,What if she kept walking and just ran away?,879,A10.2,2.0,877.0,A10
-880,,880,,,,
+880,,880,,,,A10
 881,The mailbox door creaks and,881,A10.3,2.0,879.0,A10
 882,the cool air feels good…,882,A10.3,1.0,881.0,A10
 883,"Back at the house, Gary's upstairs.",883,A10.4,1.0,882.0,A10
-884,,884,,,,
+884,,884,,,,A10
 885,"Left the lights on, their bottles",885,A10.5,2.0,883.0,A10
 886,of wine; his and hers.,886,A10.5,1.0,885.0,A10
 887,"His is done,",887,A10.6,1.0,886.0,A10
@@ -903,7 +903,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 901,and a fancy,901,A10.12,1.0,900.0,A10
 902,hotel in Tribeca.,902,A10.12,1.0,901.0,A10
 903,It’s the price tag that gets her…,903,A10.13,1.0,902.0,A10
-904,,904,,,,
+904,,904,,,,A10
 905,He sits up in,905,A10.14,2.0,903.0,A10
 906,bed all defenses.,906,A10.14,1.0,905.0,A10
 907,"""You've got to spend money to make money.""",907,A10.15,1.0,906.0,A10
@@ -920,10 +920,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 918,last two months.,918,A10.22,1.0,917.0,A10
 919,She feels she can’t breathe.,919,A10.23,1.0,918.0,A10
 920,This is half her salary,920,A10.24,1.0,919.0,A10
-921,,921,,,,
-922,,922,,2.0,920.0,
-923,,923,,1.0,922.0,
-924,,924,,,,
+921,,921,,,,A10
+922,,922,,2.0,920.0,A10
+923,,923,,1.0,922.0,A10
+924,,924,,,,A10
 925,Alexander’s third martini,925,B10.1,2.0,923.0,B10
 926,arrives with dessert.,926,B10.1,1.0,925.0,B10
 927,He hands Sasha,927,B10.2,1.0,926.0,B10
@@ -931,23 +931,23 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 929,"She shakes her head, no.",929,B10.3,1.0,928.0,B10
 930,He acts,930,B10.4,1.0,929.0,B10
 931,disappointed.,931,B10.4,1.0,930.0,B10
-932,,932,,,,
+932,,932,,,,B10
 933,“I thought you like risks...”,933,B10.5,2.0,931.0,B10
 934,She likes this man. He’s fun.,934,B10.6,1.0,933.0,B10
 935," “So when do I start?” “It’s funny, how you",935,B10.7,1.0,934.0,B10
 936,"look just like Margaret,”",936,B10.8,1.0,935.0,B10
 937,he suddenly says.,937,B10.8,1.0,936.0,B10
-938,,938,,,,
+938,,938,,,,B10
 939,Sasha licks the chocolate off her spoon.,939,B10.9,2.0,937.0,B10
-940,,940,,,,
+940,,940,,,,B10
 941,“We all look alike:,941,B10.10,2.0,939.0,B10
 942,"My mother, me, Margaret...”",942,B10.10,1.0,941.0,B10
 943,Alexander waves for the check.,943,B10.11,1.0,942.0,B10
-944,,944,,,,
+944,,944,,,,B10
 945,“You look like her but,945,B10.12,2.0,943.0,B10
 946,you’re nothing like her.,946,B10.12,1.0,945.0,B10
 947,You’re not a girl who likes playing safe.,947,B10.13,1.0,946.0,B10
-948,,948,,,,
+948,,948,,,,B10
 949,Of course that can get you in trouble…”,949,B10.14,2.0,947.0,B10
 950,A shadow crosses her eyes.,950,B10.15,1.0,949.0,B10
 951,“Did my dad tell you why,951,B10.16,1.0,950.0,B10
@@ -959,34 +959,34 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 957,"told me,”",957,B10.19,1.0,956.0,B10
 958,says Alexander.,958,B10.19,1.0,957.0,B10
 959,“I don’t believe in lies.”,959,B10.20,1.0,958.0,B10
-960,,960,,,,
+960,,960,,,,B10
 961,"“You tell me a truth, then.”",961,B10.21,2.0,959.0,B10
 962,Her voice takes Alexander by surprise.,962,B10.22,1.0,961.0,B10
 963,“I’d like to show you,963,B10.23,1.0,962.0,B10
 964,"my apartment,” he says.",964,B10.23,1.0,963.0,B10
-965,,965,,,,
+965,,965,,,,B10
 966,Sasha reaches for his martini glass.,966,B10.24,2.0,964.0,B10
-967,,967,,,,
+967,,967,,,,B10
 968,“I’ll be 21 next month and no one is looking.”,968,B10.25,2.0,966.0,B10
-969,,969,,,,
-970,,970,,2.0,968.0,
-971,,971,,1.0,970.0,
-972,,972,,1.0,971.0,
-973,,973,,,,
+969,,969,,,,B10
+970,,970,,2.0,968.0,B10
+971,,971,,1.0,970.0,B10
+972,,972,,1.0,971.0,B10
+973,,973,,,,B10
 974,"36,000",974,A11.1,2.0,972.0,A11
 975,dollars.,975,A11.1,1.0,974.0,A11
-976,,976,,,,
+976,,976,,,,A11
 977,"Clara is scared, she hates Gary and",977,A11.2,2.0,975.0,A11
 978,in a flash she wishes him dead.,978,A11.2,1.0,977.0,A11
-979,,979,,,,
+979,,979,,,,A11
 980,She walks to the living room.,980,A11.3,2.0,978.0,A11
 981,She should sleep on the couch.,981,A11.4,1.0,980.0,A11
-982,,982,,,,
+982,,982,,,,A11
 983,"Once, in New York, when Gary lost their money",983,A11.5,2.0,981.0,A11
 984,in the stock market he slept in the closet.,984,A11.5,1.0,983.0,A11
-985,,985,,,,
+985,,985,,,,A11
 986,She turns on a light. Terrified of being alone.,986,A11.6,2.0,984.0,A11
-987,,987,,,,
+987,,987,,,,A11
 988,"Defeated, tormented, pacing, then hating",988,A11.7,2.0,986.0,A11
 989,"herself more than him, she",989,A11.7,1.0,988.0,A11
 990,crawls back to their,990,A11.7,1.0,989.0,A11
@@ -997,7 +997,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 995,face in his neck.,995,A11.9,1.0,994.0,A11
 996,"“Gary, Please!” And then",996,A11.10,1.0,995.0,A11
 997,his cell rings...,997,A11.10,1.0,996.0,A11
-998,,998,,,,
+998,,998,,,,A11
 999,When people hear someone has died,999,A11.11,2.0,997.0,A11
 1000,"they cover their mouths, as if",1000,A11.11,1.0,999.0,A11
 1001,to protect their own breath.,1001,A11.11,1.0,1000.0,A11
@@ -1009,27 +1009,27 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1007,"baby,” he says.",1007,A11.14,1.0,1006.0,A11
 1008,“They found him. In,1008,A11.15,1.0,1007.0,A11
 1009,his crib. He’s gone.”,1009,A11.15,1.0,1008.0,A11
-1010,,1010,,,,
+1010,,1010,,,,A11
 1011,Gary reaches and holds her. ,1011,A11.16,2.0,1009.0,A11
 1012,Clara leans on his chest.,1012,A11.17,1.0,1011.0,A11
 1013,Gary holds Clara's hand and,1013,A11.18,1.0,1012.0,A11
 1014,will not let it go.,1014,A11.18,1.0,1013.0,A11
-1015,,1015,,,,
+1015,,1015,,,,A11
 1016,“I’m so glad you’re,1016,A11.19,2.0,1014.0,A11
 1017,"here,” he whispers.",1017,A11.19,1.0,1016.0,A11
 1018,Their palms are sweaty.,1018,A11.20,1.0,1017.0,A11
 1019,That’s how they,1019,A11.21,1.0,1018.0,A11
 1020,find comfort. Together.,1020,A11.21,1.0,1019.0,A11
-1021,,1021,,,,
-1022,,1022,,2.0,1020.0,
-1023,,1023,,1.0,1022.0,
-1024,,1024,,,,
+1021,,1021,,,,A11
+1022,,1022,,2.0,1020.0,A11
+1023,,1023,,1.0,1022.0,A11
+1024,,1024,,,,A11
 1025,"In Alexander’s apartment, the bathroom",1025,B11.1,2.0,1023.0,B11
 1026,door is all glass.,1026,B11.1,1.0,1025.0,B11
 1027,Frosted glass…,1027,B11.2,1.0,1026.0,B11
-1028,,1028,,,,
+1028,,1028,,,,B11
 1029,Sasha’s self-conscious as she locks it behind her.,1029,B11.3,2.0,1027.0,B11
-1030,,1030,,,,
+1030,,1030,,,,B11
 1031,The bathroom: White granite. ,1031,B11.4,2.0,1029.0,B11
 1032,Hasn’t been cleaned for a while.,1032,B11.5,1.0,1031.0,B11
 1033,She puts in,1033,B11.6,1.0,1032.0,B11
@@ -1040,48 +1040,48 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1038,"of something sassy, but",1038,B11.9,1.0,1037.0,B11
 1039,"says “Red, thanks.”",1039,B11.9,1.0,1038.0,B11
 1040,Then adds: “My own glass.”,1040,B11.10,1.0,1039.0,B11
-1041,,1041,,,,
+1041,,1041,,,,B11
 1042,"The sex is violent, harsh.",1042,B11.11,2.0,1040.0,B11
 1043,"“Getting too old for this,”",1043,B11.12,1.0,1042.0,B11
 1044,he sucks in his breath.,1044,B11.12,1.0,1043.0,B11
-1045,,1045,,,,
+1045,,1045,,,,B11
 1046,In the darkness he,1046,B11.13,2.0,1044.0,B11
 1047,"whispers, “You’ve got",1047,B11.13,1.0,1046.0,B11
 1048,this strange power.,1048,B11.13,1.0,1047.0,B11
 1049,You make me do things… Admit things.,1049,B11.14,1.0,1048.0,B11
-1050,,1050,,,,
+1050,,1050,,,,B11
 1051,Maybe you know.” She shrugs in,1051,B11.15,2.0,1049.0,B11
 1052,the dark.,1052,B11.16,1.0,1051.0,B11
 1053,“You don’t know? Margaret and,1053,B11.17,1.0,1052.0,B11
 1054,"I, we were lovers.”",1054,B11.17,1.0,1053.0,B11
-1055,,1055,,,,
+1055,,1055,,,,B11
 1056,“Who ended it?”,1056,B11.18,2.0,1054.0,B11
 1057,"“She did,” he says.",1057,B11.19,1.0,1056.0,B11
 1058,“She was about to marry,1058,B11.20,1.0,1057.0,B11
 1059,your dad. I was jealous.”,1059,B11.20,1.0,1058.0,B11
-1060,,1060,,,,
+1060,,1060,,,,B11
 1061,The richness of silence...,1061,B11.21,2.0,1059.0,B11
 1062,"She moves on him slow,",1062,B11.22,1.0,1061.0,B11
 1063,as if doing nothing.,1063,B11.22,1.0,1062.0,B11
-1064,,1064,,,,
+1064,,1064,,,,B11
 1065,Until he can’t help but moan.,1065,B11.23,2.0,1063.0,B11
 1066,"Not thinking,",1066,B11.24,1.0,1065.0,B11
 1067,just moving...,1067,B11.24,1.0,1066.0,B11
 1068,Relentless. Triumphant.,1068,B11.24,1.0,1067.0,B11
-1069,,1069,,,,
-1070,,1070,,2.0,1068.0,
-1071,,1071,,1.0,1070.0,
-1072,,1072,,,,
+1069,,1069,,,,B11
+1070,,1070,,2.0,1068.0,B11
+1071,,1071,,1.0,1070.0,B11
+1072,,1072,,,,B11
 1073,Gary chooses a,1073,A12.1,2.0,1071.0,A12
 1074,gorgeous funeral wreath.,1074,A12.1,1.0,1073.0,A12
 1075,"All orchids, all elegance.",1075,A12.2,1.0,1074.0,A12
 1076,"Clara doesn’t ask about price,",1076,A12.3,1.0,1075.0,A12
 1077,"nodding yes, of course.",1077,A12.3,1.0,1076.0,A12
-1078,,1078,,,,
+1078,,1078,,,,A12
 1079,The best for their friends.   How does a,1079,A12.4,2.0,1077.0,A12
 1080,baby die?,1080,A12.5,1.0,1079.0,A12
 1081,"When you're not looking, babies die.",1081,A12.6,1.0,1080.0,A12
-1082,,1082,,,,
+1082,,1082,,,,A12
 1083,"At church, the congregation is numb.",1083,A12.7,2.0,1081.0,A12
 1084,"Grad students, pulled",1084,A12.8,1.0,1083.0,A12
 1085,"from their studios,",1085,A12.8,1.0,1084.0,A12
@@ -1097,11 +1097,11 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1095,the pack of bereaved,1095,A12.13,1.0,1094.0,A12
 1096,friends to a bar.,1096,A12.13,1.0,1095.0,A12
 1097,He’s arranged for them to take over the back.,1097,A12.14,1.0,1096.0,A12
-1098,,1098,,,,
+1098,,1098,,,,A12
 1099,Clara looks at him -- proud:,1099,A12.15,2.0,1097.0,A12
 1100,"in this alternate universe, her husband’s",1100,A12.15,1.0,1099.0,A12
 1101,"a leader, getting things done.",1101,A12.15,1.0,1100.0,A12
-1102,,1102,,,,
+1102,,1102,,,,A12
 1103,Gary's hand on her arm...,1103,A12.16,2.0,1101.0,A12
 1104,"Her pride rising, and",1104,A12.16,1.0,1103.0,A12
 1105,then he puts everyone's,1105,A12.16,1.0,1104.0,A12
@@ -1118,17 +1118,17 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1116,Her phone rings.,1116,A12.21,1.0,1115.0,A12
 1117,A call from her,1117,A12.22,1.0,1116.0,A12
 1118,mom. She ignores it.,1118,A12.22,1.0,1117.0,A12
-1119,,1119,,,,
-1120,,1120,,2.0,1118.0,
-1121,,1121,,1.0,1120.0,
-1122,,1122,,,,
+1119,,1119,,,,A12
+1120,,1120,,2.0,1118.0,A12
+1121,,1121,,1.0,1120.0,A12
+1122,,1122,,,,A12
 1123,The pull-out couch covered with,1123,B12.1,2.0,1121.0,B12
 1124,the Indian bedspread is empty.,1124,B12.1,1.0,1123.0,B12
 1125,"It’s 2 am, then",1125,B12.2,1.0,1124.0,B12
 1126,"3, then 3:30…",1126,B12.2,1.0,1125.0,B12
 1127,Margaret keeps sight-reading Bach’s,1127,B12.3,1.0,1126.0,B12
 1128,2nd violin concerto.,1128,B12.3,1.0,1127.0,B12
-1129,,1129,,,,
+1129,,1129,,,,B12
 1130,Steven walks out of their bedroom.,1130,B12.4,2.0,1128.0,B12
 1131,“Do you know where she,1131,B12.5,1.0,1130.0,B12
 1132,is? I can’t sleep…”,1132,B12.5,1.0,1131.0,B12
@@ -1137,7 +1137,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1135,"signs,” says Steven.",1135,B12.7,1.0,1134.0,B12
 1136,“I don’t listen until it’s too,1136,B12.8,1.0,1135.0,B12
 1137,late. And then something horrible happens.”,1137,B12.8,1.0,1136.0,B12
-1138,,1138,,,,
+1138,,1138,,,,B12
 1139,Margaret closes her score. “I’ll,1139,B12.9,2.0,1137.0,B12
 1140,wait up for her.”,1140,B12.9,1.0,1139.0,B12
 1141,“But I always turn Sasha over to,1141,B12.10,1.0,1140.0,B12
@@ -1147,17 +1147,17 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1145,“The hard job,1145,B12.11,1.0,1144.0,B12
 1146,is done.”,1146,B12.11,1.0,1145.0,B12
 1147,Steven holds onto her.,1147,B12.12,1.0,1146.0,B12
-1148,,1148,,,,
+1148,,1148,,,,B12
 1149,"“It’s not just the boyfriend, that has her",1149,B12.13,2.0,1147.0,B12
 1150,messed up… She saw my bank statement.”,1150,B12.13,1.0,1149.0,B12
-1151,,1151,,,,
+1151,,1151,,,,B12
 1152,Margaret’s blood leaves her body.,1152,B12.14,2.0,1150.0,B12
-1153,,1153,,,,
+1153,,1153,,,,B12
 1154,“Are we broke?”,1154,B12.15,2.0,1152.0,B12
 1155,“We’re not doing great.”,1155,B12.16,1.0,1154.0,B12
-1156,,1156,,,,
+1156,,1156,,,,B12
 1157,"She waits for him to continue, but he doesn’t.",1157,B12.17,2.0,1155.0,B12
-1158,,1158,,,,
+1158,,1158,,,,B12
 1159,"“I need one of your sleeping pills, ” he says.",1159,B12.18,2.0,1157.0,B12
 1160,Margaret reaches for,1160,B12.19,1.0,1159.0,B12
 1161,his hand.,1161,B12.19,1.0,1160.0,B12
@@ -1168,10 +1168,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1166,at her.,1166,B12.22,1.0,1165.0,B12
 1167,"He doesn’t feel young,",1167,B12.23,1.0,1166.0,B12
 1168,but he’s grateful.,1168,B12.23,1.0,1167.0,B12
-1169,,1169,,,,
-1170,,1170,,2.0,1168.0,
-1171,,1171,,1.0,1170.0,
-1172,,1172,,,,
+1169,,1169,,,,B12
+1170,,1170,,2.0,1168.0,B12
+1171,,1171,,1.0,1170.0,B12
+1172,,1172,,,,B12
 1173,"The bar is half dark, stinks",1173,A13.1,2.0,1171.0,A13
 1174,"of grief, sweat and wine.",1174,A13.1,1.0,1173.0,A13
 1175,“Gary deserves so much,1175,A13.2,1.0,1174.0,A13
@@ -1180,7 +1180,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1178,Why is Tommy yelling at her?,1178,A13.3,1.0,1177.0,A13
 1179,“You look through his mail and you,1179,A13.4,1.0,1178.0,A13
 1180,nag and you make him feel small...”,1180,A13.4,1.0,1179.0,A13
-1181,,1181,,,,
+1181,,1181,,,,A13
 1182,Tommy's drunk and so,1182,A13.5,2.0,1180.0,A13
 1183,angry his spit lands,1183,A13.5,1.0,1182.0,A13
 1184,on Clara’s black dress.,1184,A13.5,1.0,1183.0,A13
@@ -1208,17 +1208,17 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1206,"Gary drives them home, taking the",1206,A13.19,1.0,1205.0,A13
 1207,"turn off the highway so sharp,",1207,A13.19,1.0,1206.0,A13
 1208,she thinks he’ll kill them.,1208,A13.19,1.0,1207.0,A13
-1209,,1209,,,,
+1209,,1209,,,,A13
 1210,"He's drunk, his eyes are half closed.",1210,A13.20,2.0,1208.0,A13
 1211,After the car screeches back,1211,A13.21,1.0,1210.0,A13
 1212,"in control, Gary says just",1212,A13.21,1.0,1211.0,A13
 1213,"one line: ""Do you",1213,A13.21,1.0,1212.0,A13
 1214,"think they’ll make it?""",1214,A13.21,1.0,1213.0,A13
-1215,,1215,,,,
-1216,,1216,,2.0,1214.0,
-1217,,1217,,1.0,1216.0,
-1218,,1218,,1.0,1217.0,
-1219,,1219,,,,
+1215,,1215,,,,A13
+1216,,1216,,2.0,1214.0,A13
+1217,,1217,,1.0,1216.0,A13
+1218,,1218,,1.0,1217.0,A13
+1219,,1219,,,,A13
 1220,At 3:30 am Sasha,1220,B13.1,2.0,1218.0,B13
 1221,wakes up feeling pain.,1221,B13.1,1.0,1220.0,B13
 1222,Jolted. Forced.,1222,B13.2,1.0,1221.0,B13
@@ -1232,18 +1232,18 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1230,She pushes him off her.,1230,B13.6,1.0,1229.0,B13
 1231,"Her fury, overpowers his mass.",1231,B13.7,1.0,1230.0,B13
 1232,“You gossiped about me?”,1232,B13.8,1.0,1231.0,B13
-1233,,1233,,,,
+1233,,1233,,,,B13
 1234,In the glare of the,1234,B13.9,2.0,1232.0,B13
 1235,"lights he looks flabby, unkempt.",1235,B13.9,1.0,1234.0,B13
 1236,“You take all your ex-lover’s daughters to bed?”,1236,B13.10,1.0,1235.0,B13
-1237,,1237,,,,
+1237,,1237,,,,B13
 1238,"“Margaret isn’t your mother,",1238,B13.11,2.0,1236.0,B13
 1239,don’t get all hysterical…”,1239,B13.11,1.0,1238.0,B13
 1240,He pulls a towel around him.,1240,B13.12,1.0,1239.0,B13
 1241,"“You should go, I’m",1241,B13.13,1.0,1240.0,B13
 1242,not feeling well.”,1242,B13.13,1.0,1241.0,B13
 1243,He walks to the bathroom and locks it.,1243,B13.14,1.0,1242.0,B13
-1244,,1244,,,,
+1244,,1244,,,,B13
 1245,"“You can’t stay in there forever,” she yells.",1245,B13.15,2.0,1243.0,B13
 1246,Her heart beats so fast.,1246,B13.16,1.0,1245.0,B13
 1247,"She throws on her clothes,",1247,B13.17,1.0,1246.0,B13
@@ -1266,10 +1266,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1264,Her wrist has been cut on the glass.,1264,B13.25,1.0,1263.0,B13
 1265,It’s her blood,1265,B13.26,1.0,1264.0,B13
 1266,on the granite.,1266,B13.26,1.0,1265.0,B13
-1267,,1267,,,,
-1268,,1268,,2.0,1266.0,
-1269,,1269,,1.0,1268.0,
-1270,,1270,,,,
+1267,,1267,,,,B13
+1268,,1268,,2.0,1266.0,B13
+1269,,1269,,1.0,1268.0,B13
+1270,,1270,,,,B13
 1271,“I think I’m going to cancel the,1271,A14.1,2.0,1269.0,A14
 1272,"trip to New York,” says Gary.",1272,A14.1,1.0,1271.0,A14
 1273,"“I’ll turn down the internship, it’s",1273,A14.2,1.0,1272.0,A14
@@ -1277,7 +1277,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1275,I’ll stay here.”,1275,A14.3,1.0,1274.0,A14
 1276,Gary opens the fridge.,1276,A14.4,1.0,1275.0,A14
 1277,“These leftovers look amazing.,1277,A14.5,1.0,1276.0,A14
-1278,,1278,,,,
+1278,,1278,,,,A14
 1279,When did you make this chili?”,1279,A14.6,2.0,1277.0,A14
 1280,“It's a week old.,1280,A14.7,1.0,1279.0,A14
 1281,We had the party a,1281,A14.8,1.0,1280.0,A14
@@ -1306,21 +1306,21 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1304,He looks smaller.,1304,A14.20,1.0,1303.0,A14
 1305,A stranger.,1305,A14.21,1.0,1304.0,A14
 1306,You can’t save the people you love.,1306,A14.22,1.0,1305.0,A14
-1307,,1307,,,,
+1307,,1307,,,,A14
 1308,She feels cold. She's so cold.,1308,A14.23,2.0,1306.0,A14
 1309,She compulsively scrolls through,1309,A14.24,1.0,1308.0,A14
 1310,her phone up to,1310,A14.24,1.0,1309.0,A14
 1311,her mother's text:,1311,A14.24,1.0,1310.0,A14
 1312,“Mr. Zimmler's expecting your,1312,A14.25,1.0,1311.0,A14
 1313,call.” And a number.,1313,A14.25,1.0,1312.0,A14
-1314,,1314,,,,
+1314,,1314,,,,A14
 1315,She saves it. ,1315,A14.26,2.0,1313.0,A14
-1316,,1316,,1.0,1315.0,
-1317,,1317,,1.0,1316.0,
-1318,,1318,,,,
+1316,,1316,,1.0,1315.0,A14
+1317,,1317,,1.0,1316.0,A14
+1318,,1318,,,,A14
 1319,The emergency vehicles…the call to,1319,B14.1,2.0,1317.0,B14
 1320,Margaret…it is all a blur.,1320,B14.1,1.0,1319.0,B14
-1321,,1321,,,,
+1321,,1321,,,,B14
 1322,"When Margaret enters the ER,",1322,B14.2,2.0,1320.0,B14
 1323,Sasha’s never felt such relief.,1323,B14.2,1.0,1322.0,B14
 1324,She’s shocked to see how,1324,B14.3,1.0,1323.0,B14
@@ -1329,21 +1329,21 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1327,is bandaged. That’s,1327,B14.4,1.0,1326.0,B14
 1328,what Margaret notices.,1328,B14.4,1.0,1327.0,B14
 1329,"“I’m ok,” says Sasha. “It’s just him…”",1329,B14.5,1.0,1328.0,B14
-1330,,1330,,,,
+1330,,1330,,,,B14
 1331,She’s terrified of Margaret’s anger but,1331,B14.6,2.0,1329.0,B14
 1332,her step-mother just holds her.,1332,B14.6,1.0,1331.0,B14
 1333,Someone says: “He wouldn’t have,1333,B14.7,1.0,1332.0,B14
 1334,made it without instant care…He,1334,B14.7,1.0,1333.0,B14
 1335,is one lucky man…”,1335,B14.7,1.0,1334.0,B14
-1336,,1336,,,,
+1336,,1336,,,,B14
 1337,“I want to stay until I,1337,B14.8,2.0,1335.0,B14
 1338,"know he’s ok,” whispers Sasha",1338,B14.8,1.0,1337.0,B14
 1339,and Margaret squeezes her hand…,1339,B14.8,1.0,1338.0,B14
-1340,,1340,,,,
+1340,,1340,,,,B14
 1341,It’s morning when they exit the hospital…,1341,B14.9,2.0,1339.0,B14
 1342,Sasha holds onto Margaret just,1342,B14.10,1.0,1341.0,B14
 1343,like when she was little…,1343,B14.10,1.0,1342.0,B14
-1344,,1344,,,,
+1344,,1344,,,,B14
 1345,They’re shaking. “What did you tell dad?”,1345,B14.11,2.0,1343.0,B14
 1346,“He was asleep. I,1346,B14.13,1.0,1345.0,B14
 1347,left him a note.,1347,B14.13,1.0,1346.0,B14
@@ -1351,29 +1351,29 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1349,I needed to get you.”,1349,B14.14,1.0,1348.0,B14
 1350,"“I love you,” says",1350,B14.15,1.0,1349.0,B14
 1351,Sasha. “I’m sorry…”,1351,B14.15,1.0,1350.0,B14
-1352,,1352,,,,
+1352,,1352,,,,B14
 1353,At home after putting Sasha to,1353,B14.16,2.0,1351.0,B14
 1354,"sleep, Margaret writes Alexander an email:",1354,B14.16,1.0,1353.0,B14
-1355,,1355,,,,
+1355,,1355,,,,B14
 1356,I’ll help you get your Pulitzer article together.,1356,B14.17,2.0,1354.0,B14
 1357,I’ll get you the Wall,1357,B14.18,1.0,1356.0,B14
 1358,Street contacts you need.,1358,B14.18,1.0,1357.0,B14
 1359,"But you, stay away",1359,B14.19,1.0,1358.0,B14
 1360,from my kid.,1360,B14.19,1.0,1359.0,B14
-1361,,1361,,,,
-1362,,1362,,2.0,1360.0,
-1363,,1363,,1.0,1362.0,
-1364,,1364,,1.0,1363.0,
-1365,,1365,,,,
+1361,,1361,,,,B14
+1362,,1362,,2.0,1360.0,B14
+1363,,1363,,1.0,1362.0,B14
+1364,,1364,,1.0,1363.0,B14
+1365,,1365,,,,B14
 1366,The bathroom is full of wet steam.,1366,A15.1,2.0,1364.0,A15
 1367,“Are you sure I,1367,A15.2,1.0,1366.0,A15
 1368,should go to NY?”,1368,A15.2,1.0,1367.0,A15
 1369,"“I'm sure,”",1369,A15.3,1.0,1368.0,A15
 1370,Clara says.,1370,A15.3,1.0,1369.0,A15
 1371,“You'll have a great life.”,1371,A15.4,1.0,1370.0,A15
-1372,,1372,,,,
+1372,,1372,,,,A15
 1373,"“You’re being a bit too dramatic,” Gary scoffs.",1373,A15.5,2.0,1371.0,A15
-1374,,1374,,,,
+1374,,1374,,,,A15
 1375,"“Our friends' baby has died, it’s",1375,A15.6,2.0,1373.0,A15
 1376,that kind of a day…”,1376,A15.6,1.0,1375.0,A15
 1377,"Through the steam, she gathers",1377,A15.7,1.0,1376.0,A15
@@ -1382,7 +1382,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1380,"You and I,",1380,A15.8,1.0,1379.0,A15
 1381,"we’re all done.""",1381,A15.8,1.0,1380.0,A15
 1382,She's not going to cry.,1382,A15.9,1.0,1381.0,A15
-1383,,1383,,,,
+1383,,1383,,,,A15
 1384,"""Let’s look at it as a",1384,A15.10,2.0,1382.0,A15
 1385,"new beginning for us,"" he deflects",1385,A15.10,1.0,1384.0,A15
 1386,stepping out of his clothes.,1386,A15.10,1.0,1385.0,A15
@@ -1401,20 +1401,20 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1399,"""we should get going",1399,A15.15,1.0,1398.0,A15
 1400,"with that baby idea...""",1400,A15.15,1.0,1399.0,A15
 1401,She enters the shower crying harder now.,1401,A15.16,1.0,1400.0,A15
-1402,,1402,,,,
+1402,,1402,,,,A15
 1403,Crying in the shower is safe.,1403,A15.17,2.0,1401.0,A15
 1404,"""We’re done Gary.”",1404,A15.18,1.0,1403.0,A15
 1405,He's right behind her.,1405,A15.19,1.0,1404.0,A15
 1406,She closes her eyes.,1406,A15.20,1.0,1405.0,A15
 1407,The baby has died,1407,A15.21,1.0,1406.0,A15
-1408,,1408,,,,
+1408,,1408,,,,A15
 1409,"“What do you think of my idea?"" he asks...",1409,A15.22,2.0,1407.0,A15
-1410,,1410,,,,
+1410,,1410,,,,A15
 1411,But he's already inside her.,1411,A15.23,2.0,1409.0,A15
-1412,,1412,,,,
-1413,,1413,,2.0,1411.0,
-1414,,1414,,1.0,1413.0,
-1415,,1415,,,,
+1412,,1412,,,,A15
+1413,,1413,,2.0,1411.0,A15
+1414,,1414,,1.0,1413.0,A15
+1415,,1415,,,,A15
 1416,Steven wakes up Margaret in the middle of the night.,1416,B15.1,2.0,1414.0,B15
 1417,“Sasha’s crying. Go,1417,B15.2,1.0,1416.0,B15
 1418,"to her,”",1418,B15.2,1.0,1417.0,B15
@@ -1422,7 +1422,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1420,“You go…”,1420,B15.3,1.0,1419.0,B15
 1421,Margaret tiptoes next to Sasha.,1421,B15.4,1.0,1420.0,B15
 1422,The crying turns to dry heaves.,1422,B15.5,1.0,1421.0,B15
-1423,,1423,,,,
+1423,,1423,,,,B15
 1424,"“I’m sorry,” says Sasha. “Hell of a dream.",1424,B15.6,2.0,1422.0,B15
 1425,I was alone,1425,B15.7,1.0,1424.0,B15
 1426,with my mom.”,1426,B15.7,1.0,1425.0,B15
@@ -1449,7 +1449,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1447,Three colorful foam,1447,B15.17,1.0,1446.0,B15
 1448,tubes land on,1448,B15.17,1.0,1447.0,B15
 1449,the Indian bedspread.,1449,B15.17,1.0,1448.0,B15
-1450,,1450,,,,
+1450,,1450,,,,B15
 1451,"“I challenge you two,” Steven",1451,B15.18,2.0,1449.0,B15
 1452,"says, brandishing the tubes.",1452,B15.18,1.0,1451.0,B15
 1453,“Lets use these to fight.”,1453,B15.19,1.0,1452.0,B15
@@ -1462,14 +1462,14 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1460,"mother and daughter,",1460,B15.21,1.0,1459.0,B15
 1461,"there’s a dad,",1461,B15.21,1.0,1460.0,B15
 1462,there is laughter.,1462,B15.21,1.0,1461.0,B15
-1463,,1463,,,,
-1464,,1464,,2.0,1462.0,
-1465,,1465,,1.0,1464.0,
-1466,,1466,,,,
+1463,,1463,,,,B15
+1464,,1464,,2.0,1462.0,B15
+1465,,1465,,1.0,1464.0,B15
+1466,,1466,,,,B15
 1467,Two months later. October 2001,1467,C1.1,2.0,1465.0,C1
 1468,– New,1468,C1.2,1.0,1467.0,C1
 1469,York City.,1469,C1.2,1.0,1468.0,C1
-1470,,1470,,,,
+1470,,1470,,,,C1
 1471,“I wish you weren’t going back to LA so soon.,1471,C1.3,2.0,1469.0,C1
 1472,Not until we find Gary…”,1472,C1.4,1.0,1471.0,C1
 1473,Clara puts her arm,1473,C1.5,1.0,1472.0,C1
@@ -1483,7 +1483,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1481,looking for surfaces to,1481,C1.8,1.0,1480.0,C1
 1482,plaster their plea:,1482,C1.8,1.0,1481.0,C1
 1483,“Missing since 9/11.”,1483,C1.8,1.0,1482.0,C1
-1484,,1484,,,,
+1484,,1484,,,,C1
 1485,Gary’s face looks up from,1485,C1.9,2.0,1483.0,C1
 1486,"the flier: elated, graduating, cap",1486,C1.9,1.0,1485.0,C1
 1487,and gown and all.,1487,C1.9,1.0,1486.0,C1
@@ -1491,7 +1491,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1489,next to the weathered,1489,C1.10,1.0,1488.0,C1
 1490,fliers of missing,1490,C1.10,1.0,1489.0,C1
 1491,"bankers, secretaries, firefighters.",1491,C1.10,1.0,1490.0,C1
-1492,,1492,,,,
+1492,,1492,,,,C1
 1493,"They run out, but Gary’s",1493,C1.11,2.0,1491.0,C1
 1494,mom is not done.,1494,C1.11,1.0,1493.0,C1
 1495,She pulls Clara into the,1495,C1.12,1.0,1494.0,C1
@@ -1513,14 +1513,14 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1511,Clara says softly.,1511,C1.18,1.0,1510.0,C1
 1512,"“The successful fliers,",1512,C1.19,1.0,1511.0,C1
 1513,make you care…”,1513,C1.19,1.0,1512.0,C1
-1514,,1514,,,,
+1514,,1514,,,,C1
 1515,Gary’s mom locks eyes with her daughter-in-law.,1515,C1.20,2.0,1513.0,C1
-1516,,1516,,,,
+1516,,1516,,,,C1
 1517,“We need people to care…” ,1517,C1.21,2.0,1515.0,C1
-1518,,1518,,1.0,1517.0,
-1519,,1519,,1.0,1518.0,
-1520,,1520,,1.0,1519.0,
-1521,,1521,,,,
+1518,,1518,,1.0,1517.0,C1
+1519,,1519,,1.0,1518.0,C1
+1520,,1520,,1.0,1519.0,C1
+1521,,1521,,,,C1
 1522,"Clara glances at Gary’s mom,",1522,C2.1,2.0,1520.0,C2
 1523,"a few steps ahead,",1523,C2.1,1.0,1522.0,C2
 1524,scouting out bulletin boards.,1524,C2.1,1.0,1523.0,C2
@@ -1529,7 +1529,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1527,"with purpose, as always:",1527,C2.2,1.0,1526.0,C2
 1528,“I’m going to ask you again. Have,1528,C2.3,1.0,1527.0,C2
 1529,you told them about Gary’s debts?”,1529,C2.3,1.0,1528.0,C2
-1530,,1530,,,,
+1530,,1530,,,,C2
 1531,"“Mom please.” “He’s dead, Clara… That",1531,C2.4,2.0,1529.0,C2
 1532,boy’s luck is over.,1532,C2.5,1.0,1531.0,C2
 1533,And you’re stuck with,1533,C2.5,1.0,1532.0,C2
@@ -1547,7 +1547,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1545,"“Enough is enough, I clean",1545,C2.12,1.0,1544.0,C2
 1546,up these fliers every day…,1546,C2.12,1.0,1545.0,C2
 1547,These people are dead…”,1547,C2.12,1.0,1546.0,C2
-1548,,1548,,,,
+1548,,1548,,,,C2
 1549,Clara finds herself screaming: “It’s,1549,C2.13,2.0,1547.0,C2
 1550,"her son…have a heart,”",1550,C2.13,1.0,1549.0,C2
 1551,"and then, she suddenly",1551,C2.14,1.0,1550.0,C2
@@ -1567,10 +1567,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1565,"""Mother and wife""",1565,C2.18,1.0,1564.0,C2
 1566,says the flier.,1566,C2.18,1.0,1565.0,C2
 1567,"“Please, Call.”",1567,C2.18,1.0,1566.0,C2
-1568,,1568,,,,
-1569,,1569,,2.0,1567.0,
-1570,,1570,,1.0,1569.0,
-1571,,1571,,,,
+1568,,1568,,,,C2
+1569,,1569,,2.0,1567.0,C2
+1570,,1570,,1.0,1569.0,C2
+1571,,1571,,,,C2
 1572,"Sasha stares at Alexander, as",1572,C3.1,2.0,1570.0,C3
 1573,if staring at prey.,1573,C3.1,1.0,1572.0,C3
 1574,A plastic zip-lock bag,1574,C3.2,1.0,1573.0,C3
@@ -1587,9 +1587,9 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1585,much older.,1585,C3.6,1.0,1584.0,C3
 1586,"“You take it in,",1586,C3.7,1.0,1585.0,C3
 1587,Sasha.She was your mom.”,1587,C3.7,1.0,1586.0,C3
-1588,,1588,,,,
+1588,,1588,,,,C3
 1589,"She leans in, all she wants is to kill him.",1589,C3.8,2.0,1587.0,C3
-1590,,1590,,,,
+1590,,1590,,,,C3
 1591,Alexander gets up.,1591,C3.9,2.0,1589.0,C3
 1592,“Go home to your dad.”,1592,C3.10,1.0,1591.0,C3
 1593,Sasha grabs the toothbrush and,1593,C3.11,1.0,1592.0,C3
@@ -1610,36 +1610,36 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1608,at the date: September 18th,1608,C3.18,1.0,1607.0,C3
 1609,"He slides over a dirty martini,",1609,C3.19,1.0,1608.0,C3
 1610,and shrugs off her money.,1610,C3.19,1.0,1609.0,C3
-1611,,1611,,,,
+1611,,1611,,,,C3
 1612,"He tries to pick her up,",1612,C3.20,2.0,1610.0,C3
 1613,but she doesn't let him.,1613,C3.20,1.0,1612.0,C3
-1614,,1614,,,,
-1615,,1615,,2.0,1613.0,
-1616,,1616,,1.0,1615.0,
-1617,,1617,,,,
+1614,,1614,,,,C3
+1615,,1615,,2.0,1613.0,C3
+1616,,1616,,1.0,1615.0,C3
+1617,,1617,,,,C3
 1618,"""I couldn't have made it without Clara today.""",1618,C4.1,2.0,1616.0,C4
 1619,Gary’s mom cuts a thick,1619,C4.2,1.0,1618.0,C4
 1620,slice of coffee cake.,1620,C4.2,1.0,1619.0,C4
 1621,"Even in deep grief,",1621,C4.3,1.0,1620.0,C4
 1622,she serves tea with,1622,C4.3,1.0,1621.0,C4
 1623,linen napkins and china.,1623,C4.3,1.0,1622.0,C4
-1624,,1624,,,,
+1624,,1624,,,,C4
 1625,All around Clara sit photos of Gary.,1625,C4.4,2.0,1623.0,C4
 1626,"Cards of sympathy,",1626,C4.5,1.0,1625.0,C4
 1627,supported on tables.,1627,C4.5,1.0,1626.0,C4
 1628,An email card from the,1628,C4.6,1.0,1627.0,C4
 1629,graduating class of UCLA.,1629,C4.6,1.0,1628.0,C4
-1630,,1630,,,,
+1630,,1630,,,,C4
 1631,"A bouquet of white orchids, from Jeannie and Tommy.",1631,C4.7,2.0,1629.0,C4
 1632,Clara feels sick.,1632,C4.8,1.0,1631.0,C4
 1633,The coffeecake rises,1633,C4.9,1.0,1632.0,C4
 1634,to her throat.,1634,C4.9,1.0,1633.0,C4
 1635,“This is the third time you’ve,1635,C4.10,1.0,1634.0,C4
 1636,"been sick today,” says Gary’s mom.",1636,C4.10,1.0,1635.0,C4
-1637,,1637,,,,
+1637,,1637,,,,C4
 1638,“Your nerves are a wreck. You want some of my Xanax?...”,1638,C4.11,2.0,1636.0,C4
-1639,,1639,,,,
-1640,,1640,,,,
+1639,,1639,,,,C4
+1640,,1640,,,,C4
 1641,"When she’s done throwing up,",1641,C4.12,3.0,1638.0,C4
 1642,Clara remembers to clean everything,1642,C4.12,1.0,1641.0,C4
 1643,"well, (underneath the toilet seat,",1643,C4.12,1.0,1642.0,C4
@@ -1647,37 +1647,37 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1645,she settles back in.,1645,C4.12,1.0,1644.0,C4
 1646,"""I know he's not",1646,C4.13,1.0,1645.0,C4
 1647,"dead,"" Gary's mother says.",1647,C4.13,1.0,1646.0,C4
-1648,,1648,,,,
+1648,,1648,,,,C4
 1649,Someone’s bound to come forward…,1649,C4.14,2.0,1647.0,C4
 1650,The new flier’s much better.”,1650,C4.14,1.0,1649.0,C4
 1651,Clara feels the stare of Gary’s father,1651,C4.15,1.0,1650.0,C4
 1652,rising up from The New York Times.,1652,C4.15,1.0,1651.0,C4
-1653,,1653,,,,
+1653,,1653,,,,C4
 1654,“I really think you should make some arrangements,1654,C4.16,2.0,1652.0,C4
 1655,and stay with us for a while.,1655,C4.16,1.0,1654.0,C4
 1656,Clara hugs Gary’s mom.,1656,C4.17,1.0,1655.0,C4
 1657,"“I can't give up, yet”",1657,C4.18,1.0,1656.0,C4
 1658,the old woman whispers.,1658,C4.18,1.0,1657.0,C4
-1659,,1659,,,,
+1659,,1659,,,,C4
 1660,"“If you were a mother, you'd know…”",1660,C4.19,2.0,1658.0,C4
 1661,If you were,1661,C4.20,1.0,1660.0,C4
 1662,a mother…,1662,C4.20,1.0,1661.0,C4
 1663,Clara shivers.,1663,C4.20,1.0,1662.0,C4
-1664,,1664,,,,
-1665,,1665,,2.0,1663.0,
-1666,,1666,,1.0,1665.0,
-1667,,1667,,,,
+1664,,1664,,,,C4
+1665,,1665,,2.0,1663.0,C4
+1666,,1666,,1.0,1665.0,C4
+1667,,1667,,,,C4
 1668,Clara walks the empty Walmart aisles.,1668,C5.1,2.0,1666.0,C5
 1669,It’s 9:30,1669,C5.2,1.0,1668.0,C5
 1670,at night.,1670,C5.2,1.0,1669.0,C5
 1671,Halloween masks and candy.,1671,C5.3,1.0,1670.0,C5
-1672,,1672,,,,
+1672,,1672,,,,C5
 1673,Plastic lanterns for the,1673,C5.4,2.0,1671.0,C5
 1674,plastic dead… she's looking...,1674,C5.4,1.0,1673.0,C5
 1675,stops in front of,1675,C5.4,1.0,1674.0,C5
 1676,the pregnancy tests.,1676,C5.4,1.0,1675.0,C5
 1677,She can’t keep ignoring the facts.,1677,C5.5,1.0,1676.0,C5
-1678,,1678,,,,
+1678,,1678,,,,C5
 1679,The test sits alone in her basket.,1679,C5.6,2.0,1677.0,C5
 1680,"At the cashier’s, she",1680,C5.7,1.0,1679.0,C5
 1681,opens her purse and,1681,C5.7,1.0,1680.0,C5
@@ -1685,7 +1685,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1683,her from the flier.,1683,C5.7,1.0,1682.0,C5
 1684,"Haunted, Clara walks the half",1684,C5.8,1.0,1683.0,C5
 1685,block back to her hotel.,1685,C5.8,1.0,1684.0,C5
-1686,,1686,,,,
+1686,,1686,,,,C5
 1687,"“Excuse me, Miss…” The employees",1687,C5.9,2.0,1685.0,C5
 1688,at reception surround her with,1688,C5.9,1.0,1687.0,C5
 1689,an afterglow of pity.,1689,C5.9,1.0,1688.0,C5
@@ -1699,7 +1699,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1697,I found a letter from a lawyer you hired.,1697,C5.14,1.0,1696.0,C5
 1698,"Zimmler, is that right?”",1698,C5.15,1.0,1697.0,C5
 1699,Gary’s father is shaking.,1699,C5.16,1.0,1698.0,C5
-1700,,1700,,,,
+1700,,1700,,,,C5
 1701,She’s been dreading these words: “Fooling me,1701,C5.17,2.0,1699.0,C5
 1702,and my wife in our grief...”,1702,C5.17,1.0,1701.0,C5
 1703,"“I don't want to see you again, you",1703,C5.18,1.0,1702.0,C5
@@ -1713,33 +1713,33 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1711,a glass of red wine.,1711,C5.22,1.0,1710.0,C5
 1712,"“On the house,” and she",1712,C5.23,1.0,1711.0,C5
 1713,can feel his compassion.,1713,C5.23,1.0,1712.0,C5
-1714,,1714,,,,
-1715,,1715,,2.0,1713.0,
-1716,,1716,,1.0,1715.0,
-1717,,1717,,,,
+1714,,1714,,,,C5
+1715,,1715,,2.0,1713.0,C5
+1716,,1716,,1.0,1715.0,C5
+1717,,1717,,,,C5
 1718,Steven opens the door of his,1718,C6.1,2.0,1716.0,C6
 1719,office to lead out a patient,1719,C6.1,1.0,1718.0,C6
 1720,"and Clara’s right there, waiting",1720,C6.1,1.0,1719.0,C6
 1721,on the soft maroon couch.,1721,C6.1,1.0,1720.0,C6
-1722,,1722,,,,
+1722,,1722,,,,C6
 1723,For one crazy double-take moment he,1723,C6.2,2.0,1721.0,C6
 1724,thinks: Is she here because,1724,C6.2,1.0,1723.0,C6
 1725,I never answer her letters?,1725,C6.2,1.0,1724.0,C6
 1726,He waves her in – on a reflex.,1726,C6.3,1.0,1725.0,C6
-1727,,1727,,,,
+1727,,1727,,,,C6
 1728,What Clara notices: his,1728,C6.4,2.0,1726.0,C6
 1729,weight and sad eyes.,1729,C6.4,1.0,1728.0,C6
-1730,,1730,,,,
+1730,,1730,,,,C6
 1731,The room is padded with sound insulation.,1731,C6.5,2.0,1729.0,C6
-1732,,1732,,,,
+1732,,1732,,,,C6
 1733,"“I know about Margaret,”",1733,C6.6,2.0,1731.0,C6
 1734,she whispers. “She's missing.”,1734,C6.6,1.0,1733.0,C6
 1735,The chair is uncomfortable.,1735,C6.7,1.0,1734.0,C6
-1736,,1736,,,,
+1736,,1736,,,,C6
 1737,"“No,” he says, in the",1737,C6.8,2.0,1735.0,C6
 1738,detached voice of a therapist.,1738,C6.8,1.0,1737.0,C6
 1739,Margaret is not missing. Margaret is dead.”,1739,C6.9,1.0,1738.0,C6
-1740,,1740,,,,
+1740,,1740,,,,C6
 1741,His hands flex an,1741,C6.10,2.0,1739.0,C6
 1742,anger management foam tube.,1742,C6.10,1.0,1741.0,C6
 1743,"When Clara starts crying, there’s",1743,C6.11,1.0,1742.0,C6
@@ -1748,11 +1748,11 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1746,stay but she apologizes…,1746,C6.12,1.0,1745.0,C6
 1747,“Later…” she says…,1747,C6.12,1.0,1746.0,C6
 1748,“I’m so sorry…Let me gather myself.”,1748,C6.13,1.0,1747.0,C6
-1749,,1749,,,,
+1749,,1749,,,,C6
 1750,Clara scrambles in her purse for,1750,C6.14,2.0,1748.0,C6
 1751,a blank piece of paper.,1751,C6.14,1.0,1750.0,C6
 1752,"“I remember your cell,” he says.",1752,C6.15,1.0,1751.0,C6
-1753,,1753,,,,
+1753,,1753,,,,C6
 1754,The sound proof room,1754,C6.16,2.0,1752.0,C6
 1755,is so incredibly quiet,1755,C6.16,1.0,1754.0,C6
 1756,after Clara leaves.,1756,C6.16,1.0,1755.0,C6
@@ -1761,12 +1761,12 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1759,He’s about to put them,1759,C6.18,1.0,1758.0,C6
 1760,away when he smashes,1760,C6.18,1.0,1759.0,C6
 1761,them into his chair.,1761,C6.18,1.0,1760.0,C6
-1762,,1762,,,,
-1763,,1763,,2.0,1761.0,
-1764,,1764,,1.0,1763.0,
-1765,,1765,,,,
+1762,,1762,,,,C6
+1763,,1763,,2.0,1761.0,C6
+1764,,1764,,1.0,1763.0,C6
+1765,,1765,,,,C6
 1766,The ceiling in Sasha’s room is finally fixed.,1766,C7.1,2.0,1764.0,C7
-1767,,1767,,,,
+1767,,1767,,,,C7
 1768,Steven sits in front of his Scotch.,1768,C7.2,2.0,1766.0,C7
 1769,On the TV,1769,C7.3,1.0,1768.0,C7
 1770,-- the Middle,1770,C7.3,1.0,1769.0,C7
@@ -1783,7 +1783,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1781,toothbrush for the,1781,C7.8,1.0,1780.0,C7
 1782,DNA file today…”,1782,C7.8,1.0,1781.0,C7
 1783,Steven hides his face in his hands.,1783,C7.9,1.0,1782.0,C7
-1784,,1784,,,,
+1784,,1784,,,,C7
 1785,He only says: “Clara’s in town.”,1785,C7.10,2.0,1783.0,C7
 1786,Sasha stops. “Not even,1786,C7.11,1.0,1785.0,C7
 1787,a month since Margaret,1787,C7.11,1.0,1786.0,C7
@@ -1802,17 +1802,17 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1800,of the woods and,1800,C7.17,1.0,1799.0,C7
 1801,of the seas.,1801,C7.17,1.0,1800.0,C7
 1802,"“Let me know how you are,” Clara’s added.",1802,C7.18,1.0,1801.0,C7
-1803,,1803,,,,
+1803,,1803,,,,C7
 1804,Sasha tears up the,1804,C7.19,2.0,1802.0,C7
 1805,card and tosses it,1805,C7.19,1.0,1804.0,C7
 1806,into the garbage.,1806,C7.19,1.0,1805.0,C7
-1807,,1807,,,,
-1808,,1808,,2.0,1806.0,
-1809,,1809,,1.0,1808.0,
-1810,,1810,,,,
+1807,,1807,,,,C7
+1808,,1808,,2.0,1806.0,C7
+1809,,1809,,1.0,1808.0,C7
+1810,,1810,,,,C7
 1811,“At least give us something of,1811,C8.1,2.0,1809.0,C8
 1812,"his. Some closure, I beg you…”",1812,C8.1,1.0,1811.0,C8
-1813,,1813,,,,
+1813,,1813,,,,C8
 1814,Gary’s mother is crying on the phone.,1814,C8.2,2.0,1812.0,C8
 1815,"Clara in her hotel room,",1815,C8.3,1.0,1814.0,C8
 1816,curled up in a ball.,1816,C8.3,1.0,1815.0,C8
@@ -1838,13 +1838,13 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1836,"mama, remember Sasha – the",1836,C8.13,1.0,1835.0,C8
 1837,little girl I used to,1837,C8.13,1.0,1836.0,C8
 1838,take care of during grad-school?,1838,C8.13,1.0,1837.0,C8
-1839,,1839,,,,
+1839,,1839,,,,C8
 1840,Her step-mother also died in the towers.”,1840,C8.14,2.0,1838.0,C8
-1841,,1841,,,,
+1841,,1841,,,,C8
 1842,Her mom’s voice is like steel.,1842,C8.15,2.0,1840.0,C8
 1843,"“Everyone suffers in life; right now,",1843,C8.16,1.0,1842.0,C8
 1844,I can only worry about you.”,1844,C8.16,1.0,1843.0,C8
-1845,,1845,,,,
+1845,,1845,,,,C8
 1846,Clara shakes her head.,1846,C8.17,2.0,1844.0,C8
 1847,Words dry up in her mouth.,1847,C8.18,1.0,1846.0,C8
 1848,She hangs up.,1848,C8.19,1.0,1847.0,C8
@@ -1855,17 +1855,17 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1853,"flier, the",1853,C8.20,1.0,1852.0,C8
 1854,pregnancy test.,1854,C8.20,1.0,1853.0,C8
 1855,She takes the test in the bathroom.,1855,C8.21,1.0,1854.0,C8
-1856,,1856,,,,
+1856,,1856,,,,C8
 1857,And braces herself.,1857,C8.22,2.0,1855.0,C8
-1858,,1858,,1.0,1857.0,
-1859,,1859,,1.0,1858.0,
-1860,,1860,,1.0,1859.0,
-1861,,1861,,,,
+1858,,1858,,1.0,1857.0,C8
+1859,,1859,,1.0,1858.0,C8
+1860,,1860,,1.0,1859.0,C8
+1861,,1861,,,,C8
 1862,In front of Margaret’s,1862,C9.1,2.0,1860.0,C9
 1863,"laptop, Sasha hits “Print.”",1863,C9.1,1.0,1862.0,C9
 1864,"Margaret’s inbox, an endless",1864,C9.2,1.0,1863.0,C9
 1865,scroll on the screen.,1865,C9.2,1.0,1864.0,C9
-1866,,1866,,,,
+1866,,1866,,,,C9
 1867,"“Dear Alexander: I’ll meet with my colleagues, on September 11th.",1867,C9.3,2.0,1865.0,C9
 1868,I’ll get you,1868,C9.4,1.0,1867.0,C9
 1869,"your Pulitzer-piece, but",1869,C9.4,1.0,1868.0,C9
@@ -1876,9 +1876,9 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1874,almost empty beside Sasha.,1874,C9.5,1.0,1873.0,C9
 1875,She chugs one last,1875,C9.6,1.0,1874.0,C9
 1876,"sip, then takes off…",1876,C9.6,1.0,1875.0,C9
-1877,,1877,,,,
+1877,,1877,,,,C9
 1878,She’s surprised Alexander opens his door.,1878,C9.7,2.0,1876.0,C9
-1879,,1879,,,,
+1879,,1879,,,,C9
 1880,"She can see right behind him, his bathroom.",1880,C9.8,2.0,1878.0,C9
 1881,The door still,1881,C9.9,1.0,1880.0,C9
 1882,all frosted glass.,1882,C9.9,1.0,1881.0,C9
@@ -1893,7 +1893,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1891,Sasha starts stripping.,1891,C9.13,1.0,1890.0,C9
 1892,"He’s panicked, looks down",1892,C9.14,1.0,1891.0,C9
 1893,"the hallway, thankfully empty.",1893,C9.14,1.0,1892.0,C9
-1894,,1894,,,,
+1894,,1894,,,,C9
 1895,He holds onto the zip locks.,1895,C9.15,2.0,1893.0,C9
 1896,“I’ll take them to the,1896,C9.16,1.0,1895.0,C9
 1897,"morgue tomorrow, get dressed”…",1897,C9.16,1.0,1896.0,C9
@@ -1907,23 +1907,23 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1905,He slams the door shut.,1905,C9.22,1.0,1904.0,C9
 1906,"Shaking, Sasha slips the printed",1906,C9.23,1.0,1905.0,C9
 1907,email underneath the door.,1907,C9.23,1.0,1906.0,C9
-1908,,1908,,,,
+1908,,1908,,,,C9
 1909,On it she’s written:,1909,C9.24,2.0,1907.0,C9
 1910,“You killed her.”,1910,C9.24,1.0,1909.0,C9
-1911,,1911,,,,
-1912,,1912,,2.0,1910.0,
-1913,,1913,,1.0,1912.0,
-1914,,1914,,,,
+1911,,1911,,,,C9
+1912,,1912,,2.0,1910.0,C9
+1913,,1913,,1.0,1912.0,C9
+1914,,1914,,,,C9
 1915,Clara sits next to,1915,C10.1,2.0,1913.0,C10
 1916,"Steven, on his couch.",1916,C10.1,1.0,1915.0,C10
 1917,She eats his homemade,1917,C10.2,1.0,1916.0,C10
 1918,"chili, always better than",1918,C10.2,1.0,1917.0,C10
 1919,"hers, always soothing.",1919,C10.2,1.0,1918.0,C10
-1920,,1920,,,,
+1920,,1920,,,,C10
 1921,Served in rustic,1921,C10.3,2.0,1919.0,C10
 1922,pottery; not plastic.,1922,C10.3,1.0,1921.0,C10
 1923,“Could Gary be running away from his debts?,1923,C10.4,1.0,1922.0,C10
-1924,,1924,,,,
+1924,,1924,,,,C10
 1925,Why would he even be near the Towers?”,1925,C10.5,2.0,1923.0,C10
 1926,Clara feels defensive:,1926,C10.6,1.0,1925.0,C10
 1927,“Gary was creating,1927,C10.7,1.0,1926.0,C10
@@ -1939,15 +1939,15 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1937,“There’s only one journalist I know.” ,1937,C10.11,1.0,1936.0,C10
 1938,He hands her a,1938,C10.12,1.0,1937.0,C10
 1939,card: Alexander Sukurov.,1939,C10.12,1.0,1938.0,C10
-1940,,1940,,,,
+1940,,1940,,,,C10
 1941,“An old friend of,1941,C10.13,2.0,1939.0,C10
 1942,Margaret’s.” Clara nods thankful.,1942,C10.13,1.0,1941.0,C10
-1943,,1943,,,,
+1943,,1943,,,,C10
 1944,“Maybe it’s not the best thing,1944,C10.14,2.0,1942.0,C10
 1945,"to see Sasha today,” says Steven.",1945,C10.14,1.0,1944.0,C10
-1946,,1946,,,,
+1946,,1946,,,,C10
 1947,“She’s having a very hard time.”,1947,C10.15,2.0,1945.0,C10
-1948,,1948,,,,
+1948,,1948,,,,C10
 1949,Clara pauses. “When I,1949,C10.16,2.0,1947.0,C10
 1950,sent her her birthday,1950,C10.16,1.0,1949.0,C10
 1951,card I was so,1951,C10.16,1.0,1950.0,C10
@@ -1959,10 +1959,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1957,“Now I,1957,C10.19,1.0,1956.0,C10
 1958,feel guilty.,1958,C10.19,1.0,1957.0,C10
 1959,And scared.”,1959,C10.19,1.0,1958.0,C10
-1960,,1960,,,,
-1961,,1961,,2.0,1959.0,
-1962,,1962,,1.0,1961.0,
-1963,,1963,,,,
+1960,,1960,,,,C10
+1961,,1961,,2.0,1959.0,C10
+1962,,1962,,1.0,1961.0,C10
+1963,,1963,,,,C10
 1964,Clara sits across from,1964,C11.1,2.0,1962.0,C11
 1965,Alexander at his make-shift,1965,C11.1,1.0,1964.0,C11
 1966,office at ground zero.,1966,C11.1,1.0,1965.0,C11
@@ -1985,9 +1985,9 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1983,close to where he is…”,1983,C11.7,1.0,1982.0,C11
 1984,She’s thankful for,1984,C11.8,1.0,1983.0,C11
 1985,this unexpected compassion.,1985,C11.8,1.0,1984.0,C11
-1986,,1986,,,,
+1986,,1986,,,,C11
 1987,She’s thankful for Alexander Sukurov.,1987,C11.9,2.0,1985.0,C11
-1988,,1988,,,,
+1988,,1988,,,,C11
 1989,"On 74th and Columbus,",1989,C11.10,2.0,1987.0,C11
 1990,"Apartment 9D, Steven begins",1990,C11.10,1.0,1989.0,C11
 1991,to clean up.,1991,C11.10,1.0,1990.0,C11
@@ -1996,7 +1996,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 1994,if Margaret’s playing.,1994,C11.11,1.0,1993.0,C11
 1995,He stares at,1995,C11.12,1.0,1994.0,C11
 1996,Margaret’s mustard-stained blouse.,1996,C11.12,1.0,1995.0,C11
-1997,,1997,,,,
+1997,,1997,,,,C11
 1998,He still can’t bare,1998,C11.13,2.0,1996.0,C11
 1999,"to clean it, folds",1999,C11.13,1.0,1998.0,C11
 2000,the Indian bedspread instead.,2000,C11.13,1.0,1999.0,C11
@@ -2010,12 +2010,12 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2008,and then --,2008,C11.17,1.0,2007.0,C11
 2009,the empty pill-box.,2009,C11.17,1.0,2008.0,C11
 2010,Margaret’s sleeping pills.,2010,C11.18,1.0,2009.0,C11
-2011,,2011,,,,
+2011,,2011,,,,C11
 2012,They’re all gone.,2012,C11.19,2.0,2010.0,C11
-2013,,2013,,,,
-2014,,2014,,2.0,2012.0,
-2015,,2015,,1.0,2014.0,
-2016,,2016,,,,
+2013,,2013,,,,C11
+2014,,2014,,2.0,2012.0,C11
+2015,,2015,,1.0,2014.0,C11
+2016,,2016,,,,C11
 2017,Sasha walks into,2017,C12.1,2.0,2015.0,C12
 2018,Alexander’s offices.,2018,C12.1,1.0,2017.0,C12
 2019,She’s calm. Rubs her eyes.,2019,C12.2,1.0,2018.0,C12
@@ -2040,14 +2040,14 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2038,Yelling at her.,2038,C12.13,1.0,2037.0,C12
 2039,"Suddenly angry, unrecognizably",2039,C12.14,1.0,2038.0,C12
 2040,"angry, then scared.",2040,C12.14,1.0,2039.0,C12
-2041,,2041,,,,
+2041,,2041,,,,C12
 2042,"Young people, congregate,",2042,C12.15,2.0,2040.0,C12
 2043,pull rashly away…,2043,C12.15,1.0,2042.0,C12
 2044,Clara gets up from her chair.,2044,C12.16,1.0,2043.0,C12
 2045,"“You cannot save people,” Jeannie",2045,C12.17,1.0,2044.0,C12
 2046,"said that night in LA,",2046,C12.17,1.0,2045.0,C12
 2047,“You cannot save the people you love…”,2047,C12.18,1.0,2046.0,C12
-2048,,2048,,,,
+2048,,2048,,,,C12
 2049,And then Clara runs…,2049,C12.19,2.0,2047.0,C12
 2050,No thinking. Just movement.,2050,C12.19,1.0,2049.0,C12
 2051,She slaps,2051,C12.20,1.0,2050.0,C12
@@ -2058,32 +2058,32 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2056,fingers inside Sasha’s throat.,2056,C12.22,1.0,2055.0,C12
 2057,"Sasha moans, half opens her",2057,C12.23,1.0,2056.0,C12
 2058,eyes and she gags.,2058,C12.23,1.0,2057.0,C12
-2059,,2059,,,,
+2059,,2059,,,,C12
 2060,“Clara” she says…,2060,C12.24,2.0,2058.0,C12
 2061,Terror and relief live on Clara’s,2061,C12.25,1.0,2060.0,C12
 2062,face as she starts CPR.,2062,C12.25,1.0,2061.0,C12
 2063,"“I got you Sasha,”",2063,C12.26,1.0,2062.0,C12
 2064,she tells her.,2064,C12.26,1.0,2063.0,C12
-2065,,2065,,,,
-2066,,2066,,2.0,2064.0,
-2067,,2067,,1.0,2066.0,
-2068,,2068,,,,
+2065,,2065,,,,C12
+2066,,2066,,2.0,2064.0,C12
+2067,,2067,,1.0,2066.0,C12
+2068,,2068,,,,C12
 2069,Steven holds Sasha.,2069,C13.1,2.0,2067.0,C13
 2070,She’s alive. She’s with him.,2070,C13.2,1.0,2069.0,C13
 2071,“This is not a repeat,2071,C13.3,1.0,2070.0,C13
 2072,"of last year,” Sasha whispers.",2072,C13.3,1.0,2071.0,C13
-2073,,2073,,,,
+2073,,2073,,,,C13
 2074,"“I’m here,” he repeats",2074,C13.4,2.0,2072.0,C13
 2075,again and again…,2075,C13.4,1.0,2074.0,C13
 2076,Father and daughter. A,2076,C13.5,1.0,2075.0,C13
 2077,tiny unit surrounded by,2077,C13.5,1.0,2076.0,C13
 2078,wires and white sheets.,2078,C13.5,1.0,2077.0,C13
-2079,,2079,,,,
+2079,,2079,,,,C13
 2080,"Steven puts on some music,",2080,C13.6,2.0,2078.0,C13
 2081,watching his child sleep.,2081,C13.6,1.0,2080.0,C13
-2082,,2082,,,,
+2082,,2082,,,,C13
 2083,Clara walks outside in the hallway.,2083,C13.7,2.0,2081.0,C13
-2084,,2084,,,,
+2084,,2084,,,,C13
 2085,A nurse passes and smiles at her.,2085,C13.8,2.0,2083.0,C13
 2086,"“You should join EMS,”",2086,C13.9,1.0,2085.0,C13
 2087,she jokes once again.,2087,C13.9,1.0,2086.0,C13
@@ -2097,16 +2097,16 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2095,at her legs.,2095,C13.13,1.0,2094.0,C13
 2096,When she walks to the,2096,C13.14,1.0,2095.0,C13
 2097,"nurses’ station, she’s remarkably calm.",2097,C13.14,1.0,2096.0,C13
-2098,,2098,,,,
+2098,,2098,,,,C13
 2099,"“I’m pregnant,” she says.",2099,C13.15,2.0,2097.0,C13
 2100,“I think I need an ultrasound. I’m bleeding.”,2100,C13.16,1.0,2099.0,C13
-2101,,2101,,,,
+2101,,2101,,,,C13
 2102,"Lying in the semi-dark room,",2102,C13.17,2.0,2100.0,C13
 2103,she keeps her eyes,2103,C13.17,1.0,2102.0,C13
 2104,closed as the technician,2104,C13.17,1.0,2103.0,C13
 2105,moves over her abdomen.,2105,C13.17,1.0,2104.0,C13
 2106,“You want to hear it?” asks the nurse.,2106,C13.18,1.0,2105.0,C13
-2107,,2107,,,,
+2107,,2107,,,,C13
 2108,Clara opens her eyes.,2108,C13.19,2.0,2106.0,C13
 2109,The black and white images,2109,C13.20,1.0,2108.0,C13
 2110,come and go on the,2110,C13.20,1.0,2109.0,C13
@@ -2116,10 +2116,10 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2114,hear its heart?”,2114,C13.21,1.0,2113.0,C13
 2115,Clara nods.,2115,C13.22,1.0,2114.0,C13
 2116,“Can we tape it?” she whispers.,2116,C13.23,1.0,2115.0,C13
-2117,,2117,,,,
-2118,,2118,,2.0,2116.0,
-2119,,2119,,1.0,2118.0,
-2120,,2120,,,,
+2117,,2117,,,,C13
+2118,,2118,,2.0,2116.0,C13
+2119,,2119,,1.0,2118.0,C13
+2120,,2120,,,,C13
 2121,On 30th Street and First Avenue,2121,C14.1,2.0,2119.0,C14
 2122,sits a complex of tents.,2122,C14.1,1.0,2121.0,C14
 2123,Alexander watches the,2123,C14.2,1.0,2122.0,C14
@@ -2135,7 +2135,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2133,coming in,2133,C14.6,1.0,2132.0,C14
 2134,every day.,2134,C14.6,1.0,2133.0,C14
 2135,Is Margaret in there?,2135,C14.7,1.0,2134.0,C14
-2136,,2136,,,,
+2136,,2136,,,,C14
 2137,It has started to rain. ,2137,C14.8,2.0,2135.0,C14
 2138,An elderly couple,2138,C14.9,1.0,2137.0,C14
 2139,"approaches, then stops,",2139,C14.9,1.0,2138.0,C14
@@ -2148,7 +2148,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2146,She points to the tent.,2146,C14.13,1.0,2145.0,C14
 2147,"She laughs, a gentle",2147,C14.14,1.0,2146.0,C14
 2148,"laugh, full of wonder.",2148,C14.14,1.0,2147.0,C14
-2149,,2149,,,,
+2149,,2149,,,,C14
 2150,“They found a small fragment. A bone.,2150,C14.15,2.0,2148.0,C14
 2151,Do you have,2151,C14.16,1.0,2150.0,C14
 2152,someone there?”,2152,C14.16,1.0,2151.0,C14
@@ -2159,15 +2159,15 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2157,“I should have,2157,C14.20,1.0,2156.0,C14
 2158,"died,” says Alexander.",2158,C14.20,1.0,2157.0,C14
 2159,“Two weeks before 9/11.,2159,C14.21,1.0,2158.0,C14
-2160,,2160,,,,
+2160,,2160,,,,C14
 2161, I had a heart attack.,2161,C14.22,2.0,2159.0,C14
 2162,"If I had died, Margaret",2162,C14.23,1.0,2161.0,C14
 2163,"would still be alive,”",2163,C14.23,1.0,2162.0,C14
 2164,he hears himself saying…,2164,C14.23,1.0,2163.0,C14
-2165,,2165,,,,
-2166,,2166,,2.0,2164.0,
-2167,,2167,,1.0,2166.0,
-2168,,2168,,,,
+2165,,2165,,,,C14
+2166,,2166,,2.0,2164.0,C14
+2167,,2167,,1.0,2166.0,C14
+2168,,2168,,,,C14
 2169,Clara takes an electric candle,2169,C15.1,2.0,2167.0,C15
 2170,out of a Halloween lantern.,2170,C15.1,1.0,2169.0,C15
 2171,They won’t allow open,2171,C15.2,1.0,2170.0,C15
@@ -2181,7 +2181,7 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2179,Sasha blows and Steven,2179,C15.6,1.0,2178.0,C15
 2180,turns off the flame.,2180,C15.6,1.0,2179.0,C15
 2181,The nurses applaud.,2181,C15.7,1.0,2180.0,C15
-2182,,2182,,,,
+2182,,2182,,,,C15
 2183,Clara keeps hearing the sound of,2183,C15.8,2.0,2181.0,C15
 2184,the baby’s heartbeat in her head.,2184,C15.8,1.0,2183.0,C15
 2185,"Faster than a bird's, faster",2185,C15.9,1.0,2184.0,C15
@@ -2193,24 +2193,24 @@ tr,Sentence,tr,index,tr_shift,prev_tr,story_section
 2191,On 30th street and First,2191,C15.11,1.0,2190.0,C15
 2192,"Avenue, the rain beats fast",2192,C15.11,1.0,2191.0,C15
 2193,against the chalk-white canvas.,2193,C15.11,1.0,2192.0,C15
-2194,,2194,,,,
+2194,,2194,,,,C15
 2195,Alexander and the old couple stand underneath.,2195,C15.12,2.0,2193.0,C15
-2196,,2196,,,,
+2196,,2196,,,,C15
 2197,A preacher leads half a dozen people in prayer.,2197,C15.13,2.0,2195.0,C15
 2198,"Alexander takes a lantern, the old",2198,C15.14,1.0,2197.0,C15
 2199,couple take another and place them,2199,C15.14,1.0,2198.0,C15
 2200,at the foot of a trailer.,2200,C15.14,1.0,2199.0,C15
-2201,,2201,,,,
+2201,,2201,,,,C15
 2202,"Across town, Gary’s father turns",2202,C15.15,2.0,2200.0,C15
 2203,to his wife: “Clara,2203,C15.15,1.0,2202.0,C15
 2204,"called,” he says quietly.",2204,C15.15,1.0,2203.0,C15
-2205,,2205,,,,
+2205,,2205,,,,C15
 2206,“She says she has something she wants us to hear.”,2206,C15.16,2.0,2204.0,C15
 2207,When Clara heads to,2207,C15.17,1.0,2206.0,C15
 2208,"the airport, it is",2208,C15.17,1.0,2207.0,C15
 2209,not yet dawn.,2209,C15.17,1.0,2208.0,C15
 2210,The taxi driver locks eyes with her in the mirror.,2210,C15.18,1.0,2209.0,C15
-2211,,2211,,,,
+2211,,2211,,,,C15
 2212,He’s Sikh.,2212,C15.19,2.0,2210.0,C15
 2213,His turban blocks her,2213,C15.20,1.0,2212.0,C15
 2214,view of the asphalt.,2214,C15.20,1.0,2213.0,C15
