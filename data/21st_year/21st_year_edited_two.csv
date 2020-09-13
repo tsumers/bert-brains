@@ -1,6 +1,6 @@
 ,,,,,,,,,,,,,
 Index,Sentence,start_timestamp,end_timestamp,start_sec_rounded,end_sec_rounded,from_sec,to_sec,from_tr,to_tr,unknown_1,unknown_2,unknown_3,unknown_4
-A1.1,This is Los Angeles.  ,0:21:02,0:23:00,21,23,1,2,1,1,1.5,1.5,0.5,-0.5
+A1.1,This is Los Angeles.  ,0:21:02,0:23:00,21,23,1,2,0,1,1.5,1.5,0.5,-0.5
 A1.2,And it's the height of summer.,0:23:00,0:24:03,23,24,2,3,1,2,1.5,3,-0.5,0
 A1.3,"In a small bungalow off of La Cienega, Clara serves homemade chili and chips in red plastic bowls -- wine in blue plastic.",0:24:04,0:32:07,24,33,3,12,2,8,3,12,0,0
 A1.4, The colors don't match and the cups are too big to serve wine.,0:32:08,0:36:03,33,36,12,15,8,10,12,15,0,0
@@ -89,10 +89,10 @@ B2.19,What do you want for your birthday?” he asks.,5:04:04,5:06:04,304,306,28
 B2.20,"“I want you to start telling the truth,” says Sasha and her voice, for the first time is breaking.",5:06:07,5:12:00,306,312,285,291,190,194,285,291,0,0
 B2.21,“Your duplicity is so fucking exhausting…” ,5:12:02,5:15:01,312,315,291,294,194,196,291,294,0,0
 ,,,,,,,,197,199,295.5,298.5,295.5,298.5
-A3.1," Clara stares at Jeannie -- she must be what, 25?  26?",5:21:02,5:25:02,321,325,300,304,200,203,300,304.5,0,0.5
+A3.1,"Clara stares at Jeannie -- she must be what, 25?  26?",5:21:02,5:25:02,321,325,300,304,200,203,300,304.5,0,0.5
 A3.2, So in love with this baby spitting up goo on her lap...  ,5:25:04,5:28:05,325,328,304,307,203,205,304.5,307.5,0.5,0.5
 A3.3,"“And then, the moment they found out I was pregnant, Tommy's parents swept in and erased all our debt.",5:28:08,5:34:05,328,334,307,313,205,209,307.5,313.5,0.5,0.5
-A3.4,"All 10,000 dollars in one check... ",5:34:07,5:36:08,334,336,313,315,209,210,313.5,315,0.5,0
+A3.4,"All 10,000 dollars in one check...",5:34:07,5:36:08,334,336,313,315,209,210,313.5,315,0.5,0
 A3.5,So we could start fresh and not stress…,5:37:00,5:39:04,337,339,316,318,211,212,316.5,318,0.5,0
 A3.6,Amazing.  Just amazing.  I love them.”,5:39:06,5:42:09,339,342,318,321,212,214,318,321,0,0
 A3.7,"“That's great, Jeannie,” Clara musters.",5:43:02,5:45:07,343,345,322,324,215,216,322.5,324,0.5,0
@@ -349,7 +349,7 @@ B8.4,There are more pressing issues than foam fights. ,18:54:02,18:56:04,1134,11
 B8.5,The ceiling leak in Sasha’s room has spread.,18:56:06,18:58:08,1136,1138,1115,1117,743,745,1114.5,1117.5,-0.5,0.5
 B8.6,"The room is a wreck, covered in tarps.",18:59:00,19:01:01,1139,1141,1118,1120,745,747,1117.5,1120.5,-0.5,0.5
 B8.7,Margaret sets up for Sasha to sleep in the living room.,19:01:06,19:04:00,1141,1144,1120,1123,747,749,1120.5,1123.5,0.5,0.5
-B8.8," She opens the pull-out couch, uses 800 thread sheets to make it feel nice.",19:04:04,19:09:05,1144,1149,1123,1128,749,752,1123.5,1128,0.5,0
+B8.8,"She opens the pull-out couch, uses 800 thread sheets to make it feel nice.",19:04:04,19:09:05,1144,1149,1123,1128,749,752,1123.5,1128,0.5,0
 B8.9,Steven just stands at the doorframe eating his lean cuisine from the box.,19:10:01,19:14:03,1150,1154,1129,1133,753,755,1129.5,1132.5,0.5,-0.5
 B8.10,Blood rushes to Margaret’s head.,19:14:06,19:16:02,1154,1156,1133,1135,755,757,1132.5,1135.5,-0.5,0.5
 B8.11,And then she says it all in one breath:  “I-want-to-go-back-to-work.”,19:16:06,19:20:02,1156,1160,1135,1139,757,759,1135.5,1138.5,0.5,-0.5
@@ -429,7 +429,7 @@ A10.18,"Like you said, I'll ask my parents.”",23:06:09,23:09:02,1386,1389,1365
 A10.19,“What a mess you’ve made…” ,23:09:05,23:11:00,1389,1391,1368,1370,912,913,1368,1369.5,0,-0.5
 A10.20,"“Stop talking.  Just stop talking Clara!""",23:11:02,23:14:01,1391,1394,1370,1373,913,915,1369.5,1372.5,-0.5,-0.5
 A10.21,She stares at the number.,23:14:04,23:16:00,1394,1396,1373,1375,915,917,1372.5,1375.5,-0.5,0.5
-A10.22,"36,000 dollars in the last two months. ",23:16:04,23:19:02,1396,1399,1375,1378,917,919,1375.5,1378.5,0.5,0.5
+A10.22,"36,000 dollars in the last two months.",23:16:04,23:19:02,1396,1399,1375,1378,917,919,1375.5,1378.5,0.5,0.5
 A10.23,She feels she can’t breathe.,23:19:04,23:20:08,1399,1400,1378,1379,919,919,1378.5,1378.5,0.5,-0.5
 A10.24,This is half her salary,23:21:00,23:22:09,1401,1402,1380,1381,920,921,1380,1381.5,0,0.5
 ,,,,,,,,922,924,1383,1386,1383,1386
@@ -457,7 +457,7 @@ B10.21,"“You tell me a truth, then.”",1:0:22,1:0:23:05.000,1462,1463,1441,14
 B10.22,Her voice takes Alexander by surprise. ,1:0:24:02.000,1:0:26:06,1464,1466,1443,1445,962,963,1443,1444.5,0,-0.5
 B10.23,"“I’d like to show you my apartment,” he says.",1:0:26:09,1:0:29:07,1466,1469,1445,1448,963,965,1444.5,1447.5,-0.5,-0.5
 B10.24,Sasha reaches for his martini glass. ,1:0:30,1:0:32:06,1470,1472,1449,1451,966,967,1449,1450.5,0,-0.5
-B10.25, “I’ll be 21 next month and no one is looking.”,1:0:33,1:0:35:05,1473,1475,1452,1454,968,969,1452,1453.5,0,-0.5
+B10.25,“I’ll be 21 next month and no one is looking.”,1:0:33,1:0:35:05,1473,1475,1452,1454,968,969,1452,1453.5,0,-0.5
 ,,,,,,,,970,973,1455,1459.5,1455,1459.5
 A11.1,"36,000 dollars.",1:0:42:03,1:0:45:05,1482,1485,1461,1464,974,976,1461,1464,0,0
 A11.2,"Clara is scared, she hates Gary and in a flash she wishes him dead.",1:0:46:00.000,1:0:50:09,1486,1490,1465,1469,977,979,1465.5,1468.5,0.5,-0.5
@@ -530,8 +530,8 @@ A12.21,Her phone rings.,1:4:15:06,1:4:16:07,1695,1696,1674,1675,1116,1117,1674,1
 A12.22,A call from her mom.  She ignores it. ,1:4:16:09,1:4:19:03,1696,1699,1675,1678,1117,1119,1675.5,1678.5,0.5,0.5
 ,,,,,,,,1120,1122,1680,1683,1680,1683
 B12.1,The pull-out couch covered with the Indian bedspread is empty.,1:4:25:07.000,1:4:28:07,1705,1708,1684,1687,1123,1125,1684.5,1687.5,0.5,0.5
-B12.2," It’s 2 am, then 3, then 3:30… ",1:4:29:00.000,1:4:32:04,1709,1712,1688,1691,1125,1127,1687.5,1690.5,-0.5,-0.5
-B12.3,Margaret keeps sight-reading Bach’s 2nd violin concerto. ,1:4:32:08,1:4:35:09,1712,1715,1691,1694,1127,1129,1690.5,1693.5,-0.5,-0.5
+B12.2,"It’s 2 am, then 3, then 3:30…",1:4:29:00.000,1:4:32:04,1709,1712,1688,1691,1125,1127,1687.5,1690.5,-0.5,-0.5
+B12.3,Margaret keeps sight-reading Bach’s 2nd violin concerto.,1:4:32:08,1:4:35:09,1712,1715,1691,1694,1127,1129,1690.5,1693.5,-0.5,-0.5
 B12.4, Steven walks out of their bedroom.,1:4:36:03.000,1:4:38:01,1716,1718,1695,1697,1130,1131,1695,1696.5,0,-0.5
 B12.5, “Do you know where she is?  I can’t sleep…”,1:4:38:04,1:4:40:08.000,1718,1720,1697,1699,1131,1133,1696.5,1699.5,-0.5,0.5
 B12.6, He looks so distraught. ,1:4:41:02,1:4:42:06,1721,1722,1700,1701,1133,1134,1699.5,1701,-0.5,0
@@ -598,7 +598,7 @@ B13.20,Sasha smashes the glass with all of her weight. ,1:7:42:02.000,1:7:44:07,
 B13.21,"So much force, so much glass, Alexander’s spread out. ",1:7:44:09.000,1:7:49:04,1904,1909,1883,1888,1255,1259,1882.5,1888.5,-0.5,0.5
 B13.22,"Oh my god, oh my god…",1:7:49:02,1:7:52,1909,1912,1888,1891,1259,1261,1888.5,1891.5,0.5,0.5
 B13.23,Her mouth on his mouth. ,1:7:52:02.000,1:7:53:07,1912,1913,1891,1892,1261,1261,1891.5,1891.5,0.5,-0.5
-B13.24,CPR as she turns on her phone – 911. ,1:7:53:09,1:7:57:01,1913,1917,1892,1896,1261,1264,1891.5,1896,-0.5,0
+B13.24,CPR as she turns on her phone – 911.,1:7:53:09,1:7:57:01,1913,1917,1892,1896,1261,1264,1891.5,1896,-0.5,0
 B13.25,Her wrist has been cut on the glass. ,1:7:57:04.000,1:7:59:03,1917,1919,1896,1898,1264,1265,1896,1897.5,0,-0.5
 B13.26, It’s her blood on the granite. ,1:7:59:04.000,1:8:01:06.000,1919,1921,1898,1900,1265,1267,1897.5,1900.5,-0.5,0.5
 ,,,,,,,,1268,1270,1902,1905,1902,1905
@@ -866,7 +866,7 @@ C8.22,And braces herself.,1:22:46,1:22:47:02,2806,2807,2785,2786,1857,1857,2785.
 ,,,,,,,,1858,1861,2787,2791.5,2787,2791.5
 C9.1,"In front of Margaret’s laptop, Sasha hits “Print.”",1:22:54:01,1:22:57:01,2814,2817,2793,2796,1862,1864,2793,2796,0,0
 C9.2,"Margaret’s inbox, an endless scroll on the screen. ",1:22:57:05,1:23:00:04.000,2817,2820,2796,2799,1864,1866,2796,2799,0,0
-C9.3," “Dear Alexander: I’ll meet with my colleagues, on September 11th.",1:23:01:02,1:23:03:03,2821,2823,2800,2802,1867,1868,2800.5,2802,0.5,0
+C9.3,"“Dear Alexander: I’ll meet with my colleagues, on September 11th.",1:23:01:02,1:23:03:03,2821,2823,2800,2802,1867,1868,2800.5,2802,0.5,0
 C9.4,"I’ll get you your Pulitzer-piece, but I repeat, you stay away from my kid.”",1:23:03:04,1:23:10:04,2823,2830,2802,2809,1868,1873,2802,2809.5,0,0.5
 C9.5,Steven’s bottle of Scotch is almost empty beside Sasha.,1:23:11:04,1:23:14:05,2831,2834,2810,2813,1873,1875,2809.5,2812.5,-0.5,-0.5
 C9.6," She chugs one last sip, then takes off… ",1:23:14:06,1:23:17:03,2834,2837,2813,2816,1875,1877,2812.5,2815.5,-0.5,-0.5
@@ -980,7 +980,7 @@ C13.21,The woman smiles at her. “You want to hear its heart?” ,2:5:09:08,2:5
 C13.22,Clara nods.,2:5:13:08,2:5:14:07,3193,3194,3172,3173,2115,2115,3172.5,3172.5,0.5,-0.5
 C13.23,“Can we tape it?” she whispers. ,2:5:15:03,2:5:17:04,3195,3197,3174,3176,2116,2117,3174,3175.5,0,-0.5
 ,,,,3180,3180,3159,3159,2118,2120,3177,3180,18,21
-C14.1, On 30th Street and First Avenue sits a complex of tents. ,2:5:22:07.000,2:5:26:01,3202,3206,3181,3185,2121,2123,3181.5,3184.5,0.5,-0.5
+C14.1,On 30th Street and First Avenue sits a complex of tents.,2:5:22:07.000,2:5:26:01,3202,3206,3181,3185,2121,2123,3181.5,3184.5,0.5,-0.5
 C14.2,Alexander watches the makeshift compound.,2:5:26:07,2:5:29:03,3206,3209,3185,3188,2123,2125,3184.5,3187.5,-0.5,-0.5
 C14.3,Traffic whistles along the FDR drive. ,2:5:29:06,2:5:32,3209,3212,3188,3191,2125,2127,3187.5,3190.5,-0.5,-0.5
 C14.4,The huge white tent is a magnet.,2:5:32:04,2:5:34:03,3212,3214,3191,3193,2127,2129,3190.5,3193.5,-0.5,0.5
@@ -1014,7 +1014,7 @@ C15.7,The nurses applaud.,2:6:53:03,2:6:54:03.000,3293,3294,3272,3273,2181,2182,
 C15.8,Clara keeps hearing the sound of the baby’s heartbeat in her head.,2:6:55:00.000,2:6:58,3295,3298,3274,3277,2183,2185,3274.5,3277.5,0.5,0.5
 C15.9,"Faster than a bird's, faster than she could ever have imagined, faster than fear. ",2:6:58:04,2:7:03:01,3298,3303,3277,3282,2185,2188,3277.5,3282,0.5,0
 C15.10,"This sound, she thinks, is the opposite of death.",2:7:03:06,2:7:07:02,3303,3307,3282,3286,2188,2191,3282,3286.5,0,0.5
-C15.11,"On 30th street and First Avenue, the rain beats fast against the chalk-white canvas. ",2:7:08:01,2:7:12:07.000,3308,3312,3287,3291,2191,2194,3286.5,3291,-0.5,0
+C15.11,"On 30th street and First Avenue, the rain beats fast against the chalk-white canvas.",2:7:08:01,2:7:12:07.000,3308,3312,3287,3291,2191,2194,3286.5,3291,-0.5,0
 C15.12,Alexander and the old couple stand underneath.,2:7:13,2:7:15:05.000,3313,3315,3292,3294,2195,2196,3292.5,3294,0.5,0
 C15.13,A preacher leads half a dozen people in prayer.,2:7:16:00.000,2:7:18:05,3316,3318,3295,3297,2197,2198,3295.5,3297,0.5,0
 C15.14," Alexander takes a lantern, the old couple take another and place them at the foot of a trailer.",2:7:18:06.000,2:7:23:09,3318,3323,3297,3302,2198,2201,3297,3301.5,0,-0.5
