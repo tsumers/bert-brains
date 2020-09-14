@@ -29,14 +29,16 @@ affine_mat = nii.affine  # What is the data transformation used here
 
 # Preset the variables
 
-data = nii.get_data()  
-big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_data() 
+data = nii.get_fdata()  
+big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_fdata() 
+#big_mask=np.zeros(big_mask.shape)
+#big_mask[40,30,40]=1
 raw_rsm=np.genfromtxt(layer_dir,delimiter=',')[:495,:495] 
 bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=10).astype('bool')] 
 
 
 
-sl_rad = 3
+sl_rad = 1
 max_blk_edge = 5
 pool_size = 1 
 
@@ -70,14 +72,15 @@ def rsa(data,mask,myrad,bcvar):
     
     human=np.corrcoef(bolddata_sl[:495,:]) 
     vec=human[np.triu(np.ones(human.shape),k=10).astype('bool')]
-    return pearsonr(vec,bcvar)[0]  
+    vec[np.isnan(vec)]=0
+    return pearsonr(vec,bcvar)[0]   
 
 print("Running Searchlight")
-sl_result = sl.run_searchlight(decode, pool_size=pool_size)
+sl_result = sl.run_searchlight(rsa, pool_size=pool_size)
 #print("End SearchLight")
 
 # Only save the data if this is the first core
-if rank == 0: 
+if rank == 0:  
 
     # Convert the output into what can be used
     sl_result = sl_result.astype('double')

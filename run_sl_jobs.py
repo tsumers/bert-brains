@@ -16,8 +16,8 @@ begin="""#!/usr/bin/env bash
 
 #SBATCH -p all
 #SBATCH --nodes 1
-#SBATCH --ntasks-per-node 20
-#SBATCH --mem-per-cpu 9G 
+#SBATCH --ntasks-per-node 4
+#SBATCH --mem-per-cpu 30G 
 #SBATCH --time 03:00:00 
 """
 
