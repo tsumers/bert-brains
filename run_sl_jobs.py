@@ -21,7 +21,7 @@ begin="""#!/usr/bin/env bash
 #SBATCH --time 03:00:00 
 """
 
-for sub in subs[:1]:
+for sub in subs[:]:
 	out_name="#SBATCH --output "+"slurm_outputs/anat_sl_"+str(sub)+"_layer_0.out"
 	job_name="#SBATCH --job-name "+"anat_sl_"+str(sub)+"_layer_0"
 	with open("searchlight_job.sh","w") as out:

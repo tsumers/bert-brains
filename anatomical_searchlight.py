@@ -38,7 +38,7 @@ bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=10).astype('bool')]
 
 
 
-sl_rad = 1
+sl_rad = 3
 max_blk_edge = 5
 pool_size = 1 
 
