@@ -16,6 +16,8 @@ sub=sys.argv[1]
 layer_dir=sys.argv[2]
 results_dir=sys.argv[3]
 data_dir=sys.argv[4]
+begin_trim=int(sys.argv[5])
+end_trim=int(sys.argv[6])
 
 
 output_name = (results_dir+'/%s_whole_brain_anatomical_SL.nii.gz' % (sub))  
@@ -29,11 +31,11 @@ affine_mat = nii.affine  # What is the data transformation used here
 
 # Preset the variables
 
-data = nii.get_fdata()  
-big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_fdata() 
+data = nii.get_fdata()[:,:,:,begin_trim:end_trim]
+big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_fdata()  
 #big_mask=np.zeros(big_mask.shape)
 #big_mask[40,30,40]=1
-raw_rsm=np.genfromtxt(layer_dir,delimiter=',')[:495,:495] 
+raw_rsm=np.load(layer_dir)[:970,:970] 
 bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=10).astype('bool')] 
 
 
@@ -70,9 +72,10 @@ def rsa(data,mask,myrad,bcvar):
     bolddata_sl=data4D[mask,:].T
 
     
-    human=np.corrcoef(bolddata_sl[:495,:]) 
+    human=np.corrcoef(bolddata_sl[:,:]) 
     vec=human[np.triu(np.ones(human.shape),k=10).astype('bool')]
     vec[np.isnan(vec)]=0
+    #print(bolddata_sl.shape,bcvar.shape)
     return pearsonr(vec,bcvar)[0]   
 
 print("Running Searchlight")
