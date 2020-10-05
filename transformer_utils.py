@@ -1,4 +1,5 @@
-import itertools
+import copy
+
 import numpy as np
 import pandas as pd
 import torch
@@ -120,7 +121,7 @@ class TransformerRSM(object):
 
         print("Processed {} TRs for activations.".format(len(self.tr_activations_array)))
 
-    def process_stimulus_attentions(self, num_window_tokens=10, verbose=False):
+    def process_stimulus_attentions(self, num_window_tokens=10):
         """Return window_tokens x tr_tokens x num_heads attention matrix"""
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
@@ -130,52 +131,103 @@ class TransformerRSM(object):
         for i, tr in enumerate(tr_chunked_tokens):
 
             # Get all of the stimulus up to this point (since we'll chop it down later)
-            window_stimulus = " ".join(tr_chunked_tokens[0:i + 1])
+            window_stimulus = " ".join(tr_chunked_tokens[max(0, i-60):i + 1])
 
             # Get the list of BERT tokens involved in that window
             window_tokens = self.tokenizer.encode_plus(window_stimulus, return_tensors='pt',
                                                        add_special_tokens=self.use_special_tokens)
 
             # window_token_ids is now a tensor containing *all* of the tokens in this TR stimulus window.
-            # We need to filter it down to our fixed dimensionality, window_tokens
+            # We need to filter it down to our fixed dimensionality, num_window_tokens
             window_token_ids = window_tokens['input_ids']
 
             if len(window_token_ids[0]) < num_window_tokens:
                 # We don't have enough words yet. This is typical for the first few TRs-- we need to build up context.
-                if verbose:
+                if self.verbose:
                     print("TR {}: not enough tokens ({}/{})".format(i, len(window_token_ids[0]), num_window_tokens))
                 continue
 
+            # N.B.: we don't currently account for CLS / SEP token here, so we'll have 18-19 "usable" tokens in the
+            # case that we have them in input.
             truncated_window_token_ids = window_token_ids[0][-num_window_tokens:]
-            if verbose:
+            if self.verbose:
                 print("TR {}: more than enough tokens ({}/{}), trimmed to {}.".format(i,
                                                                                       len(window_token_ids[0]),
                                                                                       num_window_tokens,
                                                                                       len(truncated_window_token_ids)))
 
-            # Add a new empty array to our BERT outputs -- N.B. we need to track which TRs we trim here.
-            self.tr_attentions_array.append([])
             with torch.no_grad():
 
-                _, attentions = self.transformer(truncated_window_token_ids.reshape(1, -1))[-2:]
+                attentions = self.transformer(truncated_window_token_ids.reshape(1, -1))[-1]
 
-                # bert_attentions is now a tuple of length n_layers
+                # attentions is now a tuple of length n_layers
                 # Each element of the tuple contains the outputs of each attention head in that layer.
-                # So, for example, bert_attentions[0] will be of
+                # So, for example, attentions[0] will be of
                 #       torch.Size([1, n_heads, num_window_tokens, num_window_tokens])
                 # Running this on bert-base with num_window_tokens = 40 will yield:
-                # len(bert_attentions) = 12 --> 12 layers in the model
-                # bert_attentions[0].shape = torch.Size([1, 12, 40, 40]) --> 12 attention heads, 40x40 attention weights
-                if verbose:
+                # len(attentions) = 12 --> 12 layers in the model
+                # attentions[0].shape = torch.Size([1, 12, 40, 40]) --> 12 attention heads, 40x40 attention weights
+                if self.verbose:
                     print("Extracting heads of shape {}.".format(attentions[0].shape))
 
-                for layer in attentions:
-                    # Need to flatten our attentions to 1D vector.
-                    # This is complicated but basically collapses all attention heads down to a single vector
-                    # which will have length = n_heads * n_window_tokens * n_window_tokens
-                    tr_attentions = layer[0].reshape(1, -1)[0]
+                # for layer in attentions:
+                #     # Need to flatten our attentions to 1D vector.
+                #     # This is complicated but basically collapses all attention heads down to a single vector
+                #     # which will have length = n_heads * n_window_tokens * n_window_tokens
+                #     tr_attentions = layer[0].reshape(1, -1)[0]
 
-                    self.tr_attentions_array[-1].append(tr_attentions)
+                self.tr_attentions_array.append(attentions)
+
+    def mask_head_attention(self, head_matrix, window, mask_self_attention=True):
+
+        mask_matrix = head_matrix.detach().clone()
+        if self.use_special_tokens:
+            # Mask attention to and from last token (SEP)
+            mask_matrix[:, -1] = 0
+            mask_matrix[-1, :] = 0
+
+            # and walk the window back 1 to account for that
+            window += 1
+
+            # Mask attention to and from first token (possibly CLS)
+            mask_matrix[:, 0] = 0
+            mask_matrix[0, :] = 0
+
+        if mask_self_attention:
+            # To remove tokens' self-attention
+            mask_matrix.fill_diagonal_(0)
+
+        # Finally, mask attention from preceeding (non-window) tokens
+        mask_matrix[:-window, :] = 0
+
+        return mask_matrix
+
+    def mask_all_forward_attentions(self, tokens_to_include):
+
+        # self.tr_attentions_array = [num_trs][num_layers][0][heads][from_token][to_token]
+        # so for bert-base-uncased, 10 TRs: [10][12][0][12][num_window_tokens][num_window_tokens]
+
+        masked = copy.deepcopy(self.tr_attentions_array)
+
+        for tr in range(0, len(masked)):
+            for layer in range(0, len(masked[tr])):
+                for head in range(0, len(masked[tr][layer][0])):
+                    masked[tr][layer][0][head] = self.mask_head_attention(masked[tr][layer][0][head], tokens_to_include)
+
+        return masked
+
+    @classmethod
+    def attention_head_magnitudes(cls, attention_array, p='inf'):
+
+        tr_attention_vector_array = []
+        for tr in range(0, len(attention_array)):
+            tr_attention_vector_array.append([])
+            for layer in range(0, len(attention_array[tr])):
+                for head in range(0, len(attention_array[tr][layer][0])):
+                    norm = torch.norm(attention_array[tr][layer][0][head], p=float(p))
+                    tr_attention_vector_array[-1].append(norm)
+
+        return tr_attention_vector_array
 
     @classmethod
     def mean_tr_response_across_tokens(cls, tr_layer_tokens_tensor):
