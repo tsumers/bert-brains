@@ -17,7 +17,7 @@ class TransformerRSM(object):
 
         # A list of lists: array[TR][layer] will be a tensor of shape (n_tokens, d_model) which contains the
         # model embeddings for that layer.
-        self.tr_activations_array = None
+
 
         # A list of lists for attentions. array[tr][layer] will be a tensor of shape (n_tokens x n_tokens) for
         # however many attention tokens we want to consider.
@@ -65,16 +65,19 @@ class TransformerRSM(object):
 
         return stimulus_df
 
+    # BASIC processing: generate embeddings and attention outputs for stimulus.
+
     def process_stimulus_activations(self, num_context_trs=20):
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
-        self.tr_activations_array = []
+        tr_activations_array = []
+        tr_tokens_array = []
 
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
 
             # Add a new empty array to our BERT outputs
-            self.tr_activations_array.append([])
+            tr_activations_array.append([])
 
             # Get the full context window for this TR, e.g. the appropriate preceding number of TRs.
             context_window_index_start = max(0, i - num_context_trs)
@@ -87,18 +90,21 @@ class TransformerRSM(object):
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
 
-            if self.verbose:
-                if len(tr_token_ids) > 0:
-                    tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
+            if len(tr_token_ids) > 0:
+                tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
+                if self.verbose:
                     print("TR {}: {} --> {}".format(i, tr, tr_tokens))
+            else:
+                if self.last_token_index is None:
+                    tr_tokens = self.tokenizer.convert_ids_to_tokens(
+                        window_token_ids[0][-1:].numpy())
                 else:
-                    if self.last_token_index is None:
-                        tr_tokens = self.tokenizer.convert_ids_to_tokens(
-                            window_token_ids[0][-1:].numpy())
-                    else:
-                        tr_tokens = self.tokenizer.convert_ids_to_tokens(
-                            window_token_ids[0][-2:self.last_token_index].numpy())
+                    tr_tokens = self.tokenizer.convert_ids_to_tokens(
+                        window_token_ids[0][-2:self.last_token_index].numpy())
+                if self.verbose:
                     print("Empty TR. Using token: {}".format(tr_tokens))
+
+            tr_tokens_array.append(tr_tokens)
 
             for layer in embeddings:
 
@@ -117,9 +123,11 @@ class TransformerRSM(object):
                         tr_activations = layer[0][-2:self.last_token_index]
 
                 # Append this set of activations onto our list of stimuli
-                self.tr_activations_array[-1].append(tr_activations)
+                tr_activations_array[-1].append(tr_activations)
 
-        print("Processed {} TRs for activations.".format(len(self.tr_activations_array)))
+        self.stimulus_df["activations"] = tr_activations_array
+        self.stimulus_df["transformer_activations_tr_tokens"] = tr_tokens_array
+        print("Processed {} TRs for activations.".format(len(tr_activations_array)))
 
     def process_stimulus_attentions(self, num_window_tokens=10):
         """Return window_tokens x tr_tokens x num_heads attention matrix"""
@@ -178,31 +186,41 @@ class TransformerRSM(object):
 
                 self.tr_attentions_array.append(attentions)
 
-    def mask_head_attention(self, head_matrix, window, mask_self_attention=True):
+    # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
 
-        mask_matrix = head_matrix.detach().clone()
+    def _mask_head_attention(self, head_matrix, window, mask_token_self_attention=True):
+        """Mask out (e.g. set to zero) all token-token attention weights that are not of interest."""
+
+        masked_head_matrix = head_matrix.detach().clone()
+
         if self.use_special_tokens:
-            # Mask attention to and from last token (SEP)
-            mask_matrix[:, -1] = 0
-            mask_matrix[-1, :] = 0
+            # Mask attention both to and from last token (SEP)
+            masked_head_matrix[:, -1] = 0
+            masked_head_matrix[-1, :] = 0
 
             # and walk the window back 1 to account for that
             window += 1
 
-            # Mask attention to and from first token (possibly CLS)
-            mask_matrix[:, 0] = 0
-            mask_matrix[0, :] = 0
+            # Mask attention both to and from first token (possibly CLS)
+            masked_head_matrix[:, 0] = 0
+            masked_head_matrix[0, :] = 0
 
-        if mask_self_attention:
-            # To remove tokens' self-attention
-            mask_matrix.fill_diagonal_(0)
+        # Remove tokens' attentions to themselves
+        if mask_token_self_attention:
+            masked_head_matrix.fill_diagonal_(0)
 
-        # Finally, mask attention from preceeding (non-window) tokens
-        mask_matrix[:-window, :] = 0
+        # Finally, mask attention *from* preceding (non-window) tokens
+        masked_head_matrix[:-window, :] = 0
 
-        return mask_matrix
+        return masked_head_matrix
 
-    def mask_all_forward_attentions(self, tokens_to_include):
+    def mask_non_tr_attentions(self, num_tokens_per_tr):
+        """Iterate over the attentions array and mask out attentions that (probably) don't contribute meaningfully.
+
+        num_tokens_per_tr is an estimate for how many BERT/GPT tokens appear per TR. This function will mask out
+        all attention weights except those coming *from* the tr tokens, going *to* the window tokens.
+        So each matrix is originally [num_window_tokens x num_window_tokens]; after masking it will have
+        [num_tokens_per_tr x num_window_tokens] nonzero entries."""
 
         # self.tr_attentions_array = [num_trs][num_layers][0][heads][from_token][to_token]
         # so for bert-base-uncased, 10 TRs: [10][12][0][12][num_window_tokens][num_window_tokens]
@@ -212,7 +230,7 @@ class TransformerRSM(object):
         for tr in range(0, len(masked)):
             for layer in range(0, len(masked[tr])):
                 for head in range(0, len(masked[tr][layer][0])):
-                    masked[tr][layer][0][head] = self.mask_head_attention(masked[tr][layer][0][head], tokens_to_include)
+                    masked[tr][layer][0][head] = self._mask_head_attention(masked[tr][layer][0][head], num_tokens_per_tr)
 
         return masked
 
@@ -229,12 +247,11 @@ class TransformerRSM(object):
 
         return tr_attention_vector_array
 
-    @classmethod
-    def mean_tr_response_across_tokens(cls, tr_layer_tokens_tensor):
+    def mean_tr_response_across_tokens(self, input_tensor_name="activations"):
         """tr_tensor is tr x layer x tokens; squash it to tr x layer x mean and return that."""
 
         tr_layer_mean_tensor = []
-        for tr in tr_layer_tokens_tensor:
+        for tr in self.stimulus_df[input_tensor_name]:
             tr_layer_mean_tensor.append([])
             for layer in tr:
                 tr_layer_mean_tensor[-1].append(torch.mean(layer, 0))
