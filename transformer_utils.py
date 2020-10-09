@@ -21,7 +21,6 @@ class TransformerRSM(object):
 
         # A list of lists for attentions. array[tr][layer] will be a tensor of shape (n_tokens x n_tokens) for
         # however many attention tokens we want to consider.
-        self.tr_attentions_array = None
 
         if 'bert' in self.model_name:
             self.tokenizer = BertTokenizer.from_pretrained(self.model_name)
@@ -123,17 +122,21 @@ class TransformerRSM(object):
                         tr_activations = layer[0][-2:self.last_token_index]
 
                 # Append this set of activations onto our list of stimuli
-                tr_activations_array[-1].append(tr_activations)
+                squeezed = [layer.squeeze() for layer in tr_activations]
+                tr_activations_array[-1].append(squeezed)
 
         self.stimulus_df["activations"] = tr_activations_array
-        self.stimulus_df["transformer_activations_tr_tokens"] = tr_tokens_array
+        self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
+        self.stimulus_df["n_transformer_tokens_in_tr"] = [len(tokens) for tokens in tr_tokens_array]
+
         print("Processed {} TRs for activations.".format(len(tr_activations_array)))
 
-    def process_stimulus_attentions(self, num_window_tokens=10):
+    def process_stimulus_attentions(self, num_window_tokens=20):
         """Return window_tokens x tr_tokens x num_heads attention matrix"""
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
-        self.tr_attentions_array = []
+        tr_attentions_array = []
+        tr_tokens_array = []
 
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
@@ -151,6 +154,8 @@ class TransformerRSM(object):
 
             if len(window_token_ids[0]) < num_window_tokens:
                 # We don't have enough words yet. This is typical for the first few TRs-- we need to build up context.
+                tr_attentions_array.append(None)
+                tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(window_token_ids[0].tolist()))
                 if self.verbose:
                     print("TR {}: not enough tokens ({}/{})".format(i, len(window_token_ids[0]), num_window_tokens))
                 continue
@@ -167,6 +172,9 @@ class TransformerRSM(object):
             with torch.no_grad():
 
                 attentions = self.transformer(truncated_window_token_ids.reshape(1, -1))[-1]
+                squeezed = [layer.squeeze() for layer in attentions]
+                tr_attentions_array.append(squeezed)
+                tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(truncated_window_token_ids.tolist()))
 
                 # attentions is now a tuple of length n_layers
                 # Each element of the tuple contains the outputs of each attention head in that layer.
@@ -176,15 +184,17 @@ class TransformerRSM(object):
                 # len(attentions) = 12 --> 12 layers in the model
                 # attentions[0].shape = torch.Size([1, 12, 40, 40]) --> 12 attention heads, 40x40 attention weights
                 if self.verbose:
-                    print("Extracting heads of shape {}.".format(attentions[0].shape))
+                    print("Extracting heads of shape {}.".format(squeezed[0].shape))
 
+                ## OLD LAYER LOGIC: need to delete this after integrating it elsewhere
                 # for layer in attentions:
                 #     # Need to flatten our attentions to 1D vector.
                 #     # This is complicated but basically collapses all attention heads down to a single vector
                 #     # which will have length = n_heads * n_window_tokens * n_window_tokens
                 #     tr_attentions = layer[0].reshape(1, -1)[0]
 
-                self.tr_attentions_array.append(attentions)
+        self.stimulus_df["attentions"] = tr_attentions_array
+        self.stimulus_df["attentions_transformer_tokens"] = tr_tokens_array
 
     # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
 
@@ -225,27 +235,38 @@ class TransformerRSM(object):
         # self.tr_attentions_array = [num_trs][num_layers][0][heads][from_token][to_token]
         # so for bert-base-uncased, 10 TRs: [10][12][0][12][num_window_tokens][num_window_tokens]
 
-        masked = copy.deepcopy(self.tr_attentions_array)
+        masked = copy.deepcopy(self.stimulus_df.attentions)
 
         for tr in range(0, len(masked)):
+            # We didn't process attentions for this TR, likely because there weren't enough tokens.
+            if masked[tr] is None:
+                continue
             for layer in range(0, len(masked[tr])):
-                for head in range(0, len(masked[tr][layer][0])):
-                    masked[tr][layer][0][head] = self._mask_head_attention(masked[tr][layer][0][head], num_tokens_per_tr)
+                for head in range(0, len(masked[tr][layer])):
+                    masked[tr][layer][head] = self._mask_head_attention(masked[tr][layer][head], num_tokens_per_tr)
 
-        return masked
+        self.stimulus_df["masked_attentions"] = masked
 
-    @classmethod
-    def attention_head_magnitudes(cls, attention_array, p='inf'):
+    def compute_attention_head_magnitudes(self, p='inf', attention_col="masked_attentions"):
 
         tr_attention_vector_array = []
-        for tr in range(0, len(attention_array)):
-            tr_attention_vector_array.append([])
-            for layer in range(0, len(attention_array[tr])):
-                for head in range(0, len(attention_array[tr][layer][0])):
-                    norm = torch.norm(attention_array[tr][layer][0][head], p=float(p))
-                    tr_attention_vector_array[-1].append(norm)
+        for tr in range(0, len(self.stimulus_df[attention_col])):
 
-        return tr_attention_vector_array
+            if self.stimulus_df[attention_col][tr] is None:
+                tr_attention_vector_array.append(None)
+                continue
+            else:
+                # One entry per TR
+                tr_attention_vector_array.append([])
+
+            for layer in range(0, len(self.stimulus_df[attention_col][tr])):
+                # One entry per layer
+                tr_attention_vector_array[-1].append([])
+                for head in range(0, len(self.stimulus_df[attention_col][tr][layer])):
+                    norm = torch.norm(self.stimulus_df[attention_col][tr][layer][head], p=float(p))
+                    tr_attention_vector_array[-1][-1].append(norm.item())
+
+        self.stimulus_df["attention_heads_L{}".format(p)] = tr_attention_vector_array
 
     def mean_tr_response_across_tokens(self, input_tensor_name="activations"):
         """tr_tensor is tr x layer x tokens; squash it to tr x layer x mean and return that."""
