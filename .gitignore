@@ -3,3 +3,4 @@
 slurm_outputs
 data
 .idea
+*.pyc
