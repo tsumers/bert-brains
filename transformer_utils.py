@@ -18,7 +18,6 @@ class TransformerRSM(object):
         # A list of lists: array[TR][layer] will be a tensor of shape (n_tokens, d_model) which contains the
         # model embeddings for that layer.
 
-
         # A list of lists for attentions. array[tr][layer] will be a tensor of shape (n_tokens x n_tokens) for
         # however many attention tokens we want to consider.
 
@@ -181,7 +180,7 @@ class TransformerRSM(object):
                 #       torch.Size([1, n_heads, num_window_tokens, num_window_tokens])
                 # Running this on bert-base with num_window_tokens = 40 will yield:
                 # len(attentions) = 12 --> 12 layers in the model
-                # attentions[0].shape = torch.Size([1, 12, 40, 40]) --> 12 attention heads, 40x40 attention weights
+                # attentions[0].shape = torch.Size([12, 40, 40]) --> 12 attention heads, 40x40 attention weights
                 if self.verbose:
                     print("Extracting heads of shape {}.".format(squeezed[0].shape))
 
@@ -223,7 +222,7 @@ class TransformerRSM(object):
 
         return masked_head_matrix
 
-    def mask_non_tr_attentions(self, num_tokens_per_tr):
+    def mask_non_tr_attentions(self, num_tokens_per_tr=None):
         """Iterate over the attentions array and mask out attentions that (probably) don't contribute meaningfully.
 
         num_tokens_per_tr is an estimate for how many BERT/GPT tokens appear per TR. This function will mask out
@@ -231,18 +230,24 @@ class TransformerRSM(object):
         So each matrix is originally [num_window_tokens x num_window_tokens]; after masking it will have
         [num_tokens_per_tr x num_window_tokens] nonzero entries."""
 
-        # self.tr_attentions_array = [num_trs][num_layers][0][heads][from_token][to_token]
-        # so for bert-base-uncased, 10 TRs: [10][12][0][12][num_window_tokens][num_window_tokens]
+        # Attention structure: = stimulus_df[num_trs][num_layers][heads][from_token][to_token]
+        # so for bert-base-uncased, 10 TRs: [10][12][12][num_window_tokens][num_window_tokens]
 
         masked = copy.deepcopy(self.stimulus_df.attentions)
+
+        if num_tokens_per_tr is None:
+            n_tokens = self.stimulus_df.n_transformer_tokens_in_tr
+        else:
+            n_tokens = np.full(len(masked), num_tokens_per_tr)
 
         for tr in range(0, len(masked)):
             # We didn't process attentions for this TR, likely because there weren't enough tokens.
             if masked[tr] is None:
                 continue
+
             for layer in range(0, len(masked[tr])):
                 for head in range(0, len(masked[tr][layer])):
-                    masked[tr][layer][head] = self._mask_head_attention(masked[tr][layer][head], num_tokens_per_tr)
+                    masked[tr][layer][head] = self._mask_head_attention(masked[tr][layer][head], n_tokens[tr])
 
         self.stimulus_df["masked_attentions"] = masked
 
