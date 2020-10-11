@@ -122,8 +122,7 @@ class TransformerRSM(object):
                         tr_activations = layer[0][-2:self.last_token_index]
 
                 # Append this set of activations onto our list of stimuli
-                squeezed = [layer.squeeze() for layer in tr_activations]
-                tr_activations_array[-1].append(squeezed)
+                tr_activations_array[-1].append(tr_activations)
 
         self.stimulus_df["activations"] = tr_activations_array
         self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
@@ -279,24 +278,37 @@ class TransformerRSM(object):
 
         return tr_layer_mean_tensor
 
-    @classmethod
-    def max_l2_move_per_layer(cls, tr_layer_tokens_tensor):
+    def layerwise_token_movement(self):
         """tr_tensor is tr x layer x tokens; look at l2 distance for each token / layer."""
 
-        tr_layer_l2_distance_tensor = []
-        for tr in tr_layer_tokens_tensor:
-            tr_layer_l2_distance_tensor.append([])
+        activations_layerwise_l2_difference = []
+        for tr in self.stimulus_df.activations:
+
+            activations_layerwise_l2_difference.append([])
+
             for layer_num, (layer_one, layer_two) in enumerate(zip(tr, tr[1:])):
 
                 # Get the number of tokens to compare
                 n_tokens = layer_one.shape[0]
-                l2_differences = [torch.dist(layer_one[i], layer_two[i], 2) for i in range(0, n_tokens)]
-                max_l2_distance = max(l2_differences)
-                # print("Layer {}: distance {}".format(layer_num, max_l2_distance))
+                l2_differences = [torch.dist(layer_one[i], layer_two[i], 2).item() for i in range(0, n_tokens)]
+                activations_layerwise_l2_difference[-1].append(l2_differences)
 
-                tr_layer_l2_distance_tensor[-1].append(max_l2_distance.item())
+        # will be [n_layers][n_tokens], where [0][0] gives the L2 distance for the first token across the first layer.
+        self.stimulus_df["activation_layerwise_l2_distances"] = activations_layerwise_l2_difference
 
-        return tr_layer_l2_distance_tensor
+    def end_to_end_token_movement(self):
+        """Set activation_end_to_end_l2_distances to L2 displacement from initial to final embeddings."""
+
+        activations_end_to_end_l2_difference = []
+        for tr in self.stimulus_df.activations:
+
+            # Get the number of tokens to compare
+            n_tokens = tr[0].shape[0]
+            end_to_end_l2_differences = [torch.dist(tr[0][i], tr[-1][i], 2).item() for i in range(0, n_tokens)]
+            activations_end_to_end_l2_difference.append(end_to_end_l2_differences)
+
+        # will be [n_tokens], where [0] gives the L2 distance for the first token across the whole model.
+        self.stimulus_df["activation_end_to_end_l2_distances"] = activations_end_to_end_l2_difference
 
     @classmethod
     def layer_activations_from_tensor(cls, tr_layer_tensor, layer_index):
