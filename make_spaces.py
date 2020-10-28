@@ -13,7 +13,7 @@ subs=['sub-075', 'sub-131', 'sub-190', 'sub-201', 'sub-235', 'sub-244',
 data_dir=d+'21styear_data/'
 if not(os.path.isdir(data_dir+"functional_spaces/")):
 	os.mkdir(data_dir+"functional_spaces/")
-weights=np.load(data_dir+"srm_weights.npy")
+weights=np.load(data_dir+"srm_weights_300.npy")
 
 for i,sub in enumerate(subs):
 	print(i)
@@ -32,6 +32,6 @@ for i,sub in enumerate(subs):
 	space[good_voxels,1:]=good_indices[short_space]
 	space[bad_voxels,:]=-1.0
 	output_name=data_dir+"functional_spaces/"+sub+".npy"
-	np.save(output_name,space)
+	np.save(output_name,space) 
 
 

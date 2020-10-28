@@ -24,17 +24,18 @@ affine_mat = nii.affine  # What is the data transformation used here
 # Preset the variables
 
 data = nii.get_fdata()[:,:,:,begin_trim:end_trim]
+data=data[:,:,:,960:]
 big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_fdata().astype('bool')
 data=data[big_mask]
 #big_mask=np.zeros(big_mask.shape)
 #big_mask[40,30,40]=1
-raw_rsm=np.load(layer_dir)[:970,:970]
-bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=10).astype('bool')]
+raw_rsm=np.load(layer_dir)[960:,960:]
+bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=3).astype('bool')]
 
 def rsa(bolddata,bcvar):
     bolddata_sl=bolddata.T 
     human=np.corrcoef(bolddata_sl[:,:])
-    vec=human[np.triu(np.ones(human.shape),k=10).astype('bool')]
+    vec=human[np.triu(np.ones(human.shape),k=3).astype('bool')]
     vec[np.isnan(vec)]=0
     return pearsonr(vec,bcvar)[0]
 

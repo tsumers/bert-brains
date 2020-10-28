@@ -6,6 +6,9 @@ import numpy as np
 from mpi4py import MPI 
 from brainiak.searchlight.searchlight import Searchlight
 from scipy.stats.stats import pearsonr 
+from sklearn.linear_model import Ridge 
+from sklearn.model_selection import KFold 
+from sklearn.metrics import r2_score 
 import sys 
 
 
@@ -14,8 +17,8 @@ import sys
 
 sub=sys.argv[1]
 layer_dir=sys.argv[2]
-results_dir=sys.argv[3]
-data_dir=sys.argv[4]
+results_dir=sys.argv[3] 
+data_dir=sys.argv[4] 
 begin_trim=int(sys.argv[5])
 end_trim=int(sys.argv[6])
 
@@ -32,11 +35,19 @@ affine_mat = nii.affine  # What is the data transformation used here
 # Preset the variables
 
 data = nii.get_fdata()[:,:,:,begin_trim:end_trim]
+data=data[:,:,:,960:]
 big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_fdata()  
 #big_mask=np.zeros(big_mask.shape)
-#big_mask[40,30,40]=1
-raw_rsm=np.load(layer_dir)[:970,:970] 
-bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=10).astype('bool')] 
+#big_mask[40,30,40]=1 
+""" Decoding
+if 'syntactic_complexity' in layer_dir:
+    bcvar=np.load(layer_dir)[2:,:] 
+else:
+    bcvar=np.load(layer_dir)[:,:]   
+"""
+raw_rsm=np.load(layer_dir)[960:,960:] 
+print(data.shape,raw_rsm.shape)
+bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=3).astype('bool')] 
 
 
 
@@ -62,7 +73,7 @@ sl.distribute([data], big_mask)
 # Broadcast variables
 sl.broadcast(bcvar)
 
-#Kernel function for searchlight 
+#Kernel function for searchlight RSA
 def rsa(data,mask,myrad,bcvar): 
     if np.sum(mask)<2:
         return 0.0
@@ -73,12 +84,36 @@ def rsa(data,mask,myrad,bcvar):
 
     
     human=np.corrcoef(bolddata_sl[:,:]) 
-    vec=human[np.triu(np.ones(human.shape),k=10).astype('bool')]
+    vec=human[np.triu(np.ones(human.shape),k=3).astype('bool')]
     vec[np.isnan(vec)]=0
     #print(bolddata_sl.shape,bcvar.shape)
     return pearsonr(vec,bcvar)[0]   
 
-print("Running Searchlight")
+#Kernel function for searchlight decoding
+def decode(data,mask,myrad,bcvar):
+    if np.sum(mask)<2:
+        return 0.0
+    
+    data4D=data[0]
+    mask=mask.astype('bool')
+    bolddata_sl=data4D[mask,:].T
+
+    X=bolddata_sl
+    y=bcvar 
+    
+    model=Ridge()
+    skf=KFold(n_splits=3)
+    scores=[]
+    for train_index,test_index in skf.split(X,y):
+        X_train, X_test = X[train_index], X[test_index] 
+        y_train, y_test = y[train_index], y[test_index]
+        model.fit(X_train,y_train)
+        scores.append(r2_score(y_test,model.predict(X_test)))
+    return np.mean(scores)  
+
+
+
+print("Running Searchlight") 
 sl_result = sl.run_searchlight(rsa, pool_size=pool_size)
 #print("End SearchLight")
 
@@ -93,4 +128,5 @@ if rank == 0:
     sl_nii = nib.Nifti1Image(sl_result, affine_mat)
     nib.save(sl_nii, output_name)  # Save
     #np.save(output_mask_name,big_mask) 
-    print('Finished searchlight') 
+    print('Finished searchlight')  
+
