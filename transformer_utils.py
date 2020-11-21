@@ -197,7 +197,10 @@ class TransformerRSM(object):
     # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
 
     def _mask_head_attention(self, head_matrix, window, mask_token_self_attention=True):
-        """Mask out (e.g. set to zero) all token-token attention weights that are not of interest."""
+        """Mask out (e.g. set to zero) all token-token attention weights that are not of interest.
+
+        GPT-2 attends to the first token for `null` attention: https://www.aclweb.org/anthology/W19-4808.pdf
+        """
 
         masked_head_matrix = head_matrix.detach().clone()
 
@@ -216,6 +219,10 @@ class TransformerRSM(object):
         # Remove tokens' attentions to themselves
         if mask_token_self_attention:
             masked_head_matrix.fill_diagonal_(0)
+
+        # Wipe forward attention for tokens in TR
+        # https://pytorch.org/docs/stable/generated/torch.tril.html#torch.tril
+        masked_head_matrix.tril_()
 
         # Finally, mask attention *from* preceding (non-window) tokens
         masked_head_matrix[:-window, :] = 0
@@ -271,6 +278,40 @@ class TransformerRSM(object):
                     tr_attention_vector_array[-1][-1].append(norm.item())
 
         self.stimulus_df["attention_heads_L{}".format(p)] = tr_attention_vector_array
+
+    def compute_attention_head_distances(self, attention_col="masked_attentions", to_return=15):
+        """ Implements Attention Distance metric as in:
+        https://www.aclweb.org/anthology/W19-4808.pdf
+        """
+
+        tr_attention_vector_array = []
+        for tr in range(0, len(self.stimulus_df[attention_col])):
+
+            if self.stimulus_df[attention_col][tr] is None:
+                tr_attention_vector_array.append(None)
+                continue
+            else:
+                # One entry per TR
+                tr_attention_vector_array.append([])
+
+            for layer in range(0, len(self.stimulus_df[attention_col][tr])):
+                # One entry per layer
+                tr_attention_vector_array[-1].append([])
+                for head in range(0, len(self.stimulus_df[attention_col][tr][layer])):
+                    attention_distance = 0
+                    head_matrix = self.stimulus_df[attention_col][tr][layer][head]
+
+                    # Iterate over entries in attention matrix, weighting attention by lookback distance
+                    # Note that this *relies* on having zeroed the upper triangle during masking process.
+                    for i, row in enumerate(head_matrix):
+                        for j, col in enumerate(row):
+                            distance = i - j
+                            attention = head_matrix[i][j].item()
+                            attention_distance += attention * distance
+
+                    tr_attention_vector_array[-1][-1].append(attention_distance)
+
+        self.stimulus_df["attention_distances"] = tr_attention_vector_array
 
     def mean_tr_response_across_tokens(self, input_tensor_name="activations"):
         """tr_tensor is tr x layer x tokens; squash it to tr x layer x mean and return that."""
