@@ -1,9 +1,10 @@
 import nibabel as nib 
 import numpy as np 
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression,Ridge
 import sys
 from sklearn.model_selection import KFold 
 from scipy.stats import pearsonr
+from sklearn.model_selection import TimeSeriesSplit
 sub=sys.argv[1]
 layer_dir=sys.argv[2]
 layer_name=sys.argv[3]
@@ -19,29 +20,52 @@ output_name="/scratch/sreejank/enc_"+sub+"_"+layer_name+"_"+str(r1)+"_"+str(r2)+
 nii=nib.load(data_dir+sub+".nii.gz")
 affine_mat = nii.affine  # What is the data transformation used here
 
-data = nii.get_fdata()[:,:,:,begin_trim:end_trim]
-big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_fdata().astype('bool')
-data=data[big_mask]
 #big_mask=np.zeros(big_mask.shape)
 #big_mask[40,30,40]=1
-raw_features=np.load(layer_dir)[:,:]
-model=LinearRegression(normalize=True)
+if 'syntactic_complexity' in layer_dir or 'syntactic_distance' in layer_dir:
+	raw_features=np.load(layer_dir)[2:,:]
+else:
+	raw_features=np.load(layer_dir)[:,:]
+features=np.asarray([np.hstack([raw_features[tr+2],raw_features[tr+3],raw_features[tr+4],raw_features[tr+5]]) for tr in range(raw_features.shape[0]-5)])
+#features=np.asarray([raw_features[tr+3] for tr in range(raw_features.shape[0]-3)])
+data = nii.get_fdata()[:,:,:,begin_trim:end_trim-5]
+#data = nii.get_fdata()[:,:,:,begin_trim:end_trim-3]
+big_mask=nib.load(data_dir+"whole_brain_mask.nii.gz").get_fdata().astype('bool')
+data=data[big_mask]
+
+
+  
 
 def process(i):
-	y=data[i,:].reshape((-1,1))
-	X=raw_features
+	y=data[i,:].reshape((-1,1)) 
+	X=features
 	#print(X.shape,y.shape,data.shape)
-	skf=KFold(n_splits=3)
-	r=[]
+	test_performances=[]
+	skf=KFold(n_splits=3,shuffle=False)
 	for train_index,test_index in skf.split(X):
-		X_train, X_test = X[train_index], X[test_index]
-		y_train, y_test = y[train_index], y[test_index]
-		#print(X_train.shape,X_test.shape,y_train.shape,y_test.shape)
+		X_train,X_test=X[train_index],X[test_index]
+		y_train,y_test=y[train_index],y[test_index]
+
+
+		X_trainval,X_testval=X_train[:-300],X_train[-300:]
+		y_trainval,y_testval=y_train[:-300],y_train[-300:] 
+
+		alphas=[0.001,0.001,0.1,1.0]
+
+		val_performances=[]
+		for alpha in alphas:
+			model=Ridge(alpha=alpha,normalize=True)
+			model.fit(X_trainval,y_trainval)
+			y_hatval=model.predict(X_testval)
+			val_performances.append(pearsonr(y_hatval[:,0],y_testval[:,0])[0])
+
+		tuned=alphas[np.argmax(val_performances)]
+		model=Ridge(alpha=tuned,normalize=True) 
 		model.fit(X_train,y_train)
-		preds=model.predict(X_test)
-		#print(preds.shape,y_test.shape)
-		r.append(pearsonr(y_test[:,0],preds[:,0])[0])
-	return np.mean(r)
+		y_hat=model.predict(X_test)
+		test_performances.append(pearsonr(y_hat[:,0],y_test[:,0])[0])
+
+	return np.mean(test_performances) 
 
 
 inputs=list(range(r1,r2))
