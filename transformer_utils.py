@@ -197,10 +197,7 @@ class TransformerRSM(object):
     # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
 
     def _mask_head_attention(self, head_matrix, window, mask_token_self_attention=True):
-        """Mask out (e.g. set to zero) all token-token attention weights that are not of interest.
-
-        GPT-2 attends to the first token for `null` attention: https://www.aclweb.org/anthology/W19-4808.pdf
-        """
+        """Mask out (e.g. set to zero) all token-token attention weights that are not of interest."""
 
         masked_head_matrix = head_matrix.detach().clone()
 
@@ -212,7 +209,10 @@ class TransformerRSM(object):
             # and walk the window back 1 to account for that
             window += 1
 
-            # Mask attention both to and from first token (possibly CLS)
+        if self.use_special_tokens or "gpt" in self.model_name:
+            # GPT-2 attends to the first token for `null` attention: https://www.aclweb.org/anthology/W19-4808.pdf
+            # and BERT generally uses special tokens, which puts SEP there.
+            # So for both, we mask out the attention.
             masked_head_matrix[:, 0] = 0
             masked_head_matrix[0, :] = 0
 
@@ -287,6 +287,9 @@ class TransformerRSM(object):
         tr_attention_vector_array = []
         for tr in range(0, len(self.stimulus_df[attention_col])):
 
+            if tr % 100 == 0:
+                print("Processing TR {}.".format(tr))
+
             if self.stimulus_df[attention_col][tr] is None:
                 tr_attention_vector_array.append(None)
                 continue
@@ -302,7 +305,11 @@ class TransformerRSM(object):
                     head_matrix = self.stimulus_df[attention_col][tr][layer][head]
 
                     # Iterate over entries in attention matrix, weighting attention by lookback distance
-                    # Note that this *relies* on having zeroed the upper triangle during masking process.
+                    # Should switch to using Torch's lower-triangular indices, because this is currently very slow.
+                    # https://pytorch.org/docs/stable/generated/torch.tril_indices.html
+
+                    # a = torch.tril_indices(*head_matrix.shape, -1)
+
                     for i, row in enumerate(head_matrix):
                         for j, col in enumerate(row):
                             distance = i - j
