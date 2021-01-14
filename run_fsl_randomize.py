@@ -8,10 +8,10 @@ subs=['sub-075', 'sub-131', 'sub-190', 'sub-201', 'sub-235', 'sub-244',
        'sub-265', 'sub-266', 'sub-267', 'sub-268', 'sub-269', 'sub-270',
        'sub-271']
 
-layer_names=['layer_'+str(i)+"_activations" for i in range(13)]
-layer_names.append('semantic_composition')
-layer_names.append('syntactic_complexity_L-inf')
-layer_names.append('syntactic_distance')
+layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)]
+layer_names.append('21st_year_bert-base-uncased_semantic_composition')
+layer_names.append('21st_year_bert-base-uncased_syntactic_complexity')
+layer_names.append('21st_year_bert-base-uncased_syntactic_distance')
 
 d='/jukebox/griffiths/bert-brains/'
 results_prefix=d+'results/21st_year/'

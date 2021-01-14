@@ -5,6 +5,7 @@ import sys
 from sklearn.model_selection import KFold 
 from scipy.stats import pearsonr
 from sklearn.model_selection import TimeSeriesSplit
+from sklearn.model_selection import train_test_split
 sub=sys.argv[1]
 layer_dir=sys.argv[2]
 layer_name=sys.argv[3]
@@ -41,29 +42,35 @@ def process(i):
 	X=features
 	#print(X.shape,y.shape,data.shape)
 	test_performances=[]
-	skf=KFold(n_splits=3,shuffle=False)
-	for train_index,test_index in skf.split(X):
-		X_train,X_test=X[train_index],X[test_index]
-		y_train,y_test=y[train_index],y[test_index]
+	#skf=KFold(n_splits=3,shuffle=False)
+	#for train_index,test_index in skf.split(X):
 
+	#X_train,X_test=X[train_index],X[test_index]
+	#y_train,y_test=y[train_index],y[test_index]
+	X_train,X_test=X[:-750],X[-750:]
+	y_train,y_test=y[:-750],y[-750:] 
 
-		X_trainval,X_testval=X_train[:-300],X_train[-300:]
-		y_trainval,y_testval=y_train[:-300],y_train[-300:] 
+	X_trainval,X_testval=X_train[:-300],X_train[-300:]
+	y_trainval,y_testval=y_train[:-300],y_train[-300:] 
 
-		alphas=[0.001,0.001,0.1,1.0]
+	alphas=[0.0001,0.001,0.01,1.0]
 
-		val_performances=[]
-		for alpha in alphas:
-			model=Ridge(alpha=alpha,normalize=True)
-			model.fit(X_trainval,y_trainval)
-			y_hatval=model.predict(X_testval)
-			val_performances.append(pearsonr(y_hatval[:,0],y_testval[:,0])[0])
+	val_performances=[]
+	for alpha in alphas:
+		model=Ridge(alpha=alpha,normalize=False)
+		X_trainval=(X_trainval-X_trainval.mean(axis=0))/(X_trainval.std(axis=0,ddof=1)+1e-9) 
+		model.fit(X_trainval,y_trainval)
+		X_testval=(X_testval-X_testval.mean(axis=0))/(X_testval.std(axis=0,ddof=1)+1e-9) 
+		y_hatval=model.predict(X_testval)
+		val_performances.append(pearsonr(y_hatval[:,0],y_testval[:,0])[0])
 
-		tuned=alphas[np.argmax(val_performances)]
-		model=Ridge(alpha=tuned,normalize=True) 
-		model.fit(X_train,y_train)
-		y_hat=model.predict(X_test)
-		test_performances.append(pearsonr(y_hat[:,0],y_test[:,0])[0])
+	tuned=alphas[np.argmax(val_performances)]
+	model=Ridge(alpha=tuned,normalize=False) 
+	X_train=(X_train-X_train.mean(axis=0))/(X_train.std(axis=0,ddof=1)+1e-9) 
+	model.fit(X_train,y_train)
+	X_test=(X_test-X_test.mean(axis=0))/(X_test.std(axis=0,ddof=1)+1e-9)  
+	y_hat=model.predict(X_test)
+	test_performances.append(pearsonr(y_hat[:,0],y_test[:,0])[0])
 
 	return np.mean(test_performances) 
 
@@ -71,5 +78,5 @@ def process(i):
 inputs=list(range(r1,r2))
 results=np.asarray([process(i) for i in inputs])
 
-np.save(output_name,results) 
+np.save(output_name,results)   
 
