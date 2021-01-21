@@ -1,8 +1,8 @@
 import pandas as pd 
 import numpy as np 
 import pickle
-to_convert=['data/21st_year/bert-base-uncased/syntactic_analyses/21st_year_bert-base-uncased_syntactic_complexity_L-inf.pkl',
-'data/21st_year/bert-base-uncased/syntactic_analyses/21st_year_bert-base-uncased_syntactic_distance.pkl']
+to_convert=['data/21st_year/gpt2/syntactic_analyses/21st_year_gpt2_syntactic_complexity_L-inf.pkl',
+'data/21st_year/gpt2/syntactic_analyses/21st_year_gpt2_syntactic_distance.pkl','data/21st_year/gpt2/syntactic_analyses/21st_year_gpt2_semantic_composition_max_l2.pkl']
 
 for fname in to_convert:
 	df=pickle.load(open(fname,'rb'))

@@ -30,6 +30,7 @@ data=data[big_mask]
 #big_mask=np.zeros(big_mask.shape)
 #big_mask[40,30,40]=1
 raw_rsm=np.load(layer_dir)[960:,960:]
+raw_rsm[np.isnan(raw_rsm)]=0.0
 bcvar=raw_rsm[np.triu(np.ones(raw_rsm.shape),k=3).astype('bool')]
 
 def rsa(bolddata,bcvar):
@@ -37,7 +38,7 @@ def rsa(bolddata,bcvar):
     human=np.corrcoef(bolddata_sl[:,:])
     vec=human[np.triu(np.ones(human.shape),k=3).astype('bool')]
     vec[np.isnan(vec)]=0
-    return pearsonr(vec,bcvar)[0]
+    return pearsonr(vec,bcvar)[0] 
 
 def process(i):
 	if space[i,0]<0:

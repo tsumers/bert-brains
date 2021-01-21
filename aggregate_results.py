@@ -24,17 +24,17 @@ if numbers[-1]!=size:
         numbers.append(size)
 #layer_names=['layer_'+str(i)+"_activations" for i in range(13)]
 
-layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
+layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)]   
 layer_prefix=d+'code/bert-brains/data/21st_year/bert-base-uncased/raw_embeddings/'
-layer_dirs=[layer_prefix+layer+".npy" for layer in layer_names]
-data_dir=d+"21styear_data/"
+layer_dirs=[layer_prefix+layer+".npy" for layer in layer_names] 
+data_dir=d+"21styear_data/"   
 
 layer_prefix=d+'code/bert-brains/data/21st_year/bert-base-uncased/syntactic_analyses/'
 layer_names.append('21st_year_bert-base-uncased_semantic_composition')
 layer_dirs.append(layer_prefix+"21st_year_bert-base-uncased_semantic_composition_max_l2.npy")
 layer_names.append('21st_year_bert-base-uncased_syntactic_complexity')
-layer_dirs.append(layer_prefix+"21st_year_bert-base-uncased_syntactic_complexity_L-inf.npy")
-layer_names.append('21st_year_bert-base-uncased_syntactic_distance')
+layer_dirs.append(layer_prefix+"21st_year_bert-base-uncased_syntactic_complexity_L-inf-T20.npy")
+layer_names.append('21st_year_bert-base-uncased_syntactic_distance') 
 layer_dirs.append(layer_prefix+"21st_year_bert-base-uncased_syntactic_distance.npy") 
 
 
@@ -63,5 +63,5 @@ for sub in subs:
 		volume[mask]=sl_voxels
 		affine=nib.load(data_dir+sub+".nii.gz").affine 
 		nii=nib.Nifti1Image(volume,affine)
-		nib.save(nii,result_dir+sub+"_whole_brain_encoding.nii.gz")  
+		nib.save(nii,result_dir+sub+"_whole_brain_encoding.nii.gz")   
 			

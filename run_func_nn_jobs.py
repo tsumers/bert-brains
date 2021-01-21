@@ -39,9 +39,9 @@ for sub in subs:
 		#	begin_trim="15"
 		#	end_trim="2240" 
 
-	layer_name="syntactic_complexity"
-	layer_dir=rsm_prefix+'syntactic_analyses/syntactic_complexity_rsm.npy'
-	begin_trim="16"
+	layer_name="linguistic_feats"
+	layer_dir=d+'code/bert-brains/data/21st_year/linguistic_feats_rsm.npy' 
+	begin_trim="15" 
 	end_trim="2240"
 	j=0 
 	while j<len(numbers)-1: 
