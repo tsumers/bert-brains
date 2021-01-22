@@ -39,7 +39,7 @@ elif 'slumlordreach' in data_dir:
 			else:
 				raw_features.append(load_features[i])
 	raw_features=np.vstack(raw_features)
-	load_data=nii.get_fdata()[:,:,:,:1205]
+	load_data=nii.get_fdata()[:,:,:,:1192+3]  
 	desired_size=raw_features.shape[0]
 	curr_size=load_data.shape[3]
 	raw_data=nii.get_fdata()[:,:,:,curr_size-desired_size:]
