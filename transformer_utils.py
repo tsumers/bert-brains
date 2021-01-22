@@ -279,7 +279,7 @@ class TransformerRSM(object):
 
         self.stimulus_df["attention_heads_L{}".format(p)] = tr_attention_vector_array
 
-    def compute_attention_head_distances(self, attention_col="masked_attentions", to_return=15):
+    def compute_attention_head_distances(self, attention_col="masked_attentions"):
         """ Implements Attention Distance metric as in:
         https://www.aclweb.org/anthology/W19-4808.pdf
         """
@@ -308,6 +308,7 @@ class TransformerRSM(object):
                     # Should switch to using Torch's lower-triangular indices, because this is currently very slow.
                     # https://pytorch.org/docs/stable/generated/torch.tril_indices.html
 
+                    # to return just indices below the diagonal:
                     # a = torch.tril_indices(*head_matrix.shape, -1)
 
                     for i, row in enumerate(head_matrix):
@@ -319,6 +320,47 @@ class TransformerRSM(object):
                     tr_attention_vector_array[-1][-1].append(attention_distance)
 
         self.stimulus_df["attention_distances"] = tr_attention_vector_array
+
+    def compute_attention_head_distances_fast(self, attention_col="masked_attentions"):
+        """ Implements Attention Distance metric as in:
+        https://www.aclweb.org/anthology/W19-4808.pdf
+        """
+
+        # First, build the appropriate dimension distance-weighting mask.
+        # Choose TR magic number 100 because by this point we've (almost certainly) built up enough
+        # context to actually have an attention matrix (this is about 2.5 min into story).
+        # We just need to get the dimensions so we can build the right shaped mask.
+        example_head_matrix = self.stimulus_df[attention_col][100][0][0]
+        n_tokens = example_head_matrix.shape[0]
+
+        # Construct our distance mask
+        index_array = np.array(range(1, n_tokens + 1))
+        columns = np.tile(index_array, (n_tokens, 1))
+        rows = np.tile(index_array, (n_tokens, 1)).T
+        distance_mask = (rows - columns).clip(min=0)
+
+        tr_attention_vector_array = []
+        for tr in range(0, len(self.stimulus_df[attention_col])):
+
+            if tr % 100 == 0:
+                print("Processing TR {}.".format(tr))
+
+            if self.stimulus_df[attention_col][tr] is None:
+                tr_attention_vector_array.append(None)
+                continue
+            else:
+                # One entry per TR
+                tr_attention_vector_array.append([])
+
+            for layer in range(0, len(self.stimulus_df[attention_col][tr])):
+                # One entry per layer
+                tr_attention_vector_array[-1].append([])
+                for head in range(0, len(self.stimulus_df[attention_col][tr][layer])):
+                    head_matrix = self.stimulus_df[attention_col][tr][layer][head]
+                    distance_weighted_attention = np.multiply(distance_mask, head_matrix)
+                    tr_attention_vector_array[-1][-1].append(distance_weighted_attention.sum())
+
+        self.stimulus_df["attention_distances_fast"] = tr_attention_vector_array
 
     def mean_tr_response_across_tokens(self, input_tensor_name="activations"):
         """tr_tensor is tr x layer x tokens; squash it to tr x layer x mean and return that."""
