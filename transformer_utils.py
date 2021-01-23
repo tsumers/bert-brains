@@ -135,13 +135,25 @@ class TransformerRSM(object):
         tr_chunked_tokens = self.stimulus_df.tokens.values
         tr_attentions_array = []
         tr_tokens_array = []
+        first_successful_window = None
 
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
 
             # Get all of the stimulus up to this point (since we'll chop it down later)
-            window_stimulus = " ".join(tr_chunked_tokens[max(0, i-60):i + 1])
+            # N.B. if there are *missing* attention windows in the middle of the sequence, this is likely the culprit.
+            # Increase it or remove it.
+            PRECEEDING_TR_CONTEXT_CAP = 200
+            window_stimulus = " ".join(tr_chunked_tokens[max(0, i - PRECEEDING_TR_CONTEXT_CAP):i + 1])
 
+            if i % 100 == 0:
+                print("Processing TR {}".format(i))
+
+            # Dangerous, but suppresses an annoying error message that comes up if we don't do this.
+            # https://github.com/huggingface/transformers/issues/3050#issuecomment-682167272
+            if self.verbose is False:
+                import logging
+                set_global_logging_level(logging.ERROR)
             # Get the list of BERT tokens involved in that window
             window_tokens = self.tokenizer.encode_plus(window_stimulus, return_tensors='pt',
                                                        add_special_tokens=self.use_special_tokens)
@@ -151,12 +163,20 @@ class TransformerRSM(object):
             window_token_ids = window_tokens['input_ids']
 
             if len(window_token_ids[0]) < num_window_tokens:
+                if first_successful_window is not None:
+                    raise ValueError("ERROR: failed attention context window in middle of sequence. \
+                    Consider adjusting PRECEEDING_TR_CONTEXT_CAP upwards.")
+
                 # We don't have enough words yet. This is typical for the first few TRs-- we need to build up context.
                 tr_attentions_array.append(None)
                 tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(window_token_ids[0].tolist()))
+
                 if self.verbose:
                     print("TR {}: not enough tokens ({}/{})".format(i, len(window_token_ids[0]), num_window_tokens))
                 continue
+
+            else:
+                first_successful_window = i
 
             # N.B.: we don't currently account for CLS / SEP token here, so we'll have 18-19 "usable" tokens in the
             # case that we have them in input.
@@ -284,53 +304,11 @@ class TransformerRSM(object):
         https://www.aclweb.org/anthology/W19-4808.pdf
         """
 
-        tr_attention_vector_array = []
-        for tr in range(0, len(self.stimulus_df[attention_col])):
-
-            if tr % 100 == 0:
-                print("Processing TR {}.".format(tr))
-
-            if self.stimulus_df[attention_col][tr] is None:
-                tr_attention_vector_array.append(None)
-                continue
-            else:
-                # One entry per TR
-                tr_attention_vector_array.append([])
-
-            for layer in range(0, len(self.stimulus_df[attention_col][tr])):
-                # One entry per layer
-                tr_attention_vector_array[-1].append([])
-                for head in range(0, len(self.stimulus_df[attention_col][tr][layer])):
-                    attention_distance = 0
-                    head_matrix = self.stimulus_df[attention_col][tr][layer][head]
-
-                    # Iterate over entries in attention matrix, weighting attention by lookback distance
-                    # Should switch to using Torch's lower-triangular indices, because this is currently very slow.
-                    # https://pytorch.org/docs/stable/generated/torch.tril_indices.html
-
-                    # to return just indices below the diagonal:
-                    # a = torch.tril_indices(*head_matrix.shape, -1)
-
-                    for i, row in enumerate(head_matrix):
-                        for j, col in enumerate(row):
-                            distance = i - j
-                            attention = head_matrix[i][j].item()
-                            attention_distance += attention * distance
-
-                    tr_attention_vector_array[-1][-1].append(attention_distance)
-
-        self.stimulus_df["attention_distances"] = tr_attention_vector_array
-
-    def compute_attention_head_distances_fast(self, attention_col="masked_attentions"):
-        """ Implements Attention Distance metric as in:
-        https://www.aclweb.org/anthology/W19-4808.pdf
-        """
-
         # First, build the appropriate dimension distance-weighting mask.
         # Choose TR magic number 100 because by this point we've (almost certainly) built up enough
         # context to actually have an attention matrix (this is about 2.5 min into story).
         # We just need to get the dimensions so we can build the right shaped mask.
-        example_head_matrix = self.stimulus_df[attention_col][100][0][0]
+        example_head_matrix = self.stimulus_df[attention_col][200][0][0]
         n_tokens = example_head_matrix.shape[0]
 
         # Construct our distance mask
@@ -358,9 +336,9 @@ class TransformerRSM(object):
                 for head in range(0, len(self.stimulus_df[attention_col][tr][layer])):
                     head_matrix = self.stimulus_df[attention_col][tr][layer][head]
                     distance_weighted_attention = np.multiply(distance_mask, head_matrix)
-                    tr_attention_vector_array[-1][-1].append(distance_weighted_attention.sum())
+                    tr_attention_vector_array[-1][-1].append(distance_weighted_attention.sum().item())
 
-        self.stimulus_df["attention_distances_fast"] = tr_attention_vector_array
+        self.stimulus_df["attention_distances"] = tr_attention_vector_array
 
     def mean_tr_response_across_tokens(self, input_tensor_name="activations"):
         """tr_tensor is tr x layer x tokens; squash it to tr x layer x mean and return that."""
@@ -436,3 +414,21 @@ class TransformerRSM(object):
 
         rsm_dataframe = pd.DataFrame(np.corrcoef(tr_layer_tensor))
         return rsm_dataframe
+
+
+def set_global_logging_level(level=logging.ERROR, prefices=[""]):
+    """
+    Override logging levels of different modules based on their name as a prefix.
+    It needs to be invoked after the modules have been loaded so that their loggers have been initialized.
+
+    Args:
+        - level: desired level. e.g. logging.INFO. Optional. Default is logging.ERROR
+        - prefices: list of one or more str prefices to match (e.g. ["transformers", "torch"]). Optional.
+          Default is `[""]` to match all active loggers.
+          The match is a case-sensitive `module_name.startswith(prefix)`
+    """
+    import re
+    prefix_re = re.compile(fr'^(?:{"|".join(prefices)})')
+    for name in logging.root.manager.loggerDict:
+        if re.match(prefix_re, name):
+            logging.getLogger(name).setLevel(level)
