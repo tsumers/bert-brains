@@ -34,20 +34,35 @@ elif 'slumlordreach' in data_dir:
 	raw_features=[]
 	for i in range(load_features.shape[0]):
 		if load_features[i] is not None and len(load_features[i])>0:
-			if 'semantic_composition_max_l2' in layer_dir:
+			if 'semantic_composition' in layer_dir:
 				raw_features.append(load_features[i][0])
 			else:
 				raw_features.append(load_features[i])
 	raw_features=np.vstack(raw_features)
-	load_data=nii.get_fdata()[:,:,:,:1192+3]  
-	desired_size=raw_features.shape[0]
-	curr_size=load_data.shape[3]
-	raw_data=nii.get_fdata()[:,:,:,curr_size-desired_size:]
+
+	shifted=[]
+	delays=[2,3,4,5]
+	for d in delays:
+		arr=np.zeros((raw_features.shape[0]+5,raw_features.shape[1]))
+		arr[d:raw_features.shape[0]+d,:]=raw_features
+		shifted.append(arr)
+	features=np.hstack(shifted)
+
+	begin_delay=3+(1192-raw_features.shape[0])
+
+	load_data=nii.get_fdata()[:,:,:,begin_delay:1205]  
+	features=features[10:-10,:]
+	raw_data=load_data[:,:,:,10:-10]
+
+	trailing=raw_data.shape[3]-features.shape[0]
+	raw_data=raw_data[:,:,:,:-trailing]
+	print(raw_data.shape,features.shape)
+	assert raw_data.shape[3]==features.shape[0]
 
 
 
 
-features=np.asarray([np.hstack([raw_features[tr+2],raw_features[tr+3],raw_features[tr+4],raw_features[tr+5]]) for tr in range(raw_features.shape[0]-5)])
+#features=np.asarray([np.hstack([raw_features[tr+2],raw_features[tr+3],raw_features[tr+4],raw_features[tr+5]]) for tr in range(raw_features.shape[0]-5)])
 #features=np.asarray([raw_features[tr+3] for tr in range(raw_features.shape[0]-3)])
 #data = nii.get_fdata()[:,:,:,begin_trim:end_trim-3]
 big_mask_nii=nib.load(data_dir+"whole_brain_mask.nii.gz")
@@ -65,7 +80,6 @@ for p in range(num_parcels):
   
 
 def process(i):
-	#print(i)
 	y=data[i,:].reshape((-1,1)) 
 	X=features
 	#print(X.shape,y.shape,data.shape)
@@ -100,7 +114,7 @@ def process(i):
 		y_hat=model.predict(X_test)
 		test_performances.append(pearsonr(y_hat[:,0],y_test[:,0])[0])
 		#print(test_performances[-1])
-
+	#print(i,np.mean(test_performances))
 	return np.mean(test_performances) 
 
 
