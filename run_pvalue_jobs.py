@@ -3,23 +3,31 @@ import os
 
 d="/jukebox/griffiths/bert-brains/"
 
-layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
-save_prefix=d+"results/slumlordreach/"
-save_dirs=[save_prefix+"encoding-"+layer+"/" for layer in layer_names]
 
-layer_prefix=d+'code/bert-brains/data/slumlordreach/bert-base-uncased/syntactic_analyses/'
+#Black 
+layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
+layer_prefix=d+'code/bert-brains/data/black/bert-base-uncased/raw_embeddings/'
+save_prefix=d+"results/black/"
+layer_dirs=[layer_prefix+"black_bert-base-uncased_"+layer+".npy" for layer in layer_names] 
+save_dirs=[save_prefix+"encoding-"+layer+"/" for layer in layer_names] 
+save_dirs=[]
+layer_prefix=d+'code/bert-brains/data/black/bert-base-uncased/syntactic_analyses/'
 for fname in os.listdir(layer_prefix):
+	layer_names.append(fname[:-4]) 
+	layer_dirs.append(layer_prefix+fname)
 	save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
 
-"""
+
+""" Slumlordreach
 layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
-save_prefix=d+"results/21st_year/"  
-save_dirs=[]
-#save_dirs=[save_prefix+"encoding-"+layer+"/" for layer in layer_names]
-save_dirs.append(save_prefix+"encoding-semantic_composition/")
-#save_dirs.append(save_prefix+"encoding-syntactic_complexity_L-inf/")
-#save_dirs.append(save_prefix+"encoding-syntactic_distance/")
+save_prefix=d+"results/slumlordreach/"
+save_dirs=[save_prefix+"encoding-gpt_"+layer+"/" for layer in layer_names]
+
+layer_prefix=d+'code/bert-brains/data/slumlordreach/gpt2/syntactic_analyses/'
+for fname in os.listdir(layer_prefix):
+	save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
 """
+
 
 begin="""#!/usr/bin/env bash
 # Input python command to be submitted as a job 

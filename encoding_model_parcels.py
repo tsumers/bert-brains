@@ -59,21 +59,58 @@ elif 'slumlordreach' in data_dir:
 	print(raw_data.shape,features.shape)
 	assert raw_data.shape[3]==features.shape[0]
 
+	val_size=300
+
+elif 'black' in data_dir:
+	load_features=np.load(layer_dir,allow_pickle=True)
+	raw_features=[]
+	for i in range(load_features.shape[0]):
+		if load_features[i] is not None and len(load_features[i])>0:
+			if 'semantic_composition' in layer_dir:
+				raw_features.append(load_features[i][0])
+			else:
+				raw_features.append(load_features[i])
+	raw_features=np.vstack(raw_features)
+	begin_delay=534-raw_features.shape[0]
+
+	shifted=[]
+	delays=[2,3,4,5]
+	for d in delays:
+		arr=np.zeros((raw_features.shape[0]+5,raw_features.shape[1]))
+		arr[d:raw_features.shape[0]+d,:]=raw_features
+		shifted.append(arr)
+	features=np.hstack(shifted)
+
+	load_data=nii.get_fdata()[:,:,:,8:-8]
+	raw_data=load_data[:,:,:,begin_delay:]
+
+	features=features[10:-10,:]
+	raw_data=raw_data[:,:,:,10:-10]
+
+
+	trailing=features.shape[0]-raw_data.shape[3]
+	features=features[:-trailing]
+	
+	assert raw_data.shape[3]==features.shape[0]
+
+	val_size=70
+
+	  
+
+
 
 
 
 #features=np.asarray([np.hstack([raw_features[tr+2],raw_features[tr+3],raw_features[tr+4],raw_features[tr+5]]) for tr in range(raw_features.shape[0]-5)])
 #features=np.asarray([raw_features[tr+3] for tr in range(raw_features.shape[0]-3)])
 #data = nii.get_fdata()[:,:,:,begin_trim:end_trim-3]
-big_mask_nii=nib.load(data_dir+"whole_brain_mask.nii.gz")
-big_mask=big_mask_nii.get_fdata().astype('bool')
-affine=big_mask_nii.affine
-parcellation=nib.load("/jukebox/griffiths/bert-brains/Schaefer1000_3mm.nii.gz").get_fdata().astype('int')
+parcellation_nii=nib.load(data_dir+"Schaefer1000_3mm.nii.gz")
+affine=parcellation_nii.affine
+parcellation=parcellation_nii.get_fdata().astype('int') 
 num_parcels=1000
 data=np.zeros((num_parcels,raw_data.shape[-1]))
 for p in range(num_parcels):
 	data[p,:]=raw_data[np.where(parcellation==p+1)].mean(axis=0) 
-
 
 
 
@@ -92,8 +129,8 @@ def process(i):
 		#X_train,X_test=X[:-750],X[-750:]
 		#y_train,y_test=y[:-750],y[-750:] 
 
-		X_trainval,X_testval=X_train[:-300],X_train[-300:]
-		y_trainval,y_testval=y_train[:-300],y_train[-300:] 
+		X_trainval,X_testval=X_train[:-val_size],X_train[-val_size:]
+		y_trainval,y_testval=y_train[:-val_size],y_train[-val_size:] 
 
 		alphas=[0.00001,0.0001,0.001,0.01,1.0]
 
@@ -127,4 +164,4 @@ for i in range(num_parcels):
 	results_volume[np.where(parcellation==i+1)]=raw_results[i]
 
 result_nii=nib.Nifti1Image(results_volume,affine)  
-nib.save(result_nii,output_name)
+nib.save(result_nii,output_name) 
