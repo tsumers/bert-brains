@@ -216,7 +216,7 @@ class TransformerRSM(object):
 
     # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
 
-    def _mask_head_attention(self, head_matrix, window, mask_token_self_attention=True):
+    def _mask_head_attention(self, head_matrix, window, include_backwards=True, include_forwards=True):
         """Mask out (e.g. set to zero) all token-token attention weights that are not of interest."""
 
         masked_head_matrix = head_matrix.detach().clone()
@@ -236,16 +236,20 @@ class TransformerRSM(object):
             masked_head_matrix[:, 0] = 0
             masked_head_matrix[0, :] = 0
 
-        # Remove tokens' attentions to themselves
-        if mask_token_self_attention:
-            masked_head_matrix.fill_diagonal_(0)
+        # Mask out tokens' attentions to themselves
+        masked_head_matrix.fill_diagonal_(0)
 
-        # Wipe forward attention for tokens in TR
-        # https://pytorch.org/docs/stable/generated/torch.tril.html#torch.tril
-        masked_head_matrix.tril_()
+        # Mask out attention between non-TR tokens
+        masked_head_matrix[:-window, :-window] = 0
 
-        # Finally, mask attention *from* preceding (non-window) tokens
-        masked_head_matrix[:-window, :] = 0
+        # If we don't want forward attentions (e.g. previous tokens looking to this TR)
+        if include_forwards is False:
+            # Then only keep below diagonal
+            masked_head_matrix.triu_()
+        # If we don't want backwards attentions (e.g. tokens in this TR looking to previous tokens)
+        if include_backwards is False:
+            # Then only keep above the diagonal
+            masked_head_matrix.tril_()
 
         return masked_head_matrix
 
@@ -315,7 +319,7 @@ class TransformerRSM(object):
         index_array = np.array(range(1, n_tokens + 1))
         columns = np.tile(index_array, (n_tokens, 1))
         rows = np.tile(index_array, (n_tokens, 1)).T
-        distance_mask = (rows - columns).clip(min=0)
+        distance_mask = abs((rows - columns))
 
         tr_attention_vector_array = []
         for tr in range(0, len(self.stimulus_df[attention_col])):
