@@ -45,8 +45,8 @@ def get_result(rep,threshold=0.95):
                 full_data[p,i]=data_sub[np.where(parcellation==p+1)][0]
         for i in range(len(subs)):
             full_results.append(full_data[:,i].reshape((-1,1)))
-    
-    result_array=np.mean(full_results,axis=1)
+    full_results=np.asarray(full_results)[:,:,0]
+    result_array=np.mean(full_results,axis=0) 
     result_dir=d 
     result_volume=np.zeros(parcellation.shape)
     for i,value in enumerate(result_array):

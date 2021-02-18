@@ -19,7 +19,7 @@ for dataset in ['black','slumlordreach']:
 			d1=prefix+dataset+"/encoding-"+dataset+"_"+d+"/"
 		else:
 			d1=prefix+dataset+"/encoding-"+d+"/"
-		print(os.path.isdir(d1),d1) 
+		print(os.path.isdir(d1),d1)  
 
 
 
