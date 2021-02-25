@@ -239,7 +239,7 @@ class TransformerRSM(object):
         # Mask out tokens' attentions to themselves
         masked_head_matrix.fill_diagonal_(0)
 
-        # Mask out attention between non-TR tokens
+        # Mask out attention between non-TR tokens (e.g. upper-left chunk)
         masked_head_matrix[:-window, :-window] = 0
 
         # If we don't want forward attentions (e.g. previous tokens looking to this TR)
@@ -253,7 +253,8 @@ class TransformerRSM(object):
 
         return masked_head_matrix
 
-    def mask_non_tr_attentions(self, num_tokens_per_tr=None):
+    def mask_non_tr_attentions(self, num_tokens_per_tr=None, include_backwards=True, include_forwards=True,
+                               masked_col_name="masked_attentions"):
         """Iterate over the attentions array and mask out attentions that (probably) don't contribute meaningfully.
 
         num_tokens_per_tr is an estimate for how many BERT/GPT tokens appear per TR. This function will mask out
@@ -264,7 +265,7 @@ class TransformerRSM(object):
         # Attention structure: = stimulus_df[num_trs][num_layers][heads][from_token][to_token]
         # so for bert-base-uncased, 10 TRs: [10][12][12][num_window_tokens][num_window_tokens]
 
-        masked = copy.deepcopy(self.stimulus_df.attentions)
+        masked = copy.deepcopy(self.stimulus_df.attentions.values)
 
         if num_tokens_per_tr is None:
             n_tokens = self.stimulus_df.n_transformer_tokens_in_tr
@@ -278,9 +279,11 @@ class TransformerRSM(object):
 
             for layer in range(0, len(masked[tr])):
                 for head in range(0, len(masked[tr][layer])):
-                    masked[tr][layer][head] = self._mask_head_attention(masked[tr][layer][head], n_tokens[tr])
+                    masked[tr][layer][head] = self._mask_head_attention(masked[tr][layer][head], n_tokens[tr],
+                                                                        include_backwards=include_backwards,
+                                                                        include_forwards=include_forwards)
 
-        self.stimulus_df["masked_attentions"] = masked
+        self.stimulus_df[masked_col_name] = masked
 
     def compute_attention_head_magnitudes(self, p='inf', attention_col="masked_attentions"):
 
