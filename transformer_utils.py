@@ -74,9 +74,6 @@ class TransformerRSM(object):
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
 
-            # Add a new empty array to our BERT outputs
-            tr_activations_array.append([])
-
             # Get the full context window for this TR, e.g. the appropriate preceding number of TRs.
             context_window_index_start = max(0, i - num_context_trs)
             window_stimulus = " ".join(tr_chunked_tokens[context_window_index_start:i + 1])
@@ -85,48 +82,40 @@ class TransformerRSM(object):
 
             tr_token_ids = torch.tensor([self.tokenizer.encode(tr, add_special_tokens=False)])[0]
 
+            # For empty TRs, append None and continue on.
+            # We'll forward-fill these later.
+            if len(tr_token_ids) == 0:
+                tr_tokens_array.append(None)
+                tr_activations_array.append(None)
+                continue
+
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
 
-            if len(tr_token_ids) > 0:
-                tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
-                if self.verbose:
-                    print("\nTR {}: Window Stimulus: {}".format(i, window_stimulus))
-                    print("\t TR stimulus: {}".format(tr_tokens))
-            else:
-                if self.last_token_index is None:
-                    tr_tokens = self.tokenizer.convert_ids_to_tokens(
-                        window_token_ids[0][-1:].numpy())
-                else:
-                    tr_tokens = self.tokenizer.convert_ids_to_tokens(
-                        window_token_ids[0][-2:self.last_token_index].numpy())
-                if self.verbose:
-                    print("Empty TR. Using token: {}".format(tr_tokens))
-
+            tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
             tr_tokens_array.append(tr_tokens)
 
+            if self.verbose:
+                print("\nTR {}: Window Stimulus: {}".format(i, window_stimulus))
+                print("\t TR stimulus: {}".format(tr_tokens))
+
+            # Add a new empty array to our BERT outputs
+            tr_activations_array.append([])
             for layer in embeddings:
 
-                if len(tr_token_ids) > 0:
-                    # last_token_index is either -1 or None
-                    # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
-                    # If None, we include the last token (e.g. for GPT)
-                    tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
-
-                else:
-
-                    # ASSUMPTION: if we don't have any tokens in this TR, use the last "content" token's representation.
-                    if self.last_token_index is None:
-                        tr_activations = layer[0][-1:]
-                    else:
-                        tr_activations = layer[0][-2:self.last_token_index]
-
-                # Append this set of activations onto our list of stimuli
+                # last_token_index is either -1 or None
+                # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
+                # If None, we include the last token (e.g. for GPT)
+                tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
                 tr_activations_array[-1].append(tr_activations)
 
         self.stimulus_df["activations"] = tr_activations_array
         self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
-        self.stimulus_df["n_transformer_tokens_in_tr"] = [len(tokens) for tokens in tr_tokens_array]
+
+        # Forward-fill our activations, but *not* the tokens-in-TR
+        self.stimulus_df["activations"].ffill(inplace=True)
+
+        self.stimulus_df["n_transformer_tokens_in_tr"] = list(map(lambda x: len(x) if x else 0, tr_tokens_array))
 
         print("Processed {} TRs for activations.".format(len(tr_activations_array)))
 
