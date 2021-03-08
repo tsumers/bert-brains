@@ -91,7 +91,8 @@ class TransformerRSM(object):
             if len(tr_token_ids) > 0:
                 tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
                 if self.verbose:
-                    print("TR {}: {} --> {}".format(i, tr, tr_tokens))
+                    print("\nTR {}: Window Stimulus: {}".format(i, window_stimulus))
+                    print("\t TR stimulus: {}".format(tr_tokens))
             else:
                 if self.last_token_index is None:
                     tr_tokens = self.tokenizer.convert_ids_to_tokens(
