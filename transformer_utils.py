@@ -380,6 +380,38 @@ class TransformerRSM(object):
         # will be [n_tokens], where [0] gives the L2 distance for the first token across the whole model.
         self.stimulus_df["activation_end_to_end_l2_distances"] = activations_end_to_end_l2_difference
 
+    def semantic_composition_from_activations(self):
+
+        end_to_end_mean_l2 = self.stimulus_df["activation_end_to_end_l2_distances"].apply(lambda x: np.mean(x))
+        end_to_end_mean_l2_normed = self.normalize_col(end_to_end_mean_l2)
+
+        end_to_end_max_l2 = self.stimulus_df["activation_end_to_end_l2_distances"].apply(lambda x: np.max(x))
+        end_to_end_max_l2_normed = self.normalize_col(end_to_end_max_l2)
+
+        layerwise_mean_l2 = self.stimulus_df["activation_layerwise_l2_distances"].apply(
+            lambda x: [np.mean(layer) for layer in x])
+        df = pd.DataFrame.from_records(layerwise_mean_l2)
+        normalized = (df - df.mean()) / df.std()
+        layerwise_mean_l2_normed = [list(r) for r in normalized.to_records(index=False)]
+
+        layerwise_max_l2 = self.stimulus_df["activation_layerwise_l2_distances"].apply(
+            lambda x: [np.max(layer) for layer in x])
+        df = pd.DataFrame.from_records(layerwise_max_l2)
+        normalized = (df - df.mean()) / df.std()
+        layerwise_max_l2_normed = [list(r) for r in normalized.to_records(index=False)]
+
+        all_semantic_composition = []
+        for layerwise_mean, e2e_mean, layerwise_max, e2e_max in zip(layerwise_mean_l2_normed, end_to_end_mean_l2_normed,
+                                                                    layerwise_max_l2_normed, end_to_end_max_l2_normed):
+            all_semantic_composition.append(layerwise_max + [e2e_max] + layerwise_mean + [e2e_mean])
+
+        self.stimulus_df["semantic_composition"] = all_semantic_composition
+
+    @classmethod
+    def normalize_col(cls, col):
+        de_meaned = col - col.mean()
+        return de_meaned / de_meaned.std()
+
     @classmethod
     def layer_activations_from_tensor(cls, tr_layer_tensor, layer_index):
         """Return all entries for a given layer across all TRs."""
