@@ -16,7 +16,7 @@ prefix="/jukebox/griffiths/bert-brains/results/"
 for dataset in ['black','slumlordreach']:
 	for d in ds:
 		if 'activations' not in d: 
-			d1=prefix+dataset+"/encoding-"+dataset+"_"+d+"/"
+			d1=prefix+dataset+"/encoding-"+dataset+"_"+d+"/" 
 		else:
 			d1=prefix+dataset+"/encoding-"+d+"/"
 		print(os.path.isdir(d1),d1)  
@@ -38,16 +38,16 @@ for fname in os.listdir(layer_prefix):
 	save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
 
 """
-""" Slumlordreach
+# Slumlordreach
 layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
-save_prefix=d+"results/slumlordreach/"
-save_dirs=[save_prefix+"encoding-gpt_"+layer+"/" for layer in layer_names]
+save_prefix="/jukebox/griffiths/bert-brains/results/slumlordreach/"
+save_dirs=[save_prefix+"encoding-"+layer+"/" for layer in layer_names]  
 
-layer_prefix=d+'code/bert-brains/data/slumlordreach/gpt2/syntactic_analyses/'
+layer_prefix='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/syntactic_analyses/'
 for fname in os.listdir(layer_prefix):
 	save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
-"""
 
+print(ds)
 begin="""#!/usr/bin/env bash
 # Input python command to be submitted as a job 
 
@@ -65,4 +65,5 @@ for i,rep in enumerate(ds):
 		out.write("python -u calculate_bootstrap_pvalue.py "+rep) 
 		out.close()
 	os.system('sbatch boot_job.sh')
+
 

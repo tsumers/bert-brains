@@ -237,6 +237,7 @@ for i in range(num_parcels):
 raw_results=np.asarray(raw_results)
 weights=np.asarray(weights)
 np.save(save_dir+sub+"_encoding_weights.npy",weights) 
+np.save(save_dir+sub+"_parcelwise_results.npy",raw_results)  
 output_name=save_dir+sub+"_parcels_encoding.nii.gz"
 results_volume=np.zeros(parcellation.shape)
 for i in range(num_parcels):

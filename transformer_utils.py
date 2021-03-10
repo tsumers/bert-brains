@@ -74,9 +74,6 @@ class TransformerRSM(object):
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
 
-            # Add a new empty array to our BERT outputs
-            tr_activations_array.append([])
-
             # Get the full context window for this TR, e.g. the appropriate preceding number of TRs.
             context_window_index_start = max(0, i - num_context_trs)
             window_stimulus = " ".join(tr_chunked_tokens[context_window_index_start:i + 1])
@@ -85,47 +82,40 @@ class TransformerRSM(object):
 
             tr_token_ids = torch.tensor([self.tokenizer.encode(tr, add_special_tokens=False)])[0]
 
+            # For empty TRs, append None and continue on.
+            # We'll forward-fill these later.
+            if len(tr_token_ids) == 0:
+                tr_tokens_array.append(None)
+                tr_activations_array.append(None)
+                continue
+
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
 
-            if len(tr_token_ids) > 0:
-                tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
-                if self.verbose:
-                    print("TR {}: {} --> {}".format(i, tr, tr_tokens))
-            else:
-                if self.last_token_index is None:
-                    tr_tokens = self.tokenizer.convert_ids_to_tokens(
-                        window_token_ids[0][-1:].numpy())
-                else:
-                    tr_tokens = self.tokenizer.convert_ids_to_tokens(
-                        window_token_ids[0][-2:self.last_token_index].numpy())
-                if self.verbose:
-                    print("Empty TR. Using token: {}".format(tr_tokens))
-
+            tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
             tr_tokens_array.append(tr_tokens)
 
+            if self.verbose:
+                print("\nTR {}: Window Stimulus: {}".format(i, window_stimulus))
+                print("\t TR stimulus: {}".format(tr_tokens))
+
+            # Add a new empty array to our BERT outputs
+            tr_activations_array.append([])
             for layer in embeddings:
 
-                if len(tr_token_ids) > 0:
-                    # last_token_index is either -1 or None
-                    # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
-                    # If None, we include the last token (e.g. for GPT)
-                    tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
-
-                else:
-
-                    # ASSUMPTION: if we don't have any tokens in this TR, use the last "content" token's representation.
-                    if self.last_token_index is None:
-                        tr_activations = layer[0][-1:]
-                    else:
-                        tr_activations = layer[0][-2:self.last_token_index]
-
-                # Append this set of activations onto our list of stimuli
+                # last_token_index is either -1 or None
+                # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
+                # If None, we include the last token (e.g. for GPT)
+                tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
                 tr_activations_array[-1].append(tr_activations)
 
         self.stimulus_df["activations"] = tr_activations_array
         self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
-        self.stimulus_df["n_transformer_tokens_in_tr"] = [len(tokens) for tokens in tr_tokens_array]
+
+        # Forward-fill our activations, but *not* the tokens-in-TR
+        self.stimulus_df["activations"].ffill(inplace=True)
+
+        self.stimulus_df["n_transformer_tokens_in_tr"] = list(map(lambda x: len(x) if x else 0, tr_tokens_array))
 
         print("Processed {} TRs for activations.".format(len(tr_activations_array)))
 
@@ -389,6 +379,38 @@ class TransformerRSM(object):
 
         # will be [n_tokens], where [0] gives the L2 distance for the first token across the whole model.
         self.stimulus_df["activation_end_to_end_l2_distances"] = activations_end_to_end_l2_difference
+
+    def semantic_composition_from_activations(self):
+
+        end_to_end_mean_l2 = self.stimulus_df["activation_end_to_end_l2_distances"].apply(lambda x: np.mean(x))
+        end_to_end_mean_l2_normed = self.normalize_col(end_to_end_mean_l2)
+
+        end_to_end_max_l2 = self.stimulus_df["activation_end_to_end_l2_distances"].apply(lambda x: np.max(x))
+        end_to_end_max_l2_normed = self.normalize_col(end_to_end_max_l2)
+
+        layerwise_mean_l2 = self.stimulus_df["activation_layerwise_l2_distances"].apply(
+            lambda x: [np.mean(layer) for layer in x])
+        df = pd.DataFrame.from_records(layerwise_mean_l2)
+        normalized = (df - df.mean()) / df.std()
+        layerwise_mean_l2_normed = [list(r) for r in normalized.to_records(index=False)]
+
+        layerwise_max_l2 = self.stimulus_df["activation_layerwise_l2_distances"].apply(
+            lambda x: [np.max(layer) for layer in x])
+        df = pd.DataFrame.from_records(layerwise_max_l2)
+        normalized = (df - df.mean()) / df.std()
+        layerwise_max_l2_normed = [list(r) for r in normalized.to_records(index=False)]
+
+        all_semantic_composition = []
+        for layerwise_mean, e2e_mean, layerwise_max, e2e_max in zip(layerwise_mean_l2_normed, end_to_end_mean_l2_normed,
+                                                                    layerwise_max_l2_normed, end_to_end_max_l2_normed):
+            all_semantic_composition.append(layerwise_max + [e2e_max] + layerwise_mean + [e2e_mean])
+
+        self.stimulus_df["semantic_composition"] = all_semantic_composition
+
+    @classmethod
+    def normalize_col(cls, col):
+        de_meaned = col - col.mean()
+        return de_meaned / de_meaned.std()
 
     @classmethod
     def layer_activations_from_tensor(cls, tr_layer_tensor, layer_index):

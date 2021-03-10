@@ -3,8 +3,8 @@
 
 #SBATCH -p all
 #SBATCH --mem-per-cpu 18G
-#SBATCH --time 1:00:00 
+#SBATCH --time 6:00:00 
 
-#SBATCH --job-name nn_sl_sub-271_layer_11_attention_50000_52422
-#SBATCH --output /scratch/sreejank/slurmnn_sl_sub-271_layer_11_attention_50000_52422.out
-python func_nn_job.py sub-271 /jukebox/griffiths/bert-brains/code/bert-brains/data/21st_year/bert-base-uncased/all_attentions/layer_11_rsm.npy layer_11_attention /jukebox/griffiths/bert-brains/21styear_data/ 1 971 50000 52422
+#SBATCH --job-name nn_sl_sub-271_layer_12_activations_44000_52422
+#SBATCH --output /scratch/sreejank/slurm/nn_sl_sub-271_layer_12_activations_44000_52422.out
+python encoding_model.py sub-271 /jukebox/griffiths/bert-brains/code/bert-brains/data/21st_year/bert-base-uncased/raw_embeddings/layer_12_activations.npy layer_12_activations /jukebox/griffiths/bert-brains/21styear_data/ 15 2240 44000 52422

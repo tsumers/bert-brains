@@ -4,7 +4,7 @@ begin="""#!/usr/bin/env bash
 # Input python command to be submitted as a job 
 
 #SBATCH -p all
-#SBATCH --time 01:00:00"""
+#SBATCH --time 06:00:00"""
 
 model='bert-base-uncased'
 
@@ -18,16 +18,18 @@ else:
 	d2s=['gpt_layer_'+str(i+1)+"_activations" for i in range(12)]
 
 
-d1s.append('semantic_composition_5-TRs')
-d2s.append('semantic_composition_20-TRs') 
-d1s+=['syntactic_complexity_L-1_T-128_D-concat','syntactic_distance_T-128_D-concat','syntactic_complexity_L-1_T-128_D-concat','syntactic_complexity_L-1_T-128_D-concat','syntactic_complexity_L-1_T-128_D-concat','syntactic_complexity_L-1_T-128_D-concat','syntactic_distance_T-128_D-concat','syntactic_distance_T-128_D-concat']
-d2s+=['syntactic_complexity_L-1_T-20_D-concat','syntactic_distance_T-20_D-concat','syntactic_distance_T-128_D-concat','syntactic_complexity_L-inf_T-128_D-concat','syntactic_complexity_L-1_T-128_D-fwd','syntactic_complexity_L-1_T-128_D-bck','syntactic_distance_T-128_D-bck','syntactic_distance_T-128_D-fwd']
+d1s+=['semantic_composition_0-TRs','semantic_composition_1-TRs','semantic_composition_2-TRs','semantic_composition_3-TRs','semantic_composition_4-TRs','semantic_composition_5-TRs','semantic_composition_10-TRs']
+d2s+=['semantic_composition_1-TRs','semantic_composition_2-TRs','semantic_composition_3-TRs','semantic_composition_4-TRs','semantic_composition_5-TRs','semantic_composition_10-TRs','semantic_composition_20-TRs']
+d1s+=['syntactic_complexity_L-inf_T-128_D-concat','syntactic_distance_T-128_D-concat','syntactic_complexity_L-inf_T-128_D-concat','syntactic_complexity_L-inf_T-128_D-concat','syntactic_complexity_L-inf_T-128_D-concat','syntactic_complexity_L-inf_T-128_D-concat','syntactic_distance_T-128_D-concat','syntactic_distance_T-128_D-concat']
+d2s+=['syntactic_complexity_L-inf_T-10_D-concat','syntactic_distance_T-20_D-concat','syntactic_distance_T-128_D-concat','syntactic_complexity_L-inf_T-128_D-concat','syntactic_complexity_L-inf_T-128_D-fwd','syntactic_complexity_L-inf_T-128_D-bck','syntactic_distance_T-128_D-bck','syntactic_distance_T-128_D-fwd']
 
 if model=='bert-base-uncased':
 	names=['BERT_Semantic_1_'+str(i) for i in range(12)]
-	names+=['BERT_'+x for x in ['Semantic_2','Distance_1','Distance_2','Distance_3','Distance_4','Direction_1','Direction_2','Direction_3','Direction_4']]
+	names+=['BERT_Semantic_2_'+str(i) for i in range(7)]
+	names+=['BERT_'+x for x in ['Distance_1','Distance_2','Distance_3','Distance_4','Direction_1','Direction_2','Direction_3','Direction_4']]
 else:
 	names=['GPT2_Semantic_1_'+str(i) for i in range(12)]
+	names+=['GPT2_Semantic_2_'+str(i) for i in range(7)]
 	names=['GPT2_'+x for x in ['Semantic_2','Distance_1','Distance_2','Distance_3','Distance_4','Direction_1','Direction_2','Direction_3','Direction_4']]
 
 
