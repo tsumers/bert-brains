@@ -70,6 +70,7 @@ class TransformerRSM(object):
         tr_chunked_tokens = self.stimulus_df.tokens.values
         tr_activations_array = []
         tr_tokens_array = []
+        tr_z_reps_array = []
 
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
@@ -87,10 +88,15 @@ class TransformerRSM(object):
             if len(tr_token_ids) == 0:
                 tr_tokens_array.append(None)
                 tr_activations_array.append(None)
+                tr_z_reps_array.append(None)
                 continue
-
+        
+            z_reps = []
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
+                for layer_num, layer in enumerate(embeddings[:-1]):
+                    z_reps.append(self.transformer.encoder.layer[layer_num].attention.self(layer)[0])
+
 
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
             tr_tokens_array.append(tr_tokens)
@@ -108,12 +114,23 @@ class TransformerRSM(object):
                 # If None, we include the last token (e.g. for GPT)
                 tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
                 tr_activations_array[-1].append(tr_activations)
+                    
+            tr_z_reps_array.append([])
+            for z in z_reps:
+
+                # last_token_index is either -1 or None
+                # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
+                # If None, we include the last token (e.g. for GPT)
+                tr_z_reps = z[0][-(len(tr_token_ids) + 1):self.last_token_index]
+                tr_z_reps_array[-1].append(tr_z_reps)
 
         self.stimulus_df["activations"] = tr_activations_array
+        self.stimulus_df["z_reps"] = tr_z_reps_array
         self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
 
         # Forward-fill our activations, but *not* the tokens-in-TR
         self.stimulus_df["activations"].ffill(inplace=True)
+        self.stimulus_df["z_reps"].ffill(inplace=True)
 
         self.stimulus_df["n_transformer_tokens_in_tr"] = list(map(lambda x: len(x) if x else 0, tr_tokens_array))
 

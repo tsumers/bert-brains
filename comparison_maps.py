@@ -14,6 +14,9 @@ model=sys.argv[4]
 
 full_data1_datasets=[]
 full_data2_datasets=[]
+
+individual_data1=[]
+individual_data2=[]
 for dataset in ['black','slumlordreach']:
     d=rep1
     if 'activations' not in d: 
@@ -54,17 +57,20 @@ for dataset in ['black','slumlordreach']:
         for p in range(num_parcels):
             full_data1[p,i]=data_sub1[np.where(parcellation==p+1)][0]
             full_data2[p,i]=data_sub2[np.where(parcellation==p+1)][0]
+    individual_data1.append(full_data1)
+    individual_data2.append(full_data2) 
     for i in range(len(subs)):
         full_data1_datasets.append(full_data1[:,i].reshape((-1,1)))
         full_data2_datasets.append(full_data2[:,i].reshape((-1,1)))
 
 
-full_data1=np.concatenate(full_data1_datasets,axis=1)
-full_data2=np.concatenate(full_data2_datasets,axis=1)
 
 
 
-def permutation_t_test(data1,data2):
+full_datas1=[individual_data1[0],individual_data1[1],np.concatenate(full_data1_datasets,axis=1)]
+full_datas2=[individual_data2[0],individual_data2[1],np.concatenate(full_data2_datasets,axis=1)] 
+
+def permutation_t_test(data1,data2): 
     diff=data1-data2
     stderr=np.std(diff,ddof=1)/np.sqrt(len(diff))+1e-9
     original_t=np.mean(diff)/stderr
@@ -93,29 +99,36 @@ def p_adjust_bh(p):
     q = np.minimum(1, np.minimum.accumulate(steps * p[by_descend]))
     return q[by_orig] 
 
-t_parcels=np.zeros((num_parcels,))
-p_parcels=np.zeros((num_parcels,))
-for i in range(num_parcels):
-    t,p=permutation_t_test(full_data1[i,:],full_data2[i,:])
-    t_parcels[i]=t
-    p_parcels[i]=p
-    print(i,t,p)
-
-p_parcels=p_adjust_bh(p_parcels)
-
-t_volume=np.zeros(parcellation.shape)
-p_volume=np.zeros(parcellation.shape)
-
-for i in range(num_parcels):
-    t_volume[np.where(parcellation==i+1)]=t_parcels[i]
-    p_volume[np.where(parcellation==i+1)]=1.0-p_parcels[i]
+super_names=['individual_black','individual_slumlord','combined']
+for i in range(3): 
+    super_name=super_names[i]
+    full_data1=full_datas1[i]
+    full_data2=full_datas2[i]
 
 
+    t_parcels=np.zeros((num_parcels,))
+    p_parcels=np.zeros((num_parcels,))
+    for i in range(num_parcels):
+        t,p=permutation_t_test(full_data1[i,:],full_data2[i,:])
+        t_parcels[i]=t
+        p_parcels[i]=p
+        print(i,t,p)
+
+    p_parcels=p_adjust_bh(p_parcels)
+
+    t_volume=np.zeros(parcellation.shape)
+    p_volume=np.zeros(parcellation.shape)
+
+    for i in range(num_parcels):
+        t_volume[np.where(parcellation==i+1)]=t_parcels[i]
+        p_volume[np.where(parcellation==i+1)]=1.0-p_parcels[i]
 
 
-prefix="/jukebox/griffiths/bert-brains/results/difference_maps/"
-t_nii=nib.Nifti1Image(t_volume,affine)
-nib.save(t_nii,prefix+name+"_tvalues.nii.gz")
 
-p_nii=nib.Nifti1Image(p_volume,affine)
-nib.save(p_nii,prefix+name+"_pvalues.nii.gz") 
+
+    prefix="/jukebox/griffiths/bert-brains/results/difference_maps/" 
+    t_nii=nib.Nifti1Image(t_volume,affine)
+    nib.save(t_nii,prefix+name+"_"+super_name+"_tvalues.nii.gz")
+
+    p_nii=nib.Nifti1Image(p_volume,affine)
+    nib.save(p_nii,prefix+name+"_"+super_name+"_pvalues.nii.gz") 

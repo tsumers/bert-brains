@@ -3,5 +3,5 @@
 slurm_outputs
 data
 .idea
-*.pyc
-*.npy
+*.pyc 
+dsq
