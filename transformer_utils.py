@@ -95,7 +95,10 @@ class TransformerRSM(object):
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
                 for layer_num, layer in enumerate(embeddings[:-1]):
-                    z_reps.append(self.transformer.encoder.layer[layer_num].attention.self(layer)[0])
+                    if 'bert' in self.model_name:
+                        z_reps.append(self.transformer.encoder.layer[layer_num].attention.self(layer)[0])
+                    elif 'gpt' in self.model_name:
+                        z_reps.append(self.transformer.h[layer_num].attn(self.transformer.h[layer_num].ln_1(layer))[0])
 
 
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
