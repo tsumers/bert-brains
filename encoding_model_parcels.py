@@ -12,8 +12,8 @@ layer_dir=sys.argv[2]
 layer_name=sys.argv[3]
 data_dir=sys.argv[4]
 begin_trim=int(sys.argv[5])
-end_trim=int(sys.argv[6])
-save_dir=sys.argv[7]
+end_trim=int(sys.argv[6]) 
+save_dir=sys.argv[7] 
 
 
 
@@ -50,6 +50,8 @@ elif 'slumlordreach' in data_dir:
 				raw_features.append(load_features[i])
 	raw_features=np.vstack(raw_features)
 	raw_primary_features=np.vstack(raw_primary_features)
+	num_primary=primary_features.shape[1]
+
 	raw_features=np.hstack([raw_features,raw_primary_features])
 
 	shifted=[]
@@ -58,7 +60,7 @@ elif 'slumlordreach' in data_dir:
 	for d in delays:
 		arr=np.zeros((raw_features.shape[0]+5,raw_features.shape[1]))
 		arr_prim=np.zeros(arr.shape)
-		arr_prim[:,-42:]=1
+		arr_prim[:,-num_primary:]=1
 		arr[d:raw_features.shape[0]+d,:]=raw_features
 		is_primary_lst.append(arr_prim)
 		shifted.append(arr)
@@ -72,10 +74,17 @@ elif 'slumlordreach' in data_dir:
 
 	load_data=nii.get_fdata()[:,:,:,begin_delay:1205]  
 
-	load_data=np.concatenate([zscore(load_data[:,:,:,:splice1],axis=3,ddof=1),zscore(load_data[:,:,:,splice2:],axis=3,ddof=1)],axis=3)
+	#load_data=np.concatenate([zscore(load_data[:,:,:,:splice1],axis=3,ddof=1),zscore(load_data[:,:,:,splice2:],axis=3,ddof=1)],axis=3)
+	#load_data[np.isnan(load_data)]=0.0
+	#features=np.concatenate([features[:splice1,:],features[splice2:,:]],axis=0) 
+	#is_primary=np.concatenate([is_primary[:splice1,:],is_primary[splice2:,:]],axis=0)   
+	#print(load_data.shape)
+	load_data=zscore(load_data[:,:,:,:splice1],axis=3,ddof=1)
+	#print(load_data.shape)
 	load_data[np.isnan(load_data)]=0.0
-	features=np.concatenate([features[:splice1,:],features[splice2:,:]],axis=0) 
-	is_primary=np.concatenate([is_primary[:splice1,:],is_primary[splice2:,:]],axis=0)   
+	#print(load_data.shape)
+	features=features[:splice1,:] 
+	is_primary=is_primary[:splice1,:] 
 
 	features=features[10:-10,:]
 	is_primary=is_primary[10:-10,:] 
@@ -84,7 +93,8 @@ elif 'slumlordreach' in data_dir:
 
 
 	trailing=raw_data.shape[3]-features.shape[0]
-	raw_data=raw_data[:,:,:,:-trailing] 
+	if trailing>0:
+		raw_data=raw_data[:,:,:,:-trailing] 
 	print(raw_data.shape,features.shape)
 
 	assert raw_data.shape[3]==features.shape[0]
@@ -95,13 +105,14 @@ elif 'slumlordreach' in data_dir:
 			row_equivalence=False 
 	assert row_equivalence
 
-	val_size=300
+	val_size=70
 
 elif 'black' in data_dir:
 	data_prefix='/jukebox/griffiths/bert-brains/code/bert-brains/data/black/'
 	phoneme_counts=np.load(data_prefix+"black_phoneme_counts.npy").reshape((-1,1))
 	word_counts=np.load(data_prefix+"black_word_counts.npy").reshape((-1,1))
 	phoneme_vectors=np.load(data_prefix+"black_phoneme_vectors.npy")
+	#embedding_layer=np.load('/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_12_activations.npy')
 	primary_features=np.hstack([phoneme_counts,phoneme_vectors,word_counts])
 
 	load_features=np.load(layer_dir,allow_pickle=True)
@@ -122,7 +133,7 @@ elif 'black' in data_dir:
 
 
 	raw_features=np.hstack([raw_features,raw_primary_features])
-
+	num_primary=raw_primary_features.shape[1]
 
 	shifted=[]
 	is_primary_lst=[]
@@ -130,7 +141,7 @@ elif 'black' in data_dir:
 	for d in delays:
 		arr=np.zeros((raw_features.shape[0]+5,raw_features.shape[1]))
 		arr_prim=np.zeros(arr.shape)
-		arr_prim[:,-42:]=1
+		arr_prim[:,-num_primary:]=1
 		arr[d:raw_features.shape[0]+d,:]=raw_features
 		is_primary_lst.append(arr_prim)
 		shifted.append(arr)
@@ -191,6 +202,7 @@ def process(i):
 	test_performances=[]
 	skf=KFold(n_splits=3,shuffle=False)
 	encoding_model_weights=[]
+	tuned_alphas=[]
 	for train_index,test_index in skf.split(X):
 
 		X_train,X_test=X[train_index],X[test_index]
@@ -202,7 +214,7 @@ def process(i):
 		X_trainval,X_testval=X_train[:-val_size],X_train[-val_size:]
 		y_trainval,y_testval=y_train[:-val_size],y_train[-val_size:] 
 
-		alphas=[0.00001,0.0001,0.001,0.01,1.0]
+		alphas=[1e-25,1e-20,1e-10,1e-6,1e-3,1e-1,1,10,100,1000,1e5,1e7,1e10,1e21,1e23,1e24,1e25]   
 
 		val_performances=[]
 		for alpha in alphas:
@@ -213,35 +225,48 @@ def process(i):
 			model.coef_[:,is_primary_features]=0.0
 			y_hatval=model.predict(X_testval)
 			val_performances.append(pearsonr(y_hatval[:,0],y_testval[:,0])[0])
-
+		val_performances=np.asarray(val_performances)
+		val_performances[np.isnan(val_performances)]=0.0
 		tuned=alphas[np.argmax(val_performances)]
+		tuned_alphas.append(tuned)
 		model=Ridge(alpha=tuned,normalize=False) 
 		X_train=(X_train-X_train.mean(axis=0))/(X_train.std(axis=0,ddof=1)+1e-9) 
 		model.fit(X_train,y_train)
 		X_test=(X_test-X_test.mean(axis=0))/(X_test.std(axis=0,ddof=1)+1e-9)  
 		model.coef_[:,is_primary_features]=0.0
 		encoding_model_weights.append(model.coef_[:,~is_primary_features])
+		#encoding_model_weights.append(model.coef_[:,:])
 
 		y_hat=model.predict(X_test)
 		test_performances.append(pearsonr(y_hat[:,0],y_test[:,0])[0])
 	#print(i,np.mean(test_performances)) 
 	mean_weights=np.mean(np.asarray(encoding_model_weights),axis=0)
-	return [np.mean(test_performances),mean_weights]  
+	test_performances=np.asarray(test_performances)
+	test_performances[np.isnan(test_performances)]=0.0
+	return [np.mean(test_performances),mean_weights,tuned_alphas]  
 
 raw_results=[]
 weights=[]
-for i in range(num_parcels):
+reg_lambdas=[]
+#roi_mapping=np.load('/jukebox/griffiths/bert-brains/black_data/Parcel2ROI.npy')
+for i in range(1000):
 	r=process(i)
 	raw_results.append(r[0])
 	weights.append(r[1])
+	reg_lambdas.append(r[2])
+	#print(r[2])
 raw_results=np.asarray(raw_results)
-weights=np.asarray(weights)
+weights=np.asarray(weights) 
+reg_lambdas=np.asarray(reg_lambdas)
 np.save(save_dir+sub+"_encoding_weights.npy",weights) 
 np.save(save_dir+sub+"_parcelwise_results.npy",raw_results)  
+np.save(save_dir+sub+"_regularization_coef.npy",reg_lambdas) 
+
+
 output_name=save_dir+sub+"_parcels_encoding.nii.gz"
 results_volume=np.zeros(parcellation.shape)
-for i in range(num_parcels):
+for i in range(1000):
 	results_volume[np.where(parcellation==i+1)]=raw_results[i]
 
 result_nii=nib.Nifti1Image(results_volume,affine)  
-nib.save(result_nii,output_name)       
+nib.save(result_nii,output_name)        
