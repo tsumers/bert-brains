@@ -71,6 +71,9 @@ class TransformerRSM(object):
         tr_activations_array = []
         tr_tokens_array = []
         tr_z_reps_array = []
+        tr_query_array = []
+        tr_key_array = []
+        tr_value_array = []
 
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
@@ -89,14 +92,23 @@ class TransformerRSM(object):
                 tr_tokens_array.append(None)
                 tr_activations_array.append(None)
                 tr_z_reps_array.append(None)
+                tr_query_array.append(None)
+                tr_key_array.append(None)
+                tr_value_array.append(None)
                 continue
-        
+
             z_reps = []
+            queries = []
+            keys = []
+            values = []
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
                 for layer_num, layer in enumerate(embeddings[:-1]):
                     if 'bert' in self.model_name:
                         z_reps.append(self.transformer.encoder.layer[layer_num].attention.self(layer)[0])
+                        queries.append(self.transformer.encoder.layer[layer_num].attention.self.query(layer))
+                        keys.append(self.transformer.encoder.layer[layer_num].attention.self.key(layer))
+                        values.append(self.transformer.encoder.layer[layer_num].attention.self.value(layer))
                     elif 'gpt' in self.model_name:
                         z_reps.append(self.transformer.h[layer_num].attn(self.transformer.h[layer_num].ln_1(layer))[0])
 
@@ -117,7 +129,7 @@ class TransformerRSM(object):
                 # If None, we include the last token (e.g. for GPT)
                 tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
                 tr_activations_array[-1].append(tr_activations)
-                    
+
             tr_z_reps_array.append([])
             for z in z_reps:
 
@@ -127,13 +139,32 @@ class TransformerRSM(object):
                 tr_z_reps = z[0][-(len(tr_token_ids) + 1):self.last_token_index]
                 tr_z_reps_array[-1].append(tr_z_reps)
 
+            tr_query_array.append([])
+            tr_key_array.append([])
+            tr_value_array.append([])
+            for q,k,v in zip(queries,keys,values):
+                tr_query = q[0][-(len(tr_token_ids) + 1):self.last_token_index]
+                tr_key = k[0][-(len(tr_token_ids) + 1):self.last_token_index]
+                tr_value = v[0][-(len(tr_token_ids) + 1):self.last_token_index]
+
+                tr_query_array[-1].append(tr_query)
+                tr_key_array[-1].append(tr_key)
+                tr_value_array[-1].append(tr_value)
+
+
         self.stimulus_df["activations"] = tr_activations_array
         self.stimulus_df["z_reps"] = tr_z_reps_array
+        self.stimulus_df["query"] = tr_query_array
+        self.stimulus_df["key"] = tr_key_array
+        self.stimulus_df["value"] = tr_value_array
         self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
 
         # Forward-fill our activations, but *not* the tokens-in-TR
         self.stimulus_df["activations"].ffill(inplace=True)
         self.stimulus_df["z_reps"].ffill(inplace=True)
+        self.stimulus_df["query"].ffill(inplace=True)
+        self.stimulus_df["key"].ffill(inplace=True)
+        self.stimulus_df["value"].ffill(inplace=True)
 
         self.stimulus_df["n_transformer_tokens_in_tr"] = list(map(lambda x: len(x) if x else 0, tr_tokens_array))
 
@@ -144,6 +175,10 @@ class TransformerRSM(object):
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
         tr_attentions_array = []
+        '''
+        tr_attention_rollouts_array = []
+        tr_attention_flows_array = []
+        '''
         tr_tokens_array = []
         first_successful_window = None
 
@@ -179,6 +214,8 @@ class TransformerRSM(object):
 
                 # We don't have enough words yet. This is typical for the first few TRs-- we need to build up context.
                 tr_attentions_array.append(None)
+                #tr_attention_rollouts_array.append(None)
+                #tr_attention_flows_array.append(None)
                 tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(window_token_ids[0].tolist()))
 
                 if self.verbose:
@@ -202,6 +239,54 @@ class TransformerRSM(object):
                 attentions = self.transformer(truncated_window_token_ids.reshape(1, -1))[-1]
                 squeezed = [layer.squeeze() for layer in attentions]
                 tr_attentions_array.append(squeezed)
+
+                '''
+                # calcuate atttention including residual effects and take average across heads within the same layer
+                full_attentions = [0.5*layer+0.5*torch.eye(layer.shape[-1])[None,...] for layer in squeezed]
+                ave_attentions = [layer.mean(dim=0) for layer in full_attentions]
+
+                # calculate attention rollout
+                attention_rollout = [full_attentions[0]]
+                ave_attention_rollout = [ave_attentions[0]]
+                for layer,ave_layer in zip(full_attentions[1:],ave_attentions[1:]):
+                    layer_rollout = torch.tensor([list((head@ave_attention_rollout[-1]).detach().numpy()) for head in layer])
+                    attention_rollout.append(layer_rollout)
+                    ave_attention_rollout.append(ave_layer@ave_attention_rollout[-1])
+                tr_attention_rollouts_array.append(attention_rollout)
+
+                # calculate attentino flow
+                # create graph
+                num_layers = len(ave_attentions)
+                seq_len = ave_attentions[0].shape[0]
+                adj_mat = np.zeros(((num_layers+1)*seq_len, (num_layers+1)*seq_len))
+                for layer_id in range(1,num_layers+1):
+                    for pos_from in range(seq_len):
+                        for pos_to in range(seq_len):
+                            adj_mat[layer_id*seq_len+pos_from][(layer_id-1)*seq_len+pos_to] = ave_attentions[layer_id-1][pos_from][pos_to]
+                G=nx.from_numpy_matrix(adj_mat, create_using=nx.DiGraph())
+                for i in range(adj_mat.shape[0]):
+                    for j in range(adj_mat.shape[1]):
+                        nx.set_edge_attributes(G, {(i,j): adj_mat[i,j]}, 'capacity')
+
+                # calculate maximum flow
+                max_flows = []
+                for layer_id in range(1,num_layers+1):
+                    max_flow_layer = np.zeros((seq_len,seq_len))
+                    for pos in range(seq_len):
+                        for input_node in range(seq_len):
+                            max_flow_layer[pos,input_node] = nx.maximum_flow_value(G,layer_id*seq_len+pos,input_node, flow_func=nx.algorithms.flow.edmonds_karp)
+                    max_flows.append(torch.from_numpy(max_flow_layer).float())
+                normed_max_flows = [layer/layer.sum(dim=1)[...,None] for layer in max_flows]
+                for layer in normed_max_flows:
+                    assert torch.allclose(layer.sum(dim=1),torch.ones_like(layer.sum(dim=1)))
+
+                attention_flow = [full_attentions[0]]
+                for layer, ave_layer in zip(full_attentions[1:],normed_max_flows[:-1]):
+                    layer_flow = torch.tensor([list((head@ave_layer).detach().numpy()) for head in layer])
+                    attention_flow.append(layer_flow)
+                tr_attention_flows_array.append(attention_flow)
+                '''
+
                 tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(truncated_window_token_ids.tolist()))
 
                 # attentions is now a tuple of length n_layers
@@ -222,6 +307,10 @@ class TransformerRSM(object):
                 #     tr_attentions = layer[0].reshape(1, -1)[0]
 
         self.stimulus_df["attentions"] = tr_attentions_array
+        '''
+        self.stimulus_df["attention_rollouts"] = tr_attention_rollouts_array
+        self.stimulus_df["attention_flows"] = tr_attention_flows_array
+        '''
         self.stimulus_df["attentions_transformer_tokens"] = tr_tokens_array
 
     # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
