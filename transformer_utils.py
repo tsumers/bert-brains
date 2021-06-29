@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import torch
 from transformers import *
-
+import spacy
 
 class TransformerRSM(object):
 
@@ -74,6 +74,9 @@ class TransformerRSM(object):
         tr_query_array = []
         tr_key_array = []
         tr_value_array = []
+        tr_glove_array = []
+        
+        nlp = spacy.load('en_core_web_lg')
 
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
@@ -95,6 +98,7 @@ class TransformerRSM(object):
                 tr_query_array.append(None)
                 tr_key_array.append(None)
                 tr_value_array.append(None)
+                tr_glove_array.append(None)
                 continue
 
             z_reps = []
@@ -111,7 +115,7 @@ class TransformerRSM(object):
                         values.append(self.transformer.encoder.layer[layer_num].attention.self.value(layer))
                     elif 'gpt' in self.model_name:
                         z_reps.append(self.transformer.h[layer_num].attn(self.transformer.h[layer_num].ln_1(layer))[0])
-
+            glove = [nlp(tr).vector]
 
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
             tr_tokens_array.append(tr_tokens)
@@ -151,12 +155,17 @@ class TransformerRSM(object):
                 tr_key_array[-1].append(tr_key)
                 tr_value_array[-1].append(tr_value)
 
+            tr_glove_array.append([])
+            # there is only one 'layer' for glove
+            for layer in glove:
+                tr_glove_array[-1].append(layer)
 
         self.stimulus_df["activations"] = tr_activations_array
         self.stimulus_df["z_reps"] = tr_z_reps_array
         self.stimulus_df["query"] = tr_query_array
         self.stimulus_df["key"] = tr_key_array
         self.stimulus_df["value"] = tr_value_array
+        self.stimulus_df["glove"] = tr_glove_array
         self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
 
         # Forward-fill our activations, but *not* the tokens-in-TR
@@ -165,6 +174,7 @@ class TransformerRSM(object):
         self.stimulus_df["query"].ffill(inplace=True)
         self.stimulus_df["key"].ffill(inplace=True)
         self.stimulus_df["value"].ffill(inplace=True)
+        self.stimulus_df["glove"].ffill(inplace=True)
 
         self.stimulus_df["n_transformer_tokens_in_tr"] = list(map(lambda x: len(x) if x else 0, tr_tokens_array))
 
