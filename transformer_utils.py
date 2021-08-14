@@ -3,9 +3,8 @@ import copy
 import numpy as np
 import pandas as pd
 import torch
-from transformers import GPT2Tokenizer, GPT2Model, BertTokenizer, BertModel, logging
+from transformers import AutoTokenizer, AutoModel, logging
 import spacy
-
 
 class TransformerRSM(object):
 
@@ -16,32 +15,21 @@ class TransformerRSM(object):
         self.verbose = verbose
         self.stimulus_df = self._load_stimulus(file_path=file_path)
 
-        # A list of lists: array[TR][layer] will be a tensor of shape (n_tokens, d_model) which contains the
-        # model embeddings for that layer.
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
-        # A list of lists for attentions. array[tr][layer] will be a tensor of shape (n_tokens x n_tokens) for
-        # however many attention tokens we want to consider.
-
+        # Models can return full list of hidden-states & attentions weights at each layer
+        self.transformer = AutoModel.from_pretrained(self.model_name,
+                                                     output_hidden_states=True,
+                                                     output_attentions=True)
+        # bert-base-uncased or bert-large-uncased
         if 'bert' in self.model_name:
-            self.tokenizer = BertTokenizer.from_pretrained(self.model_name)
-
-            # Models can return full list of hidden-states & attentions weights at each layer
-            self.transformer = BertModel.from_pretrained(self.model_name,
-                                                         output_hidden_states=True,
-                                                         output_attentions=True)
 
             # Use special tokens with BERT, but then slice them off when returning activations
             self.use_special_tokens = True
             self.last_token_index = -1
 
+        # gpt2, gpt2-xl, gpt-neo-2.7B
         elif 'gpt' in self.model_name:
-
-            self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_name)
-
-            # Models can return full list of hidden-states & attentions weights at each layer
-            self.transformer = GPT2Model.from_pretrained(self.model_name,
-                                                         output_hidden_states=True,
-                                                         output_attentions=True)
 
             # Don't use special tokens with GPT, so return whole list of embeddings
             self.use_special_tokens = False
