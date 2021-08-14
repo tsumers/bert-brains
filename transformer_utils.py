@@ -3,8 +3,9 @@ import copy
 import numpy as np
 import pandas as pd
 import torch
-from transformers import *
+from transformers import GPT2Tokenizer, GPT2Model, BertTokenizer, BertModel, logging
 import spacy
+
 
 class TransformerRSM(object):
 
@@ -54,7 +55,11 @@ class TransformerRSM(object):
             file_path = 'data/stimuli/{}/tr_tokens.csv'.format(self.stimulus_name)
 
         print("Looking for TR-aligned tokens in {}".format(file_path))
-        stimulus_df = pd.read_csv(file_path)
+        try:
+            stimulus_df = pd.read_csv(file_path)
+        except FileNotFoundError:
+            raise FileNotFoundError("Could not find target file. "
+                                    "You may need to use `Gentle Transcript Processing` notebook to get tokens.")
 
         stimulus_df.n_tokens = stimulus_df.n_tokens.fillna(0)
         stimulus_df.tokens = stimulus_df.tokens.fillna("")
