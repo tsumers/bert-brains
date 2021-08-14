@@ -119,7 +119,24 @@ class TransformerRSM(object):
                         keys.append(self.transformer.encoder.layer[layer_num].attention.self.key(layer))
                         values.append(self.transformer.encoder.layer[layer_num].attention.self.value(layer))
                     elif 'gpt' in self.model_name:
-                        z_reps.append(self.transformer.h[layer_num].attn(self.transformer.h[layer_num].ln_1(layer))[0])
+                        attn_layer = self.transformer.h[layer_num].attn
+                        query, key, value = attn_layer.c_attn(self.transformer.h[layer_num].ln_1(layer)).split(attn_layer.split_size,dim=2)
+                        try:
+                            query = attn_layer._split_heads(query,attn_layer.num_heads,attn_layer.head_dim)
+                            key = attn_layer._split_heads(key,attn_layer.num_heads,attn_layer.head_dim)
+                            value = attn_layer._split_heads(value,attn_layer.num_heads,attn_layer.head_dim)
+                            if layer_num==0:
+                                print('This part of implementation is for newer version of transformers and has not been tested.')
+                        except AttributeError:
+                            query = attn_layer.split_heads(query)
+                            key = attn_layer.split_heads(key, k=True)
+                            value = attn_layer.split_heads(value)
+                        attn_output = attn_layer._attn(query, key, value, attention_mask=None, head_mask=None)[0]
+                        try:
+                            attn_output = attn_layer._merge_heads(attn_output,attn_layer.num_heads,attn_layer.head_dim)
+                        except AttributeError:
+                            attn_output = attn_layer.merge_heads(attn_output)
+                        z_reps.append(attn_output)
             glove = [nlp(tr).vector]
 
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
