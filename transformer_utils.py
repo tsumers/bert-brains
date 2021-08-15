@@ -189,11 +189,6 @@ class TransformerRSM(object):
             if i % 100 == 0:
                 print("Processing TR {}".format(i))
 
-            # Dangerous, but suppresses an annoying error message that comes up if we don't do this.
-            # https://github.com/huggingface/transformers/issues/3050#issuecomment-682167272
-            if self.verbose is False:
-                import logging
-                set_global_logging_level(logging.ERROR)
             # Get the list of BERT tokens involved in that window
             window_tokens = self.tokenizer.encode_plus(window_stimulus, return_tensors='pt',
                                                        add_special_tokens=self.use_special_tokens)
@@ -431,21 +426,3 @@ class TransformerRSM(object):
 
         rsm_dataframe = pd.DataFrame(np.corrcoef(tr_layer_tensor))
         return rsm_dataframe
-
-
-def set_global_logging_level(level=logging.ERROR, prefices=[""]):
-    """
-    Override logging levels of different modules based on their name as a prefix.
-    It needs to be invoked after the modules have been loaded so that their loggers have been initialized.
-
-    Args:
-        - level: desired level. e.g. logging.INFO. Optional. Default is logging.ERROR
-        - prefices: list of one or more str prefices to match (e.g. ["transformers", "torch"]). Optional.
-          Default is `[""]` to match all active loggers.
-          The match is a case-sensitive `module_name.startswith(prefix)`
-    """
-    import re
-    prefix_re = re.compile(fr'^(?:{"|".join(prefices)})')
-    for name in logging.root.manager.loggerDict:
-        if re.match(prefix_re, name):
-            logging.getLogger(name).setLevel(level)
