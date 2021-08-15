@@ -65,9 +65,6 @@ class TransformerRSM(object):
         tr_activations_array = []
         tr_tokens_array = []
         tr_z_reps_array = []
-        tr_query_array = []
-        tr_key_array = []
-        tr_value_array = []
         tr_glove_array = []
         
         nlp = spacy.load('en_core_web_lg')
@@ -92,24 +89,16 @@ class TransformerRSM(object):
                 tr_tokens_array.append(None)
                 tr_activations_array.append(None)
                 tr_z_reps_array.append(None)
-                tr_query_array.append(None)
-                tr_key_array.append(None)
-                tr_value_array.append(None)
                 tr_glove_array.append(None)
                 continue
 
             z_reps = []
-            queries = []
-            keys = []
-            values = []
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
                 for layer_num, layer in enumerate(embeddings[:-1]):
                     if 'bert' in self.model_name:
                         z_reps.append(self.transformer.encoder.layer[layer_num].attention.self(layer)[0])
-                        queries.append(self.transformer.encoder.layer[layer_num].attention.self.query(layer))
-                        keys.append(self.transformer.encoder.layer[layer_num].attention.self.key(layer))
-                        values.append(self.transformer.encoder.layer[layer_num].attention.self.value(layer))
+
                     elif 'gpt' in self.model_name:
                         attn_layer = self.transformer.h[layer_num].attn
                         query, key, value = attn_layer.c_attn(self.transformer.h[layer_num].ln_1(layer)).split(attn_layer.split_size,dim=2)
@@ -129,7 +118,6 @@ class TransformerRSM(object):
                         except AttributeError:
                             attn_output = attn_layer.merge_heads(attn_output)
                         z_reps.append(attn_output)
-            glove = [nlp(tr).vector]
 
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
             tr_tokens_array.append(tr_tokens)
@@ -157,18 +145,7 @@ class TransformerRSM(object):
                 tr_z_reps = z[0][-(len(tr_token_ids) + 1):self.last_token_index]
                 tr_z_reps_array[-1].append(tr_z_reps)
 
-            tr_query_array.append([])
-            tr_key_array.append([])
-            tr_value_array.append([])
-            for q,k,v in zip(queries,keys,values):
-                tr_query = q[0][-(len(tr_token_ids) + 1):self.last_token_index]
-                tr_key = k[0][-(len(tr_token_ids) + 1):self.last_token_index]
-                tr_value = v[0][-(len(tr_token_ids) + 1):self.last_token_index]
-
-                tr_query_array[-1].append(tr_query)
-                tr_key_array[-1].append(tr_key)
-                tr_value_array[-1].append(tr_value)
-
+            glove = [nlp(tr).vector]
             tr_glove_array.append([])
             # there is only one 'layer' for glove
             for layer in glove:
@@ -176,20 +153,14 @@ class TransformerRSM(object):
 
         self.stimulus_df["activations"] = tr_activations_array
         self.stimulus_df["z_reps"] = tr_z_reps_array
-        self.stimulus_df["query"] = tr_query_array
-        self.stimulus_df["key"] = tr_key_array
-        self.stimulus_df["value"] = tr_value_array
         self.stimulus_df["glove"] = tr_glove_array
-        self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
 
         # Forward-fill our activations, but *not* the tokens-in-TR
         self.stimulus_df["activations"].ffill(inplace=True)
         self.stimulus_df["z_reps"].ffill(inplace=True)
-        self.stimulus_df["query"].ffill(inplace=True)
-        self.stimulus_df["key"].ffill(inplace=True)
-        self.stimulus_df["value"].ffill(inplace=True)
         self.stimulus_df["glove"].ffill(inplace=True)
 
+        self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
         self.stimulus_df["n_transformer_tokens_in_tr"] = list(map(lambda x: len(x) if x else 0, tr_tokens_array))
 
         print("Processed {} TRs for activations.".format(len(tr_activations_array)))
