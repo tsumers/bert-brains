@@ -6,9 +6,10 @@ import torch
 from transformers import AutoTokenizer, AutoModel, logging
 import spacy
 
+
 class TransformerRSM(object):
 
-    def __init__(self, stimulus_name, model_name='bert-base-uncased', file_path=None, verbose=False):
+    def __init__(self, stimulus_name, model_name, file_path=None, verbose=False):
 
         self.stimulus_name = stimulus_name
         self.model_name = model_name
@@ -74,6 +75,9 @@ class TransformerRSM(object):
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
 
+            if self.verbose and i % 100 == 0:
+                print("Processing TR {}.".format(i))
+
             # Get the full context window for this TR, e.g. the appropriate preceding number of TRs.
             context_window_index_start = max(0, i - num_context_trs)
             window_stimulus = " ".join(tr_chunked_tokens[context_window_index_start:i + 1])
@@ -130,7 +134,7 @@ class TransformerRSM(object):
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
             tr_tokens_array.append(tr_tokens)
 
-            if self.verbose:
+            if self.verbose and i % 100 == 0:
                 print("\nTR {}: Window Stimulus: {}".format(i, window_stimulus))
                 print("\t TR stimulus: {}".format(tr_tokens))
 
