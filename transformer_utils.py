@@ -102,21 +102,14 @@ class TransformerRSM(object):
                     elif 'gpt' in self.model_name:
                         attn_layer = self.transformer.h[layer_num].attn
                         query, key, value = attn_layer.c_attn(self.transformer.h[layer_num].ln_1(layer)).split(attn_layer.split_size,dim=2)
-                        try:
-                            query = attn_layer._split_heads(query,attn_layer.num_heads,attn_layer.head_dim)
-                            key = attn_layer._split_heads(key,attn_layer.num_heads,attn_layer.head_dim)
-                            value = attn_layer._split_heads(value,attn_layer.num_heads,attn_layer.head_dim)
-                            if layer_num==0:
-                                print('This part of implementation is for newer version of transformers and has not been tested.')
-                        except AttributeError:
-                            query = attn_layer.split_heads(query)
-                            key = attn_layer.split_heads(key, k=True)
-                            value = attn_layer.split_heads(value)
+
+                        query = attn_layer._split_heads(query,attn_layer.num_heads,attn_layer.head_dim)
+                        key = attn_layer._split_heads(key,attn_layer.num_heads,attn_layer.head_dim)
+                        value = attn_layer._split_heads(value,attn_layer.num_heads,attn_layer.head_dim)
+
                         attn_output = attn_layer._attn(query, key, value, attention_mask=None, head_mask=None)[0]
-                        try:
-                            attn_output = attn_layer._merge_heads(attn_output,attn_layer.num_heads,attn_layer.head_dim)
-                        except AttributeError:
-                            attn_output = attn_layer.merge_heads(attn_output)
+                        attn_output = attn_layer._merge_heads(attn_output,attn_layer.num_heads,attn_layer.head_dim)
+
                         z_reps.append(attn_output)
 
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
