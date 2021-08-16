@@ -3,7 +3,7 @@ import copy
 import numpy as np
 import pandas as pd
 import torch
-from transformers import AutoTokenizer, AutoModel, logging
+from transformers import AutoTokenizer, AutoModel
 import spacy
 
 
