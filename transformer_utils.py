@@ -59,7 +59,7 @@ class TransformerRSM(object):
 
     # BASIC processing: generate embeddings and attention outputs for stimulus.
 
-    def process_stimulus_activations(self, num_context_trs=20):
+    def process_stimulus_activations(self, num_context_trs=20, save_activations=True, save_z_reps=True):
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
         tr_activations_array = []
@@ -121,22 +121,24 @@ class TransformerRSM(object):
 
             # Add a new empty array to our BERT outputs
             tr_activations_array.append([])
-            for layer in embeddings:
+            if save_activations:
+                for layer in embeddings:
 
-                # last_token_index is either -1 or None
-                # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
-                # If None, we include the last token (e.g. for GPT)
-                tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
-                tr_activations_array[-1].append(tr_activations)
+                    # last_token_index is either -1 or None
+                    # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
+                    # If None, we include the last token (e.g. for GPT)
+                    tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
+                    tr_activations_array[-1].append(tr_activations)
 
             tr_z_reps_array.append([])
-            for z in z_reps:
+            if save_z_reps:
+                for z in z_reps:
 
-                # last_token_index is either -1 or None
-                # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
-                # If None, we include the last token (e.g. for GPT)
-                tr_z_reps = z[0][-(len(tr_token_ids) + 1):self.last_token_index]
-                tr_z_reps_array[-1].append(tr_z_reps)
+                    # last_token_index is either -1 or None
+                    # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
+                    # If None, we include the last token (e.g. for GPT)
+                    tr_z_reps = z[0][-(len(tr_token_ids) + 1):self.last_token_index]
+                    tr_z_reps_array[-1].append(tr_z_reps)
 
             glove = [nlp(tr).vector]
             tr_glove_array.append([])
@@ -281,13 +283,6 @@ class TransformerRSM(object):
                 # attentions[0].shape = torch.Size([12, 40, 40]) --> 12 attention heads, 40x40 attention weights
                 if self.verbose:
                     print("Extracting heads of shape {}.".format(squeezed[0].shape))
-
-                ## OLD LAYER LOGIC: need to delete this after integrating it elsewhere
-                # for layer in attentions:
-                #     # Need to flatten our attentions to 1D vector.
-                #     # This is complicated but basically collapses all attention heads down to a single vector
-                #     # which will have length = n_heads * n_window_tokens * n_window_tokens
-                #     tr_attentions = layer[0].reshape(1, -1)[0]
 
         self.stimulus_df["attentions"] = tr_attentions_array
         '''
