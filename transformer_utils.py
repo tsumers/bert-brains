@@ -354,6 +354,12 @@ class TransformerRSM(object):
             if masked[tr] is None:
                 continue
 
+            if n_tokens[tr] == 0:
+                # If we don't have any tokens in this TR, wipe out
+                # the attention pattern. We'll forward-fill this at the end.
+                masked[tr] = None
+                continue
+
             for layer in range(0, len(masked[tr])):
                 for head in range(0, len(masked[tr][layer])):
                     masked[tr][layer][head] = self._mask_head_attention(masked[tr][layer][head], n_tokens[tr],
@@ -361,6 +367,7 @@ class TransformerRSM(object):
                                                                         include_forwards=include_forwards)
 
         self.stimulus_df[masked_col_name] = masked
+        self.stimulus_df[masked_col_name].ffill(inplace=True)
 
     def compute_attention_head_magnitudes(self, p='inf', attention_col="masked_attentions"):
 
