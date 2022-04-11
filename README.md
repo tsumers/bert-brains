@@ -5,7 +5,7 @@
 
 ### Transformers
 `transformer-representations.ipynb`: the primary notebook used to generate Transformer representations (embeddings, transformations) for regression analyses. 
-`transformer-utils.py`: functionality for extracting various Transformer representations, including some experimental metrics that were used in the paper.
+`transformer-utils.py`: functionality for extracting various Transformer representations, including some experimental metrics that were used in the paper. 
 `transformer-transformation-magnitudes.ipynb`: small script used to produce transformation magnitudes from the transformations themselves.
 
 ### data_moving 
