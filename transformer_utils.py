@@ -3,44 +3,34 @@ import copy
 import numpy as np
 import pandas as pd
 import torch
-from transformers import *
+from transformers import AutoTokenizer, AutoModel
+import spacy
 
 
 class TransformerRSM(object):
 
-    def __init__(self, stimulus_name, model_name='bert-base-uncased', file_path=None, verbose=False):
+    def __init__(self, stimulus_name, model_name, file_path=None, verbose=False):
 
         self.stimulus_name = stimulus_name
         self.model_name = model_name
         self.verbose = verbose
         self.stimulus_df = self._load_stimulus(file_path=file_path)
 
-        # A list of lists: array[TR][layer] will be a tensor of shape (n_tokens, d_model) which contains the
-        # model embeddings for that layer.
+        self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
 
-        # A list of lists for attentions. array[tr][layer] will be a tensor of shape (n_tokens x n_tokens) for
-        # however many attention tokens we want to consider.
-
+        # Models can return full list of hidden-states & attentions weights at each layer
+        self.transformer = AutoModel.from_pretrained(self.model_name,
+                                                     output_hidden_states=True,
+                                                     output_attentions=True)
+        # bert-base-uncased or bert-large-uncased
         if 'bert' in self.model_name:
-            self.tokenizer = BertTokenizer.from_pretrained(self.model_name)
-
-            # Models can return full list of hidden-states & attentions weights at each layer
-            self.transformer = BertModel.from_pretrained(self.model_name,
-                                                         output_hidden_states=True,
-                                                         output_attentions=True)
 
             # Use special tokens with BERT, but then slice them off when returning activations
             self.use_special_tokens = True
             self.last_token_index = -1
 
+        # gpt2, gpt2-xl, gpt-neo-2.7B
         elif 'gpt' in self.model_name:
-
-            self.tokenizer = GPT2Tokenizer.from_pretrained(self.model_name)
-
-            # Models can return full list of hidden-states & attentions weights at each layer
-            self.transformer = GPT2Model.from_pretrained(self.model_name,
-                                                         output_hidden_states=True,
-                                                         output_attentions=True)
 
             # Don't use special tokens with GPT, so return whole list of embeddings
             self.use_special_tokens = False
@@ -54,7 +44,11 @@ class TransformerRSM(object):
             file_path = 'data/stimuli/{}/tr_tokens.csv'.format(self.stimulus_name)
 
         print("Looking for TR-aligned tokens in {}".format(file_path))
-        stimulus_df = pd.read_csv(file_path)
+        try:
+            stimulus_df = pd.read_csv(file_path)
+        except FileNotFoundError:
+            raise FileNotFoundError("Could not find target file. "
+                                    "You may need to use `Gentle Transcript Processing` notebook to get tokens.")
 
         stimulus_df.n_tokens = stimulus_df.n_tokens.fillna(0)
         stimulus_df.tokens = stimulus_df.tokens.fillna("")
@@ -65,15 +59,21 @@ class TransformerRSM(object):
 
     # BASIC processing: generate embeddings and attention outputs for stimulus.
 
-    def process_stimulus_activations(self, num_context_trs=20):
+    def process_stimulus_activations(self, num_context_trs=20, save_activations=True, save_z_reps=True):
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
         tr_activations_array = []
         tr_tokens_array = []
         tr_z_reps_array = []
+        tr_glove_array = []
+        
+        nlp = spacy.load('en_core_web_lg')
 
         # Enumerate over the TR-aligned tokens
         for i, tr in enumerate(tr_chunked_tokens):
+
+            if self.verbose and i % 100 == 0:
+                print("Processing TR {}.".format(i))
 
             # Get the full context window for this TR, e.g. the appropriate preceding number of TRs.
             context_window_index_start = max(0, i - num_context_trs)
@@ -89,52 +89,73 @@ class TransformerRSM(object):
                 tr_tokens_array.append(None)
                 tr_activations_array.append(None)
                 tr_z_reps_array.append(None)
+                tr_glove_array.append(None)
                 continue
-        
+
             z_reps = []
             with torch.no_grad():
                 embeddings, _ = self.transformer(window_token_ids)[-2:]
                 for layer_num, layer in enumerate(embeddings[:-1]):
                     if 'bert' in self.model_name:
                         z_reps.append(self.transformer.encoder.layer[layer_num].attention.self(layer)[0])
-                    elif 'gpt' in self.model_name:
-                        z_reps.append(self.transformer.h[layer_num].attn(self.transformer.h[layer_num].ln_1(layer))[0])
 
+                    elif 'gpt' in self.model_name:
+                        attn_layer = self.transformer.h[layer_num].attn
+                        query, key, value = attn_layer.c_attn(self.transformer.h[layer_num].ln_1(layer)).split(attn_layer.split_size,dim=2)
+
+                        query = attn_layer._split_heads(query,attn_layer.num_heads,attn_layer.head_dim)
+                        key = attn_layer._split_heads(key,attn_layer.num_heads,attn_layer.head_dim)
+                        value = attn_layer._split_heads(value,attn_layer.num_heads,attn_layer.head_dim)
+
+                        attn_output = attn_layer._attn(query, key, value, attention_mask=None, head_mask=None)[0]
+                        attn_output = attn_layer._merge_heads(attn_output,attn_layer.num_heads,attn_layer.head_dim)
+
+                        z_reps.append(attn_output)
 
             tr_tokens = self.tokenizer.convert_ids_to_tokens(tr_token_ids.numpy())
             tr_tokens_array.append(tr_tokens)
 
-            if self.verbose:
+            if self.verbose and i % 100 == 0:
                 print("\nTR {}: Window Stimulus: {}".format(i, window_stimulus))
                 print("\t TR stimulus: {}".format(tr_tokens))
 
             # Add a new empty array to our BERT outputs
             tr_activations_array.append([])
-            for layer in embeddings:
+            if save_activations:
+                for layer in embeddings:
 
-                # last_token_index is either -1 or None
-                # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
-                # If None, we include the last token (e.g. for GPT)
-                tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
-                tr_activations_array[-1].append(tr_activations)
-                    
+                    # last_token_index is either -1 or None
+                    # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
+                    # If None, we include the last token (e.g. for GPT)
+                    tr_activations = layer[0][-(len(tr_token_ids) + 1):self.last_token_index]
+                    tr_activations_array[-1].append(tr_activations)
+
             tr_z_reps_array.append([])
-            for z in z_reps:
+            if save_z_reps:
+                for z in z_reps:
 
-                # last_token_index is either -1 or None
-                # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
-                # If None, we include the last token (e.g. for GPT)
-                tr_z_reps = z[0][-(len(tr_token_ids) + 1):self.last_token_index]
-                tr_z_reps_array[-1].append(tr_z_reps)
+                    # last_token_index is either -1 or None
+                    # If -1, we slice off the last token and don't include (e.g. SEP token for BERT)
+                    # If None, we include the last token (e.g. for GPT)
+                    tr_z_reps = z[0][-(len(tr_token_ids) + 1):self.last_token_index]
+                    tr_z_reps_array[-1].append(tr_z_reps)
+
+            glove = [nlp(tr).vector]
+            tr_glove_array.append([])
+            # there is only one 'layer' for glove
+            for layer in glove:
+                tr_glove_array[-1].append(layer)
 
         self.stimulus_df["activations"] = tr_activations_array
         self.stimulus_df["z_reps"] = tr_z_reps_array
-        self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
+        self.stimulus_df["glove"] = tr_glove_array
 
         # Forward-fill our activations, but *not* the tokens-in-TR
         self.stimulus_df["activations"].ffill(inplace=True)
         self.stimulus_df["z_reps"].ffill(inplace=True)
+        self.stimulus_df["glove"].ffill(inplace=True)
 
+        self.stimulus_df["transformer_tokens_in_tr"] = tr_tokens_array
         self.stimulus_df["n_transformer_tokens_in_tr"] = list(map(lambda x: len(x) if x else 0, tr_tokens_array))
 
         print("Processed {} TRs for activations.".format(len(tr_activations_array)))
@@ -144,6 +165,10 @@ class TransformerRSM(object):
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
         tr_attentions_array = []
+        '''
+        tr_attention_rollouts_array = []
+        tr_attention_flows_array = []
+        '''
         tr_tokens_array = []
         first_successful_window = None
 
@@ -159,11 +184,6 @@ class TransformerRSM(object):
             if i % 100 == 0:
                 print("Processing TR {}".format(i))
 
-            # Dangerous, but suppresses an annoying error message that comes up if we don't do this.
-            # https://github.com/huggingface/transformers/issues/3050#issuecomment-682167272
-            if self.verbose is False:
-                import logging
-                set_global_logging_level(logging.ERROR)
             # Get the list of BERT tokens involved in that window
             window_tokens = self.tokenizer.encode_plus(window_stimulus, return_tensors='pt',
                                                        add_special_tokens=self.use_special_tokens)
@@ -179,6 +199,8 @@ class TransformerRSM(object):
 
                 # We don't have enough words yet. This is typical for the first few TRs-- we need to build up context.
                 tr_attentions_array.append(None)
+                #tr_attention_rollouts_array.append(None)
+                #tr_attention_flows_array.append(None)
                 tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(window_token_ids[0].tolist()))
 
                 if self.verbose:
@@ -202,6 +224,54 @@ class TransformerRSM(object):
                 attentions = self.transformer(truncated_window_token_ids.reshape(1, -1))[-1]
                 squeezed = [layer.squeeze() for layer in attentions]
                 tr_attentions_array.append(squeezed)
+
+                '''
+                # calcuate atttention including residual effects and take average across heads within the same layer
+                full_attentions = [0.5*layer+0.5*torch.eye(layer.shape[-1])[None,...] for layer in squeezed]
+                ave_attentions = [layer.mean(dim=0) for layer in full_attentions]
+
+                # calculate attention rollout
+                attention_rollout = [full_attentions[0]]
+                ave_attention_rollout = [ave_attentions[0]]
+                for layer,ave_layer in zip(full_attentions[1:],ave_attentions[1:]):
+                    layer_rollout = torch.tensor([list((head@ave_attention_rollout[-1]).detach().numpy()) for head in layer])
+                    attention_rollout.append(layer_rollout)
+                    ave_attention_rollout.append(ave_layer@ave_attention_rollout[-1])
+                tr_attention_rollouts_array.append(attention_rollout)
+
+                # calculate attentino flow
+                # create graph
+                num_layers = len(ave_attentions)
+                seq_len = ave_attentions[0].shape[0]
+                adj_mat = np.zeros(((num_layers+1)*seq_len, (num_layers+1)*seq_len))
+                for layer_id in range(1,num_layers+1):
+                    for pos_from in range(seq_len):
+                        for pos_to in range(seq_len):
+                            adj_mat[layer_id*seq_len+pos_from][(layer_id-1)*seq_len+pos_to] = ave_attentions[layer_id-1][pos_from][pos_to]
+                G=nx.from_numpy_matrix(adj_mat, create_using=nx.DiGraph())
+                for i in range(adj_mat.shape[0]):
+                    for j in range(adj_mat.shape[1]):
+                        nx.set_edge_attributes(G, {(i,j): adj_mat[i,j]}, 'capacity')
+
+                # calculate maximum flow
+                max_flows = []
+                for layer_id in range(1,num_layers+1):
+                    max_flow_layer = np.zeros((seq_len,seq_len))
+                    for pos in range(seq_len):
+                        for input_node in range(seq_len):
+                            max_flow_layer[pos,input_node] = nx.maximum_flow_value(G,layer_id*seq_len+pos,input_node, flow_func=nx.algorithms.flow.edmonds_karp)
+                    max_flows.append(torch.from_numpy(max_flow_layer).float())
+                normed_max_flows = [layer/layer.sum(dim=1)[...,None] for layer in max_flows]
+                for layer in normed_max_flows:
+                    assert torch.allclose(layer.sum(dim=1),torch.ones_like(layer.sum(dim=1)))
+
+                attention_flow = [full_attentions[0]]
+                for layer, ave_layer in zip(full_attentions[1:],normed_max_flows[:-1]):
+                    layer_flow = torch.tensor([list((head@ave_layer).detach().numpy()) for head in layer])
+                    attention_flow.append(layer_flow)
+                tr_attention_flows_array.append(attention_flow)
+                '''
+
                 tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(truncated_window_token_ids.tolist()))
 
                 # attentions is now a tuple of length n_layers
@@ -214,14 +284,11 @@ class TransformerRSM(object):
                 if self.verbose:
                     print("Extracting heads of shape {}.".format(squeezed[0].shape))
 
-                ## OLD LAYER LOGIC: need to delete this after integrating it elsewhere
-                # for layer in attentions:
-                #     # Need to flatten our attentions to 1D vector.
-                #     # This is complicated but basically collapses all attention heads down to a single vector
-                #     # which will have length = n_heads * n_window_tokens * n_window_tokens
-                #     tr_attentions = layer[0].reshape(1, -1)[0]
-
         self.stimulus_df["attentions"] = tr_attentions_array
+        '''
+        self.stimulus_df["attention_rollouts"] = tr_attention_rollouts_array
+        self.stimulus_df["attention_flows"] = tr_attention_flows_array
+        '''
         self.stimulus_df["attentions_transformer_tokens"] = tr_tokens_array
 
     # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
@@ -287,6 +354,12 @@ class TransformerRSM(object):
             if masked[tr] is None:
                 continue
 
+            if n_tokens[tr] == 0:
+                # If we don't have any tokens in this TR, wipe out
+                # the attention pattern. We'll forward-fill this at the end.
+                masked[tr] = None
+                continue
+
             for layer in range(0, len(masked[tr])):
                 for head in range(0, len(masked[tr][layer])):
                     masked[tr][layer][head] = self._mask_head_attention(masked[tr][layer][head], n_tokens[tr],
@@ -294,6 +367,7 @@ class TransformerRSM(object):
                                                                         include_forwards=include_forwards)
 
         self.stimulus_df[masked_col_name] = masked
+        self.stimulus_df[masked_col_name].ffill(inplace=True)
 
     def compute_attention_head_magnitudes(self, p='inf', attention_col="masked_attentions"):
 
@@ -316,7 +390,7 @@ class TransformerRSM(object):
 
         self.stimulus_df["attention_heads_L{}".format(p)] = tr_attention_vector_array
 
-    def compute_attention_head_distances(self, attention_col="masked_attentions"):
+    def compute_attention_head_distances(self, attention_col="masked_attentions", verbose=False):
         """ Implements Attention Distance metric as in:
         https://www.aclweb.org/anthology/W19-4808.pdf
         """
@@ -334,18 +408,27 @@ class TransformerRSM(object):
         rows = np.tile(index_array, (n_tokens, 1)).T
         distance_mask = abs((rows - columns))
 
+        if verbose:
+            print(distance_mask)
+
         tr_attention_vector_array = []
         for tr in range(0, len(self.stimulus_df[attention_col])):
 
             if tr % 100 == 0:
                 print("Processing TR {}.".format(tr))
 
-            if self.stimulus_df[attention_col][tr] is None:
+            if attention_col == "masked_attentions":
+                n_tokens = self.stimulus_df.n_transformer_tokens_in_tr.iloc[tr]
+            else:
+                n_tokens = 128
+
+            if n_tokens == 0 or self.stimulus_df[attention_col][tr] is None:
                 tr_attention_vector_array.append(None)
                 continue
             else:
                 # One entry per TR
                 tr_attention_vector_array.append([])
+
 
             for layer in range(0, len(self.stimulus_df[attention_col][tr])):
                 # One entry per layer
@@ -353,84 +436,9 @@ class TransformerRSM(object):
                 for head in range(0, len(self.stimulus_df[attention_col][tr][layer])):
                     head_matrix = self.stimulus_df[attention_col][tr][layer][head]
                     distance_weighted_attention = np.multiply(distance_mask, head_matrix)
-                    tr_attention_vector_array[-1][-1].append(distance_weighted_attention.sum().item())
+                    tr_attention_vector_array[-1][-1].append(distance_weighted_attention.sum().item()/n_tokens)
 
         self.stimulus_df["attention_distances"] = tr_attention_vector_array
-
-    def mean_tr_response_across_tokens(self, input_tensor_name="activations"):
-        """tr_tensor is tr x layer x tokens; squash it to tr x layer x mean and return that."""
-
-        tr_layer_mean_tensor = []
-        for tr in self.stimulus_df[input_tensor_name]:
-            tr_layer_mean_tensor.append([])
-            for layer in tr:
-                tr_layer_mean_tensor[-1].append(torch.mean(layer, 0))
-
-        return tr_layer_mean_tensor
-
-    def layerwise_token_movement(self):
-        """tr_tensor is tr x layer x tokens; look at l2 distance for each token / layer."""
-
-        activations_layerwise_l2_difference = []
-        for tr in self.stimulus_df.activations:
-
-            activations_layerwise_l2_difference.append([])
-
-            for layer_num, (layer_one, layer_two) in enumerate(zip(tr, tr[1:])):
-
-                # Get the number of tokens to compare
-                n_tokens = layer_one.shape[0]
-                l2_differences = [torch.dist(layer_one[i], layer_two[i], 2).item() for i in range(0, n_tokens)]
-                activations_layerwise_l2_difference[-1].append(l2_differences)
-
-        # will be [n_layers][n_tokens], where [0][0] gives the L2 distance for the first token across the first layer.
-        self.stimulus_df["activation_layerwise_l2_distances"] = activations_layerwise_l2_difference
-
-    def end_to_end_token_movement(self):
-        """Set activation_end_to_end_l2_distances to L2 displacement from initial to final embeddings."""
-
-        activations_end_to_end_l2_difference = []
-        for tr in self.stimulus_df.activations:
-
-            # Get the number of tokens to compare
-            n_tokens = tr[0].shape[0]
-            end_to_end_l2_differences = [torch.dist(tr[0][i], tr[-1][i], 2).item() for i in range(0, n_tokens)]
-            activations_end_to_end_l2_difference.append(end_to_end_l2_differences)
-
-        # will be [n_tokens], where [0] gives the L2 distance for the first token across the whole model.
-        self.stimulus_df["activation_end_to_end_l2_distances"] = activations_end_to_end_l2_difference
-
-    def semantic_composition_from_activations(self):
-
-        end_to_end_mean_l2 = self.stimulus_df["activation_end_to_end_l2_distances"].apply(lambda x: np.mean(x))
-        end_to_end_mean_l2_normed = self.normalize_col(end_to_end_mean_l2)
-
-        end_to_end_max_l2 = self.stimulus_df["activation_end_to_end_l2_distances"].apply(lambda x: np.max(x))
-        end_to_end_max_l2_normed = self.normalize_col(end_to_end_max_l2)
-
-        layerwise_mean_l2 = self.stimulus_df["activation_layerwise_l2_distances"].apply(
-            lambda x: [np.mean(layer) for layer in x])
-        df = pd.DataFrame.from_records(layerwise_mean_l2)
-        normalized = (df - df.mean()) / df.std()
-        layerwise_mean_l2_normed = [list(r) for r in normalized.to_records(index=False)]
-
-        layerwise_max_l2 = self.stimulus_df["activation_layerwise_l2_distances"].apply(
-            lambda x: [np.max(layer) for layer in x])
-        df = pd.DataFrame.from_records(layerwise_max_l2)
-        normalized = (df - df.mean()) / df.std()
-        layerwise_max_l2_normed = [list(r) for r in normalized.to_records(index=False)]
-
-        all_semantic_composition = []
-        for layerwise_mean, e2e_mean, layerwise_max, e2e_max in zip(layerwise_mean_l2_normed, end_to_end_mean_l2_normed,
-                                                                    layerwise_max_l2_normed, end_to_end_max_l2_normed):
-            all_semantic_composition.append(layerwise_max + [e2e_max] + layerwise_mean + [e2e_mean])
-
-        self.stimulus_df["semantic_composition"] = all_semantic_composition
-
-    @classmethod
-    def normalize_col(cls, col):
-        de_meaned = col - col.mean()
-        return de_meaned / de_meaned.std()
 
     @classmethod
     def layer_activations_from_tensor(cls, tr_layer_tensor, layer_index):
@@ -463,21 +471,3 @@ class TransformerRSM(object):
 
         rsm_dataframe = pd.DataFrame(np.corrcoef(tr_layer_tensor))
         return rsm_dataframe
-
-
-def set_global_logging_level(level=logging.ERROR, prefices=[""]):
-    """
-    Override logging levels of different modules based on their name as a prefix.
-    It needs to be invoked after the modules have been loaded so that their loggers have been initialized.
-
-    Args:
-        - level: desired level. e.g. logging.INFO. Optional. Default is logging.ERROR
-        - prefices: list of one or more str prefices to match (e.g. ["transformers", "torch"]). Optional.
-          Default is `[""]` to match all active loggers.
-          The match is a case-sensitive `module_name.startswith(prefix)`
-    """
-    import re
-    prefix_re = re.compile(fr'^(?:{"|".join(prefices)})')
-    for name in logging.root.manager.loggerDict:
-        if re.match(prefix_re, name):
-            logging.getLogger(name).setLevel(level)
