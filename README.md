@@ -1,7 +1,12 @@
 # bert-brains
 
 ### Preprocessing
-gentle_transcript_processing.pynb: 
+`narratives-transcript-processing.ipynb`: Used to pre-process transcripts from the `Narratives` dataset. Outputs (1) phonemes and associated nuisance variables for regression analyses; (2) TR-aligned tokens for use with Transformer notebooks.
+
+### Transformers
+`transformer-representations.ipynb`: the primary notebook used to generate Transformer representations (embeddings, transformations) for regression analyses. 
+`transformer-utils.py`: functionality for extracting various Transformer representations, including some experimental metrics that were used in the paper.
+`transformer-transformation-magnitudes.ipynb`: small script used to produce transformation magnitudes from the transformations themselves.
 
 ### data_moving 
 acquire_weight_mats.py: Save all ridge regression weights across subjects into one npy file. 
