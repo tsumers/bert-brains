@@ -165,10 +165,6 @@ class TransformerRSM(object):
 
         tr_chunked_tokens = self.stimulus_df.tokens.values
         tr_attentions_array = []
-        '''
-        tr_attention_rollouts_array = []
-        tr_attention_flows_array = []
-        '''
         tr_tokens_array = []
         first_successful_window = None
 
@@ -225,53 +221,6 @@ class TransformerRSM(object):
                 squeezed = [layer.squeeze() for layer in attentions]
                 tr_attentions_array.append(squeezed)
 
-                '''
-                # calcuate atttention including residual effects and take average across heads within the same layer
-                full_attentions = [0.5*layer+0.5*torch.eye(layer.shape[-1])[None,...] for layer in squeezed]
-                ave_attentions = [layer.mean(dim=0) for layer in full_attentions]
-
-                # calculate attention rollout
-                attention_rollout = [full_attentions[0]]
-                ave_attention_rollout = [ave_attentions[0]]
-                for layer,ave_layer in zip(full_attentions[1:],ave_attentions[1:]):
-                    layer_rollout = torch.tensor([list((head@ave_attention_rollout[-1]).detach().numpy()) for head in layer])
-                    attention_rollout.append(layer_rollout)
-                    ave_attention_rollout.append(ave_layer@ave_attention_rollout[-1])
-                tr_attention_rollouts_array.append(attention_rollout)
-
-                # calculate attentino flow
-                # create graph
-                num_layers = len(ave_attentions)
-                seq_len = ave_attentions[0].shape[0]
-                adj_mat = np.zeros(((num_layers+1)*seq_len, (num_layers+1)*seq_len))
-                for layer_id in range(1,num_layers+1):
-                    for pos_from in range(seq_len):
-                        for pos_to in range(seq_len):
-                            adj_mat[layer_id*seq_len+pos_from][(layer_id-1)*seq_len+pos_to] = ave_attentions[layer_id-1][pos_from][pos_to]
-                G=nx.from_numpy_matrix(adj_mat, create_using=nx.DiGraph())
-                for i in range(adj_mat.shape[0]):
-                    for j in range(adj_mat.shape[1]):
-                        nx.set_edge_attributes(G, {(i,j): adj_mat[i,j]}, 'capacity')
-
-                # calculate maximum flow
-                max_flows = []
-                for layer_id in range(1,num_layers+1):
-                    max_flow_layer = np.zeros((seq_len,seq_len))
-                    for pos in range(seq_len):
-                        for input_node in range(seq_len):
-                            max_flow_layer[pos,input_node] = nx.maximum_flow_value(G,layer_id*seq_len+pos,input_node, flow_func=nx.algorithms.flow.edmonds_karp)
-                    max_flows.append(torch.from_numpy(max_flow_layer).float())
-                normed_max_flows = [layer/layer.sum(dim=1)[...,None] for layer in max_flows]
-                for layer in normed_max_flows:
-                    assert torch.allclose(layer.sum(dim=1),torch.ones_like(layer.sum(dim=1)))
-
-                attention_flow = [full_attentions[0]]
-                for layer, ave_layer in zip(full_attentions[1:],normed_max_flows[:-1]):
-                    layer_flow = torch.tensor([list((head@ave_layer).detach().numpy()) for head in layer])
-                    attention_flow.append(layer_flow)
-                tr_attention_flows_array.append(attention_flow)
-                '''
-
                 tr_tokens_array.append(self.tokenizer.convert_ids_to_tokens(truncated_window_token_ids.tolist()))
 
                 # attentions is now a tuple of length n_layers
@@ -285,10 +234,6 @@ class TransformerRSM(object):
                     print("Extracting heads of shape {}.".format(squeezed[0].shape))
 
         self.stimulus_df["attentions"] = tr_attentions_array
-        '''
-        self.stimulus_df["attention_rollouts"] = tr_attention_rollouts_array
-        self.stimulus_df["attention_flows"] = tr_attention_flows_array
-        '''
         self.stimulus_df["attentions_transformer_tokens"] = tr_tokens_array
 
     # ADVANCED processing: use the stimulus_df entries to generate more interesting representations.
