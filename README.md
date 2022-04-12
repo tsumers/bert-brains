@@ -7,15 +7,15 @@ gentle_transcript_processing.pynb:
 acquire_weight_mats.py: Save all ridge regression weights across subjects into one npy file. 
 aggregate_full_layer_results.py: Save full embedding model results into npy files (each job did 50 parcels, so we aggregated outputs across jobs)
 create_fmri_dataset.py: Copy data from narratives dataset into lab project folder. 
-
+narative-transcript-processing.ipynb: [FOR TED]
 
 ### Analysis Code
 banded_ridge_regression_joint.py: Run encoding model with embedding and transformation jointly fit into different bands (per layer). 
 banded_ridge_regression.py: Run encoding model analyses (banded ridge regression) with a given representation as main features 
 calculate_boostrap_pvalue.py: Calculate bootstrap pvalue (with FDR corrections) for individual parcels to determine significance. 
 compute_isc.py: Compute noise ceilings with intersubject correlation. 
-decode_linguistic_features_peters.py: 
-decode_linguistic_features.ipynb: 
+decode_linguistic_features_peters.py: [FOR TAKA]
+decode_linguistic_features.ipynb: [FOR TAKA]
 headwise_banded_ridge_regression.py: Headwise version of the encoding analyses (banded ridge regression, but knock out weights for all heads but one when evaluating a head)
 
 
@@ -53,3 +53,6 @@ encoding_model.py
 encoding_preference_map.py
 encoding_residuals.py
 encoding_variance_partitioning.py
+load_encoding_weights.py 
+move_z_results.py
+multilayer_results.ipynb
