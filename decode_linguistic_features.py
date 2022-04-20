@@ -22,7 +22,6 @@ if __name__ == '__main__':
     parser.add_argument('--train_balance',dest='train_balance',action='store_true',default=False)
     parser.add_argument('--score_balance',dest='score_balance',action='store_true',default=False)
     parser.add_argument('--block_cv',dest='block_cv',action='store_true',default=False)
-    parser.add_argument('--snapshot',dest='snapshot',action='store_true',default=False)
     parser.add_argument('--solver', type=str, choices=['liblinear','lbfgs','newton-cg','sag','saga'], default='liblinear')
     args = parser.parse_args()
     print(f'Running with args: {args}')
@@ -42,17 +41,14 @@ if __name__ == '__main__':
     else:
         score_balance_id = ''
 
-    loaded_data = np.load(f'/jukebox/griffiths/bert-brains/code/bert-brains/data/{args.STIMULUS}/{args.STIMULUS}_ling_features.npz')
+    loaded_data = np.load(f'data/{args.STIMULUS}/{args.STIMULUS}_ling_features.npz')
     ling_data = loaded_data['ling_features']
     ling_labels = list(loaded_data['dep_list'])+list(loaded_data['pos_list'])
     #print(ling_labels)
 
     z_reps_list = []
     for layer_num in range(12):
-        if args.snapshot:
-            z_rep_fname = f'/jukebox/griffiths/bert-brains/code/bert-brains/data/{args.STIMULUS}/{args.MODEL}/snapshot-8-16/{args.STIMULUS}_{args.MODEL}_layer_{layer_num}_z_representations.npy'
-        else:
-            z_rep_fname = f'/jukebox/griffiths/bert-brains/code/bert-brains/data/{args.STIMULUS}/{args.MODEL}/raw_embeddings/{args.STIMULUS}_{args.MODEL}_layer_{layer_num}_z_representations.npy'
+        z_rep_fname = f'data/{args.STIMULUS}/{args.MODEL}/raw_embeddings/{args.STIMULUS}_{args.MODEL}_layer_{layer_num}_z_representations.npy'
         loaded_data = np.load(z_rep_fname)
         z_reps_list.append(loaded_data)
 

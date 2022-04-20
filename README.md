@@ -36,9 +36,9 @@ Results_Figures.ipynb: Notebook to plot most main results in the paper.
 View_Encoding_Results.ipynb: Plots whole-brain glass brain results 
 
 ### Slurm Jobs
-avg_job.sh: Slurm job corresponding to save_mean_volumes.py. 
-boot_job.sh: Slurm job corresponding to calculate_bootstrap_pvalue.py 
-dsq-submit.sh: Slurm job that submits a job array specified in a .txt file. 
+avg_job.sh: Slurm job corresponding to save_mean_volumes.py.
+boot_job.sh: Slurm job corresponding to calculate_bootstrap_pvalue.py
+dsq-submit.sh: Slurm job that submits a job array specified in a .txt file.
 joblist.txt: Job list for submitting slurm job array
 
 
@@ -47,11 +47,11 @@ fmri_conda_env.yml: yml conda env file for fmri analyses
 
 
 
-To delete: 
+To delete:
 aggregate_mixing_data.py
 aggregate_full_layer_results.py
 aggregate_residual_results.py
-aggregate_results.py 
+aggregate_results.py
 anatomical_searchlight.py
 comparison_maps.py
 aggregate_featurewise_results.py
@@ -64,7 +64,7 @@ encoding_model.py
 encoding_preference_map.py
 encoding_residuals.py
 encoding_variance_partitioning.py
-load_encoding_weights.py 
+load_encoding_weights.py
 move_z_results.py
 multilayer_results.ipynb
 nn_job.sh 
