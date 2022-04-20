@@ -5,48 +5,26 @@ d="/jukebox/griffiths/bert-brains/"
 
 model='bert-base-uncased'
 
-if model=='bert-base-uncased':
-	ds=['layer_'+str(i)+"_activations" for i in range(13)]
-else:
-	ds=['gpt_layer_'+str(i)+"_activations" for i in range(13)]
-
+#ds=['layer_'+str(i)+"_activations" for i in range(12)]
+#ds+=['layer_'+str(i)+"_z_representations" for i in range(12)]
+#ds+=['bert-base-uncased_syntactic_complexity_L-inf_T-128_D-concat']
+#ds=['ling_features']
+#ds=['bert-base-uncased_syntactic_complexity_L-inf_T-128_D-concat','bert-base-uncased_syntactic_complexity_L-inf_T-128_D-fwd','bert-base-uncased_syntactic_complexity_L-inf_T-128_D-bck','bert-base-uncased_syntactic_complexity_L-inf_T-20_D-concat']
+#ds=['encoding_full_z']
+ds=['encoding_onerep']
+"""
 for fname in os.listdir(d+'code/bert-brains/data/black/bert-base-uncased/syntactic_analyses/'):
 	ds.append(fname[6:-4])
+"""
 prefix="/jukebox/griffiths/bert-brains/results/"
 for dataset in ['black','slumlordreach']:
 	for d in ds:
-		if 'activations' not in d: 
+		if 'layer' not in d and 'ling' not in d: 
 			d1=prefix+dataset+"/encoding-"+dataset+"_"+d+"/" 
 		else:
 			d1=prefix+dataset+"/encoding-"+d+"/"
-		print(os.path.isdir(d1),d1)  
-
-
-
-
-"""
-#Black 
-layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
-layer_prefix=d+'code/bert-brains/data/black/gpt2/raw_embeddings/'
-save_prefix=d+"results/black/"
-layer_dirs=[layer_prefix+"gpt2_"+layer+".npy" for layer in layer_names] 
-save_dirs=[save_prefix+"encoding-gpt_"+layer+"/" for layer in layer_names] 
-layer_prefix=d+'code/bert-brains/data/black/bert-base-uncased/syntactic_analyses/'
-for fname in os.listdir(layer_prefix):
-	layer_names.append(fname[:-4])  
-	layer_dirs.append(layer_prefix+fname)
-	save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
-
-"""
-# Slumlordreach
-layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
-save_prefix="/jukebox/griffiths/bert-brains/results/slumlordreach/"
-save_dirs=[save_prefix+"encoding-"+layer+"/" for layer in layer_names]  
-
-layer_prefix='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/syntactic_analyses/'
-for fname in os.listdir(layer_prefix):
-	save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
-
+		print(os.path.isdir(d1),d1)   
+		
 print(ds)
 begin="""#!/usr/bin/env bash
 # Input python command to be submitted as a job 

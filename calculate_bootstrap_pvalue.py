@@ -27,36 +27,38 @@ for dataset in ['black','slumlordreach']:
 		parcellation=nib.load("/jukebox/griffiths/bert-brains/slumlordreach_data/Schaefer1000_3mm.nii.gz").get_fdata().astype('int')
 		affine=nib.load("/jukebox/griffiths/bert-brains/slumlordreach_data/Schaefer1000_3mm.nii.gz").affine
 
-	if 'activations' not in rep: 
-		d=prefix+dataset+"/encoding-"+dataset+"_"+rep+"/" 
+	if rep=='encoding_full_z' or rep=='encoding_onerep':  
+		d=prefix+dataset+"/"+rep+"/"
+	elif 'layer' not in rep and 'ling' not in rep: 
+		d=prefix+dataset+"/encoding-"+dataset+"_"+rep+"/"
 	else:
 		d=prefix+dataset+"/encoding-"+rep+"/"
 
-	full_data=np.zeros((num_parcels,len(subs)))
+	full_data=np.zeros((num_parcels,len(subs))) 
 	for i,sub in enumerate(subs):
 		print(i)
-		data_sub=nib.load(d+sub+"_parcels_encoding.nii.gz").get_fdata()
-		for p in range(num_parcels):
-			full_data[p,i]=data_sub[np.where(parcellation==p+1)][0]
-	
+		#data_sub=nib.load(d+sub+"_parcels_encoding.nii.gz").get_fdata()
+		#for p in range(num_parcels):
+		#	full_data[p,i]=data_sub[np.where(parcellation==p+1)][0]
+		full_data[:,i]=np.load(d+sub+"_parcelwise_results_banded_ridge.npy")[:,3]
 	for i in range(len(subs)):
 		full_data_datasets.append(full_data[:,i].reshape((-1,1)))
 
 full_data=np.concatenate(full_data_datasets,axis=1) 
-cutpoint=42 
+cutpoint=42
 def bootstrap_pvalue(data):
 	shifted=data-np.mean(data)
 	sampling=[]
 	for _ in range(1000):
-		m1=np.mean(np.random.choice(shifted[:42],replace=True,size=42))
-		m2=np.mean(np.random.choice(shifted[42:],replace=True,size=17))
+		m1=np.mean(np.random.choice(shifted[:cutpoint],replace=True,size=cutpoint))
+		m2=np.mean(np.random.choice(shifted[cutpoint:],replace=True,size=len(shifted)-cutpoint))
 		sampling.append(np.mean([m1,m2]))
 	sampling=np.asarray(sampling)
 	p=np.sum(sampling>=np.mean(data))/len(sampling)
 	print(p)
-	return p
+	return p 
 
-def p_adjust_bh(p):
+def p_adjust_bh(p): 
     """Benjamini-Hochberg p-value correction for multiple hypothesis testing."""
     p = np.asfarray(p)
     by_descend = p.argsort()[::-1]
@@ -111,7 +113,9 @@ for dataset in ['black','slumlordreach']:
 		parcellation=nib.load("/jukebox/griffiths/bert-brains/slumlordreach_data/Schaefer1000_3mm.nii.gz").get_fdata().astype('int')
 		affine=nib.load("/jukebox/griffiths/bert-brains/slumlordreach_data/Schaefer1000_3mm.nii.gz").affine
 
-	if 'activations' not in rep: 
+	if rep=='encoding_full_z' or rep=='encoding_onerep':  
+		d=prefix+dataset+"/"+rep+"/"
+	elif 'layer' not in rep and 'ling' not in rep: 
 		d=prefix+dataset+"/encoding-"+dataset+"_"+rep+"/"
 	else:
 		d=prefix+dataset+"/encoding-"+rep+"/"

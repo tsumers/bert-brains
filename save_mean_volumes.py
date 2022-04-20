@@ -21,7 +21,7 @@ def get_result(rep,threshold=0.95):
             'sub-291', 'sub-297', 'sub-303', 'sub-294', 'sub-286', 'sub-282', 'sub-310', 'sub-302', 'sub-312', 
             'sub-301', 'sub-287', 'sub-298', 'sub-313', 'sub-285', 'sub-292', 'sub-311', 'sub-267', 'sub-295', 
             'sub-305', 'sub-274', 'sub-290', 'sub-288', 'sub-281', 'sub-276', 'sub-277', 'sub-299', 'sub-308',
-            'sub-272', 'sub-284', 'sub-289', 'sub-280', 'sub-309', 'sub-306', 'sub-296', 'sub-127', 'sub-279', 
+            'sub-272', 'sub-284', 'sub-289', 'sub-280', 'sub-309', 'sub-306',  'sub-127', 'sub-279', 
             'sub-315', 'sub-314']
             parcellation=nib.load(parce1).get_fdata().astype('int')
             affine=nib.load(parce1).affine
@@ -32,7 +32,9 @@ def get_result(rep,threshold=0.95):
             parcellation=nib.load(parce2).get_fdata().astype('int')
             affine=nib.load(parce2).affine
         
-        if 'activations' not in rep: 
+        if rep=='encoding_full_z' or rep=='encoding_onerep':
+            d=prefix+dataset+"/"+rep+"/"
+        elif 'layer' not in rep and 'ling' not in rep: 
             d=prefix+dataset+"/encoding-"+dataset+"_"+rep+"/"
         else:
             d=prefix+dataset+"/encoding-"+rep+"/"
@@ -40,9 +42,11 @@ def get_result(rep,threshold=0.95):
         full_data=np.zeros((num_parcels,len(subs)))
         for i,sub in enumerate(subs):
             print(sub)
-            data_sub=nib.load(d+sub+"_parcels_encoding.nii.gz").get_fdata()
-            for p in range(num_parcels):
-                full_data[p,i]=data_sub[np.where(parcellation==p+1)][0]
+            #data_sub=nib.load(d+sub+"_parcels_encoding.nii.gz").get_fdata()
+            #for p in range(num_parcels):
+            #    full_data[p,i]=data_sub[np.where(parcellation==p+1)][0]
+            #results_sub_parcels=np.arctanh(np.load(d+sub+"_parcelwise_results_banded_ridge.npy")[:,3])
+            full_data[:,i]=np.load(d+sub+"_parcelwise_results_banded_ridge.npy")[:,3]
         for i in range(len(subs)):
             full_results.append(full_data[:,i].reshape((-1,1)))
     full_results=np.asarray(full_results)[:,:,0]
