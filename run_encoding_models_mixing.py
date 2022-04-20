@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import time
 d='/jukebox/griffiths/bert-brains/'
 
@@ -16,7 +17,7 @@ with open("joblist.txt","w") as f:
 
 
 			data_dir=d+"slumlordreach_data/"
-			save_dir='/jukebox/griffiths/bert-brains/results/slumlordreach/encoding-mixing/' 
+			save_dir='/jukebox/griffiths/bert-brains/results/slumlordreach/encoding-mixing_z/' 
 		else:
 			subs=['sub-300', 'sub-304', 'sub-293', 'sub-273', 'sub-265', 'sub-307', 'sub-283', 'sub-275', 
 			'sub-291', 'sub-297', 'sub-303', 'sub-294', 'sub-286', 'sub-282', 'sub-310', 'sub-302', 'sub-312', 
@@ -25,7 +26,7 @@ with open("joblist.txt","w") as f:
 			'sub-272', 'sub-284', 'sub-289', 'sub-280', 'sub-309', 'sub-306', 'sub-296', 'sub-127', 'sub-279', 
 			'sub-315', 'sub-314']
 			data_dir=d+"black_data/"     
-			save_dir='/jukebox/griffiths/bert-brains/results/black/encoding-mixing/' 
+			save_dir='/jukebox/griffiths/bert-brains/results/black/encoding-mixing_z/' 
 
 		layer_names=list(range(-1,13))
 		
@@ -43,6 +44,18 @@ with open("joblist.txt","w") as f:
 
 
 		for sub in subs: 
-			if not(os.path.exists(save_dir+sub+"_parcelwise_results.npy")):
-				f.write("python encoding_model_mixing.py "+sub+" "+data_dir+" "+save_dir+"\n")
+			idxs=list(range(0,1001,50))
+			i=0
+			while i<len(idxs)-1:
+				start=idxs[i]
+				end=idxs[i+1]
+				if 'black' in data_dir:
+					save_fname='/scratch/sreejank/mixing_data_z/black_'+sub+"_"+str(start)+"_"+str(end)+'.npy' 
+				else:
+					save_fname='/scratch/sreejank/mixing_data_z/slumlordreach_'+sub+"_"+str(start)+"_"+str(end)+'.npy'
+				if not( os.path.exists(save_fname)):
+					f.write("python encoding_model_mixing.py "+sub+" "+data_dir+" "+str(start)+" "+str(end)+"\n")
+				else:
+					print(np.load(save_fname).shape)
+				i+=1
 	f.close()   

@@ -15,18 +15,44 @@ def load_weights(dataset,collapse_delay=True):
 		'sub-315', 'sub-314']
 	else:
 		return None 
-
+	"""
 	layer_names=['layer_'+str(i)+"_activations" for i in range(0,13)] 
+	layer_names+=['layer_'+str(i)+"_z_representations" for i in range(0,12)]
 	layer_prefix=d+'code/bert-brains/data/'+dataset+'/bert-base-uncased/raw_embeddings/'
 	save_prefix=d+"results/"+dataset+"/"
 	layer_dirs=[layer_prefix+dataset+"_bert-base-uncased_"+layer+".npy" for layer in layer_names] 
 	save_dirs=[save_prefix+"encoding-"+layer+"/" for layer in layer_names]
+	"""
+	save_prefix=d+"results/"+dataset+"/"
+	layer_names=[]
+	layer_dirs=[]
+	save_dirs=[]
 	layer_prefix=d+'code/bert-brains/data/'+dataset+'/bert-base-uncased/syntactic_analyses/'
 	for fname in os.listdir(layer_prefix):
-		layer_names.append(fname[:-4]) 
-		layer_dirs.append(layer_prefix+fname)
-		save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
+		if 'bert-base-uncased_syntactic_complexity_L-inf_T-128_D-concat' in fname:
+			layer_names.append(fname[:-4]) 
+			layer_dirs.append(layer_prefix+fname)
+			save_dirs.append(save_prefix+'encoding-'+fname[:-4]+"/")
 
+	layer_names+=['ling_features']
+	layer_dirs+=[d+"code/bert-brains/data/"+dataset+"/ling_features.npy"]
+	save_dirs+=[d+"results/"+dataset+"/encoding-ling_features/"]
+
+	layer_names+=['glove']
+	layer_dirs+=[d+'code/bert-brains/data/'+dataset+'/bert-base-uncased/raw_embeddings/'+dataset+'_bert-base-uncased_layer_0_glove.npy']
+	save_dirs+=[d+"results/"+dataset+"/encoding-glove/"]
+
+	layer_names+=['full_z']
+	layer_dirs+=['/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/full_z_representations.npy']
+	save_dirs+=[d+"results/"+dataset+"/encoding_full_z/"]
+
+	layer_names+=['full']
+	layer_dirs+=['/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/full_layer_embeddings.npy']
+	save_dirs+=[d+"results/"+dataset+"/encoding_full/"]
+
+
+
+	
 	assert len(layer_names)==len(layer_dirs)
 	assert len(save_dirs)==len(layer_names)
 
@@ -49,8 +75,15 @@ def load_weights(dataset,collapse_delay=True):
 		num_units=raw_features.shape[1]
 
 		total_weights=[]
-		for sub in subs:
+		if layer_name=='full':
+			sub_list=subs[:11]
+		else:
+			sub_list=subs
+
+		for sub in sub_list:
 			weights_sub=np.load(save_dir+sub+"_encoding_weights.npy")[:,0,:]
+			if 'full' in layer_name and len(weights_sub.shape)==3:
+				weights_sub=weights_sub[:,0,:]
 			if collapse_delay:
 				assert weights_sub.shape[1]%4==0
 				by_weights=[]
@@ -64,7 +97,7 @@ def load_weights(dataset,collapse_delay=True):
 		return_dict[layer_name]=total_weights
 	return return_dict
 
-for dataset in ['slumlordreach','black']:
+for dataset in ['black']:
 	x=load_weights(dataset)
 	fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/'+dataset+'/bert-base-uncased/encoding_weights.npy'
 	np.savez(fname,**x)

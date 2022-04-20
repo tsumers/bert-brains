@@ -11,15 +11,17 @@ from sklearn.model_selection import train_test_split
 
 sub=sys.argv[1]
 data_dir=sys.argv[2]
-save_dir=sys.argv[3]
+#save_dir=sys.argv[3]
+start_idx=int(sys.argv[3])
+end_idx=int(sys.argv[4])
 
 raw_features=[]
-for lnum in range(13):
+for lnum in range(12):
 	if 'black' in data_dir:
-		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_'+str(lnum)+"_activations.npy"
+		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_'+str(lnum)+"_z_representations.npy"
 	else:
-		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/raw_embeddings/slumlordreach_bert-base-uncased_layer_'+str(lnum)+"_activations.npy"
-	raw_features.append(np.load(fname))
+		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/raw_embeddings/slumlordreach_bert-base-uncased_layer_'+str(lnum)+"_z_representations.npy"
+	raw_features.append(np.load(fname)) 
 raw_features=np.asarray(raw_features)  
 
 
@@ -99,7 +101,7 @@ elif 'black' in data_dir:
 	phoneme_counts=np.load(data_prefix+"black_phoneme_counts.npy").reshape((-1,1))
 	word_counts=np.load(data_prefix+"black_word_counts.npy").reshape((-1,1))
 	phoneme_vectors=np.load(data_prefix+"black_phoneme_vectors.npy")
-	embedding_layer=np.load('/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_12_activations.npy')
+	#embedding_layer=np.load('/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_12_activations.npy')
 	primary_features=np.hstack([phoneme_counts,phoneme_vectors,word_counts])
 
 
@@ -165,8 +167,8 @@ for p in range(num_parcels):
 def process(i): 
 	y=data[i,:].reshape((-1,1)) 
 	def loss(params):
-		mixing_weights=params[:13]
-		alpha=params[13]
+		mixing_weights=params[:12]
+		alpha=params[12]
 		model=Ridge(alpha=alpha,normalize=False)
 		mixed_features=np.zeros(features.shape[1:])
 		for i in range(features.shape[0]):
@@ -178,26 +180,34 @@ def process(i):
 		preds=model.predict(X)
 		return np.sum((preds-y)**2.0)
 	
-	cons=({'type':'eq','fun':lambda x: np.sum(x[:13])-1})
-	bounds=[(0.0,1.0) for _ in range(13)]
+	cons=({'type':'eq','fun':lambda x: np.sum(x[:12])-1})
+	bounds=[(0.0,1.0) for _ in range(12)]
 	bounds.append((None,None))
-	x0=np.ones((14,))*(1.0/13)
+	x0=np.ones((13,))*(1.0/12)
 	x0[-1]=1.0
 	res=minimize(loss,x0,bounds=bounds,constraints=cons)
 	
-	optimized_mixing_weights=res.x[:13]
-	center_of_mass=np.sum(optimized_mixing_weights*np.arange(13))
-	return center_of_mass
+	optimized_mixing_weights=res.x[:12]
+	print(np.sum(optimized_mixing_weights*np.arange(12))) 
+	return optimized_mixing_weights
+	#center_of_mass=np.sum(optimized_mixing_weights*np.arange(13))
+	#return center_of_mass
 	
 
 
 raw_results=[]
 weights=[]
-for i in range(num_parcels):
+for i in range(start_idx,end_idx):
 	r=process(i)
 	raw_results.append(r)
 raw_results=np.asarray(raw_results)
-np.save(save_dir+sub+"_parcelwise_results.npy",raw_results)  
+if 'black' in data_dir:
+	save_fname='/scratch/sreejank/mixing_data_z/black_'+sub+"_"+str(start_idx)+"_"+str(end_idx)+'.npy' 
+else:
+	save_fname='/scratch/sreejank/mixing_data_z/slumlordreach_'+sub+"_"+str(start_idx)+"_"+str(end_idx)+'.npy'
+
+np.save(save_fname,raw_results)  
+""" 
 output_name=save_dir+sub+"_parcels_encoding.nii.gz"
 results_volume=np.zeros(parcellation.shape)
 for i in range(num_parcels):
@@ -205,3 +215,4 @@ for i in range(num_parcels):
 
 result_nii=nib.Nifti1Image(results_volume,affine)  
 nib.save(result_nii,output_name)        
+"""

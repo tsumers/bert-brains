@@ -13,13 +13,13 @@ holdout_layer=int(sys.argv[2])
 data_dir=sys.argv[3]
 save_dir=sys.argv[4]
 
-raw_features=[]
-for lnum in range(13):
+raw_features=[] 
+for lnum in range(12):
 	if holdout_layer!=lnum:
 		if 'black' in data_dir:
-			fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_'+str(lnum)+"_activations.npy"
+			fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_'+str(lnum)+"_z_representations.npy"
 		else:
-			fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/raw_embeddings/slumlordreach_bert-base-uncased_layer_'+str(lnum)+"_activations.npy"
+			fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/raw_embeddings/slumlordreach_bert-base-uncased_layer_'+str(lnum)+"_z_representations.npy"
 		raw_features.append(np.load(fname))
 raw_features=np.hstack(raw_features)  
 
@@ -43,7 +43,7 @@ if 'slumlordreach' in data_dir:
 	phoneme_vectors=np.load(data_prefix+"slumlordreach_phoneme_vectors.npy")
 	if holdout_layer!=-1:
 		lnum=holdout_layer 
-		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/raw_embeddings/slumlordreach_bert-base-uncased_layer_'+str(lnum)+"_activations.npy"
+		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/slumlordreach/bert-base-uncased/raw_embeddings/slumlordreach_bert-base-uncased_layer_'+str(lnum)+"_z_representations.npy"
 		heldout_embeddings=np.load(fname)
 		primary_features=np.hstack([phoneme_counts,phoneme_vectors,word_counts,heldout_embeddings])
 	else:
@@ -122,10 +122,9 @@ elif 'black' in data_dir:
 	phoneme_counts=np.load(data_prefix+"black_phoneme_counts.npy").reshape((-1,1))
 	word_counts=np.load(data_prefix+"black_word_counts.npy").reshape((-1,1))
 	phoneme_vectors=np.load(data_prefix+"black_phoneme_vectors.npy")
-	embedding_layer=np.load('/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_12_activations.npy')
 	if holdout_layer!=-1:
 		lnum=holdout_layer
-		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_'+str(lnum)+"_activations.npy"
+		fname='/jukebox/griffiths/bert-brains/code/bert-brains/data/black/bert-base-uncased/raw_embeddings/black_bert-base-uncased_layer_'+str(lnum)+"_z_representations.npy"
 		heldout_embeddings=np.load(fname)
 		primary_features=np.hstack([phoneme_counts,phoneme_vectors,word_counts,heldout_embeddings])
 	else:
@@ -256,7 +255,7 @@ def process(i):
 
 		y_hat=model.predict(X_test)
 		test_performances.append(pearsonr(y_hat[:,0],y_test[:,0])[0])
-	print(i,np.mean(test_performances)) 
+	#print(i,np.mean(test_performances)) 
 	mean_weights=np.mean(np.asarray(encoding_model_weights),axis=0)
 	return [np.mean(test_performances),mean_weights]  
 
@@ -270,6 +269,7 @@ raw_results=np.asarray(raw_results)
 weights=np.asarray(weights) 
 np.save(save_dir+sub+"_encoding_weights.npy",weights) 
 np.save(save_dir+sub+"_parcelwise_results.npy",raw_results)  
+"""
 output_name=save_dir+sub+"_parcels_encoding.nii.gz"
 results_volume=np.zeros(parcellation.shape)
 for i in range(num_parcels):
@@ -277,3 +277,4 @@ for i in range(num_parcels):
 
 result_nii=nib.Nifti1Image(results_volume,affine)  
 nib.save(result_nii,output_name)        
+"""

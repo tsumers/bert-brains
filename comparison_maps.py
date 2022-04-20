@@ -19,12 +19,12 @@ individual_data1=[]
 individual_data2=[]
 for dataset in ['black','slumlordreach']:
     d=rep1
-    if 'activations' not in d: 
+    if 'activations' not in d and 'z_representation' not in d and 'ling' not in d: 
         d1=prefix+dataset+"/encoding-"+dataset+"_"+model+"_"+d+"/"
     else:
         d1=prefix+dataset+"/encoding-"+d+"/"
     d=rep2 
-    if 'activations' not in d: 
+    if 'activations' not in d and 'z_representation' not in d and 'ling' not in d: 
         d2=prefix+dataset+"/encoding-"+dataset+"_"+model+"_"+d+"/"
     else:
         d2=prefix+dataset+"/encoding-"+d+"/" 
@@ -100,7 +100,7 @@ def p_adjust_bh(p):
     return q[by_orig] 
 
 super_names=['individual_black','individual_slumlord','combined']
-for i in range(3): 
+for i in [2]: 
     super_name=super_names[i]
     full_data1=full_datas1[i]
     full_data2=full_datas2[i]
@@ -131,4 +131,4 @@ for i in range(3):
     nib.save(t_nii,prefix+name+"_"+super_name+"_tvalues.nii.gz")
 
     p_nii=nib.Nifti1Image(p_volume,affine)
-    nib.save(p_nii,prefix+name+"_"+super_name+"_pvalues.nii.gz") 
+    nib.save(p_nii,prefix+name+"_"+super_name+"_pvalues.nii.gz")  
