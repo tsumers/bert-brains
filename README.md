@@ -65,3 +65,4 @@
 
 ### Misc
 `fmri_conda_env.yml`: yml conda env file for fmri analyses
+`transformer_conda_env.yml`: yml conda env file for transcript pre-processing and Transformer analysis notebooks
