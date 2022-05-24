@@ -16,7 +16,7 @@
 `ROIs.ipynb`: Handling ROI labeling and visualizing.
 
 ### Analysis Code
-`banded_ridge_regression.py`: Run encoding model analyses (banded ridge regression) with a given representation as main features
+`banded_ridge_regression.py`: Run encoding model analyses (banded ridge regression) with a given representation as main features.
 
 `calculate_boostrap_pvalue.py`: Calculate bootstrap pvalue (with FDR corrections) for individual parcels to determine significance.
 
@@ -26,13 +26,13 @@
 
 `decode_linguistic_features.py`: Run the decoding analysis, where we decode linguistic features from the headwise transformation representations. All the necessary functions should be in decode_linguistic_features_utils.py.
 
-`headwise_banded_ridge_regression.py`: Headwise version of the encoding analyses (banded ridge regression, but knock out weights for all heads but one when evaluating a head)
+`headwise_banded_ridge_regression.py`: Headwise version of the encoding analyses (banded ridge regression, but knock out weights for all heads but one when evaluating a head).
 
 `run_encoding_models_banded.py`: Creates a joblist.txt for banded ridge regression jobs to input as a slurm job array.
 
 `run_encoding_models_headwise_banded.py`: Same as above, but for the headwise encoding analyses.
 
-`run_isc_jobs.py`: Run multiple subjects' ISC analyses in parallel (slurm jobs)
+`run_isc_jobs.py`: Run multiple subjects' ISC analyses in parallel (slurm jobs).
 
 `run_jupyter.sh`: Run a jupyter notebook on the cluster.
 
@@ -43,7 +43,6 @@
 `save_mean_volume.py`: Collapse performance across subjects for a specific representation.
 
 
-
 ### Visualizations
 `Head_Dep_Brain_Plots.ipynb`: Plots whole brain results for headwise encoding (and dependency encoding).
 
@@ -51,18 +50,28 @@
 
 `Results_Figures.ipynb`: Notebook to plot most main results in the paper.
 
-`View_Encoding_Results.ipynb`: Plots whole-brain glass brain results
+`View_Encoding_Results.ipynb`: Plots whole-brain glass brain results.
+
+`bert_rdms.ipynb`: Compare RDMs for embeddings and transformations (as well as autocorrelation).
+
+`layer_preference.ipynb`: Create layer preference and layer specificity histograms.
+
+`plot_layer_brain.ipynb`: Process and export layer preferences for visualization on cortical surface.
+
+`headwise_specialization.ipynb`: Run PCA on transformation weights and visualization two-dimensional projections.
+
 
 ### Slurm Jobs
 `avg_job.sh`: Slurm job corresponding to save_mean_volumes.py.
 
-`boot_job.sh`: Slurm job corresponding to calculate_bootstrap_pvalue.py
+`boot_job.sh`: Slurm job corresponding to calculate_bootstrap_pvalue.py.
 
 `dsq-submit.sh`: Slurm job that submits a job array specified in a .txt file.
 
-`joblist.txt`: Job list for submitting slurm job array
+`joblist.txt`: Job list for submitting slurm job array.
 
 
 ### Misc
-`fmri_conda_env.yml`: yml conda env file for fmri analyses  
-`transformer_conda_env.yml`: yml conda env file for transcript pre-processing and Transformer analysis notebooks
+`fmri_conda_env.yml`: yml conda env file for fmri analyses.
+
+`transformer_conda_env.yml`: yml conda env file for transcript pre-processing and Transformer analysis notebooks.
