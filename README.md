@@ -1,7 +1,16 @@
-# bert-brains
+## Reconstructing the cascade of language processing in the brain using the internal computations of transformer language models
+
+![alt text](https://github.com/tsumers/bert-brains/blob/master/figure_1_github.png?raw=true)
+
+This repository accompanies the manuscript "Reconstructing the cascade of language processing in the brain using the internal computations of transformer language models". In this manuscript we use the internal computations of a transformer model (BERT) to predict fMRI activity while subjects listen to naturalistic spoken narratives.
+
+Authors: Sreejan Kumar, Theodore R. Sumers, Takateru Yamakoshi, Uri Hasson, Kenneth A. Norman, Thomas L. Griffiths, Robert D. Hawkins, Samuel A. Nastase
+
+The following list describes the various analysis scripts:
 
 ### Preprocessing
 `narratives-transcript-processing.ipynb`: Used to pre-process transcripts from the `Narratives` dataset. Outputs (1) phonemes and associated nuisance variables for regression analyses; (2) TR-aligned tokens for use with Transformer notebooks.
+
 
 ### Transformers
 `transformer-representations.ipynb`: the primary notebook used to generate Transformer representations (embeddings, transformations) for regression analyses.  
@@ -10,12 +19,14 @@
 
 `transformer-utils.py`: functionality for extracting various Transformer representations, including some experimental metrics that were used in the paper.  
 
-### data_moving/handling
+
+### Data handling
 `create_fmri_dataset.py`: Copy data from narratives dataset into lab project folder.
 
 `ROIs.ipynb`: Handling ROI labeling and visualizing.
 
-### Analysis Code
+
+### Analysis code
 `banded_ridge_regression.py`: Run encoding model analyses (banded ridge regression) with a given representation as main features.
 
 `calculate_boostrap_pvalue.py`: Calculate bootstrap pvalue (with FDR corrections) for individual parcels to determine significance.
@@ -61,7 +72,7 @@
 `headwise_specialization.ipynb`: Run PCA on transformation weights and visualization two-dimensional projections.
 
 
-### Slurm Jobs
+### Slurm jobs
 `avg_job.sh`: Slurm job corresponding to save_mean_volumes.py.
 
 `boot_job.sh`: Slurm job corresponding to calculate_bootstrap_pvalue.py.
@@ -71,7 +82,7 @@
 `joblist.txt`: Job list for submitting slurm job array.
 
 
-### Misc
+### Miscellaneous
 `fmri_conda_env.yml`: yml conda env file for fmri analyses.
 
 `transformer_conda_env.yml`: yml conda env file for transcript pre-processing and Transformer analysis notebooks.
