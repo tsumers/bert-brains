@@ -8,17 +8,18 @@ Authors: Sreejan Kumar, Theodore R. Sumers, Takateru Yamakoshi, Uri Hasson, Kenn
 
 The following list describes the various analysis scripts:
 
-### Preprocessing
+### Text Processing and Transformer Models
 `narratives-transcript-processing.ipynb`: Used to pre-process transcripts from the `Narratives` dataset. Outputs (1) phonemes and associated nuisance variables for regression analyses; (2) TR-aligned tokens for use with Transformer notebooks.
 
-
-### Transformers
 `transformer-representations.ipynb`: the primary notebook used to generate Transformer representations (embeddings, transformations) for regression analyses.  
 
 `transformer-transformation-magnitudes.ipynb`: small script used to produce transformation magnitudes from the transformations themselves.  
 
 `transformer-utils.py`: functionality for extracting various Transformer representations, including some experimental metrics that were used in the paper.  
 
+`extract_linguistic_features.py`: Extract linguistic features (parts-of-speech and dependency tags) using spaCy.
+
+`decode_linguistic_features.py`: Run the decoding analysis, where we decode linguistic features from the headwise transformation representations. All the necessary functions should be in decode_linguistic_features_utils.py.
 
 ### Data handling
 `create_fmri_dataset.py`: Copy data from narratives dataset into lab project folder.
@@ -32,10 +33,6 @@ The following list describes the various analysis scripts:
 `calculate_boostrap_pvalue.py`: Calculate bootstrap pvalue (with FDR corrections) for individual parcels to determine significance.
 
 `compute_isc.py`: Compute noise ceilings with intersubject correlation.
-
-`extract_linguistic_features.py`: Extract linguistic features (parts-of-speech and dependency tags) using spaCy.
-
-`decode_linguistic_features.py`: Run the decoding analysis, where we decode linguistic features from the headwise transformation representations. All the necessary functions should be in decode_linguistic_features_utils.py.
 
 `headwise_banded_ridge_regression.py`: Headwise version of the encoding analyses (banded ridge regression, but knock out weights for all heads but one when evaluating a head).
 
