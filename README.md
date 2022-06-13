@@ -4,7 +4,7 @@
 
 This repository accompanies the manuscript "Reconstructing the cascade of language processing in the brain using the internal computations of transformer language models". In this manuscript we use the internal computations of a transformer model (BERT) to predict fMRI activity while subjects listen to naturalistic spoken narratives.
 
-Authors: Sreejan Kumar, Theodore R. Sumers, Takateru Yamakoshi, Uri Hasson, Kenneth A. Norman, Thomas L. Griffiths, Robert D. Hawkins, Samuel A. Nastase
+Kumar, S.\*, Sumers, T. R.\*, Yamakoshi, T., Goldstein, A., Hasson, U., Norman, K. A., Griffiths, T. L., Hawkins, R. D., & Nastase, S. A.. (2022). Reconstructing the cascade of language processing in the brain using the internal computations of a transformer-based language model. *bioRxiv*. https://doi.org/10.1101/2022.06.08.495348
 
 The following list describes the various analysis scripts:
 
