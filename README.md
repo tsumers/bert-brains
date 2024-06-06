@@ -1,10 +1,11 @@
-## Reconstructing the cascade of language processing in the brain using the internal computations of transformer language models
+## Shared functional specialization in transformer-based language models and the human brain
 
 ![alt text](https://github.com/tsumers/bert-brains/blob/master/figure_1_github.png?raw=true)
 
-This repository accompanies the manuscript "Reconstructing the cascade of language processing in the brain using the internal computations of transformer language models". In this manuscript we use the internal computations of a transformer model (BERT) to predict fMRI activity while subjects listen to naturalistic spoken narratives.
+This repository accompanies the manuscript "Shared functional specialization in transformer-based language models and the human brain". In this manuscript we use the internal computations of a transformer model (BERT) to predict fMRI activity while subjects listen to naturalistic spoken narratives.
 
-Kumar, S.\*, Sumers, T. R.\*, Yamakoshi, T., Goldstein, A., Hasson, U., Norman, K. A., Griffiths, T. L., Hawkins, R. D., & Nastase, S. A. (2022). Reconstructing the cascade of language processing in the brain using the internal computations of a transformer-based language model. *bioRxiv*. https://doi.org/10.1101/2022.06.08.495348
+Kumar, S.\*, Sumers, T. R.\*, Yamakoshi, T., Goldstein, A., Hasson, U., Norman, K. A., Griffiths, T. L., Hawkins, R. D., & Nastase, S. A. (2024). Shared functional specialization in
+transformer-based language models and the human brain. *Nature Communications (accepted)*. https://doi.org/10.1101/2022.06.08.495348
 
 The following list describes the various analysis scripts:
 
